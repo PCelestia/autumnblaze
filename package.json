@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/PCelestia/autumnblaze/issues"
   },
-  "homepage": "https://github.com/PCelestia/autumnblaze#readme"
+  "homepage": "https://github.com/PCelestia/autumnblaze#readme",
+  "dependencies": {
+    "eristools": "github:pcelestia/eristools"
+  }
 }
