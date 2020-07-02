@@ -1,5 +1,6 @@
-# autumnblaze
+# autumnblaze detailed readme
 (eventually will be) the code behind Autumn Blaze#1324
+This is the same as [README.md](README.md), except this includes more details.
 
 ## requirements
 `node.js` and `npm` required. i have `npm 6.14.5` and `node v14.4.0` installed, but i think `12.18.2 LTS` and `14.5.0 Current` (as well as all future "current" and "LTS" versions) will work. this bot programmed using [discord.js](https://discord.js.org) and [MongoDB](https://mongodb.com) for the database.
@@ -11,15 +12,21 @@
 4. get a bot account (and token) at [the discord developer website](https://discord.com/developers), google how to if you dont know how
    the gist of it: create an application, click "bot" on the sidebar thing, then create a bot. click "copy" to copy your token
 5. stick this inside `index.js` (eventually when it actually does something)
+PRACTICALLY REQUIRED: also include a mongodb connection string. This allows for the bot's customisability, and to store data.
 ```js
 require("autumnblaze")({
-   token: "your_bot_token"
+   token: "your_bot_token",
+   mongodbconnectionstring: "your_mongodb_connection_string"
 });
 ```
 6. open a new terminal window (bash, windows powershell, windows cmd, whatever has node in it), run `node index.js`. keep that terminal window open. to stop it, do `ctrl+c`.
 
 ## more config options
 will be put here as they come in. i shall also put some docs as i feel is needed
+
+## contributing
+like why would you honestly. but fork it, clone it, and do whatever you want to do with it. when you're done, do a pr. (standard stuff)
+preferably, however, create an issue [here](https://github.com/pcelestia/autumnblaze/issues/new). do check to see if your issue has been created first though, [here](https://github.com/pcelestia/autumnblaze/issues/new).
 
 ## other stuffs
 - more config options available soonish
