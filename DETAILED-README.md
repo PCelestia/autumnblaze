@@ -37,6 +37,7 @@ preferably, however, create an issue [here](https://github.com/pcelestia/autumnb
 
 ## other stuffs
 - more config options available soonish
-- current bot (used in [L&T Discord Server](https://love-tolerance.com/discord)) is closed source because the way i wrote it required the bot token to be committed, this is the rewrite
+- current version of the bot (used in [L&T Discord Server](https://love-tolerance.com/discord)) is closed source because the way i wrote it required the bot token to be committed, this is the rewrite
+- rewriting because the current bot has a lot of design flaws (including committing the token)
 - this does nothing right now so dont bother installing it lol
 - my hosted bot *may* be opened to public use in the future (probably not though, since i dont have money lol)
