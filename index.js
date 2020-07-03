@@ -10,7 +10,9 @@ require("console-stamp")(console, {
 const discord = require("discord.js");
 // default options
 const defaultopts = {
-   prefix: "autumnt "
+   prefix: "autumn ",
+   mongodatabase: "autumnblazebot",
+   radiostreamurl: "http://fancynoise.xyz:8000/radio"
 };
 
 // the main creating bot thingie
@@ -25,18 +27,46 @@ const autumnblaze = (opts = {}) => {
    // for (const key in defaultopts) if (opts[key] === undefined) opts[key] = defaultopts[key];
 
    // take opts and patch it into the default opts (faster)
-   const { copyobj } = require("./randutils");
-   var patchedopts = copyobj(defaultopts);
+   const randutils = require("./randutils");
+   autumnblaze.randutils = randutils;
+
+   var patchedopts = randutils.copyobj(defaultopts);
    for (const key in opts) patchedopts[key] = opts[key];
 
    // console.log(opts);
    // debug
 
-   // connect to mongo needed here
+   // connect to mongo needed here --------------------------------------------------------------------------------------------------------
    const bot = new discord.Client();
+   bot.on("warn", m => console.warn(m));
+   // bot.on("debug", m => console.debug(m));
+
 
    autumnblaze.bot = bot;
    autumnblaze.opts = patchedopts;
+
+   autumnblaze.text = require("./text");
+   autumnblaze.commands = autumnblaze.text.commands;
+
+   // process potential command
+   bot.on("message", (message) => {
+      // if no prefix, log it then get out
+      if (!(message.content.substring(0, autumnblaze.opts.prefix.length) === autumnblaze.opts.prefix)) {
+         console.log(randutils.logmsg(message));
+         return;
+      }
+
+      // loggie
+      console.log(randutils.logcmdmsg(message));
+      // strip out the prefix, and process it
+      const sentcmd = message.content.substring(autumnblaze.opts.prefix.length);
+
+      for (const cmd in autumnblaze.commands) if (sentcmd.substring(0, cmd.length + 1) === cmd + " ") {
+         message.channel.send(autumnblaze.commands[cmd](sentcmd.substring(cmd.length + 1)));
+         return;
+      }
+   });
+
 
    return autumnblaze;
 };
@@ -46,7 +76,8 @@ autumnblaze.connect = () => {
    autumnblaze.bot.login(autumnblaze.opts.token).then(token => {
       token = "erased";
       if (token !== "erased") {
-         console.log("token not erased or smth idk lo, ignore this lol");
+         console.warn("token not erased or smth idk lol, ignore this lol");
+         console.warn("if this pops up then something is def wrong");
       }
       console.log("connection success!!");
    }).catch(err => {

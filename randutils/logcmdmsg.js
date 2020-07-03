@@ -1,3 +1,3 @@
 module.exports = msg => {
-   return "[" + msg.content + "]" + " sent by [" + msg.author + "] in guild " + msg.guild + " channel " + msg.channel;
+   return "command[" + msg.content + "]" + " author[" + msg.author.username + "#" + msg.author.discriminator + "][" + msg.author.id + "] guild[" + msg.guild + "] channel[" + msg.channel + "]";
 };
