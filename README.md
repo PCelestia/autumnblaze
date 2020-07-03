@@ -26,7 +26,8 @@ require("autumnblaze")({
    token: "your_bot_token",
    mongodbconnectionstring: "your_mongodb_connection_string",
    mongodatabase: "autumnblazebot",
-   defaultcmdprefix: "autumn "
+   defaultcmdprefix: "autumn ",
+   radiostreamurl: "http://fancynoise.xyz:8000/radio"
 }
 ```
 
