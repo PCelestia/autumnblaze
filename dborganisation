@@ -1,0 +1,104 @@
+server
+
+db discordbot {
+   // might implement a way to switch to a different db
+   collection <guild id> {
+      {
+         name: <user id>
+         msg: <thing>
+         ...etc
+      }
+      {
+         name: <another user id>
+         msg: <another thing>
+         ...etc
+      }
+      {
+         name: "guild settings"
+         <options here>
+      }
+   }
+   collection <another guild id> {
+      {
+         name: <user id>
+         msg: <thing>
+         ...etc
+      }
+      {
+         name: <another user id>
+         msg: <another thing>
+         ...etc
+      }
+      {
+         name: "guild settings"
+         <options here>
+      }
+   }
+   collection listinfo {
+      {
+         userid: <user id>
+         lists: [
+            "name of list in plain regular user specified text"
+            "another list"
+            "third list"
+         ]
+      }
+   }
+   collection lists {
+      // the idea is to implement a checklist thing
+      {
+         // for example if my userid is "12345" and my list is "a nice list"
+         // the list name would be "12345a nice list"
+         listname: "<userid>name of list in plain regular user specified text"
+         listitems: [
+            {
+               content: "ee"
+               done: false
+            }
+            {
+               content: "ff"
+               done: true
+            }
+            {
+               content: "gg"
+               done: false
+            }
+         ]
+      }
+      {
+         listname: "<userid>another list"
+         listitems: [
+            {
+               content: "ee"
+               done: false
+            }
+            {
+               content: "ff"
+               done: true
+            }
+            {
+               content: "gg"
+               done: false
+            }
+         ]
+      }
+      {
+         listname: "<userid>third list"
+         listitems: [
+            {
+               content: "ee"
+               done: false
+            }
+            {
+               content: "ff"
+               done: true
+            }
+            {
+               content: "gg"
+               done: false
+            }
+         ]
+      }
+   } // done collecction lists
+
+}
