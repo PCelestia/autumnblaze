@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/PCelestia/autumnblaze#readme",
   "dependencies": {
-    "eristools": "github:pcelestia/eristools"
+    "@discordjs/opus": "^0.3.2",
+    "console-stamp": "^0.2.9",
+    "discord.js": "^12.2.0"
   }
 }
