@@ -11,7 +11,7 @@ a discord moderation bot. i wrote my own because i don't feel really satisfied w
 4. get a bot account (and token) at [the discord developer website](https://discord.com/developers), google how to if you dont know how
    the gist of it: create an application, click "bot" on the sidebar thing, then create a bot. click "copy" to copy your token
 5. stick this inside `index.js` (eventually when it actually does something)
-PRACTICALLY REQUIRED: also include a mongodb connection string. This allows for the bot's customisability, and to store data. i don't think the bot can operate without connecting to a database.
+   PRACTICALLY REQUIRED: also include a mongodb connection string. This allows for the bot's customisability, and to store data. i don't think the bot can operate without connecting to a database.
 ```js
 require("autumnblaze")({
    token: "your_bot_token",
@@ -30,6 +30,19 @@ require("autumnblaze")({
    radiostreamurl: "http://fancynoise.xyz:8000/radio"
 }
 ```
+
+### what they mean
+- token: your bot token.
+  for example: `XXXXXXXXXXXXXXXXXXXXXXXX.XXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXX`
+- mongodbconnectionstring: the connection string used to connect to your mongodb server.
+  for example: `mongodb+srv://username:passwordd@databaseurl.example.com/etcetcetc?etc=etc&etc=etc`
+- mongodatabase: the name of the database to use for the bot. Assume that the bot can/will take over this entire database, so there better not be anything else in here.
+  default: `autumnblazebot`
+- defaultcmdprefix: for guilds that don't have a custom prefix setup, use this instead.
+  default: `autumn `
+- radiostreamurl: a link to an audio stream, for use in the eventual radio functionality
+  confirmed audio stream formats: ogg
+  default: `http://fancynoise.xyz:8000/radio`
 
 ## other stuffs
 - more config options available soonish
