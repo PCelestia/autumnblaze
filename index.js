@@ -86,4 +86,9 @@ autumnblaze.connect = () => {
    });
 };
 
+process.on("SIGINT", () => {
+   // cleanup things here
+   autumnblaze.bot.destroy();
+});
+
 module.exports = autumnblaze;
