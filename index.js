@@ -63,6 +63,7 @@ const autumnblaze = (opts = {}) => {
 
       for (const cmd in autumnblaze.commands) if (sentcmd.substring(0, cmd.length + 1) === cmd + " ") {
          message.channel.send(autumnblaze.commands[cmd](sentcmd.substring(cmd.length + 1)));
+         // need to check response for nullness and undefinedness lol
          return;
       }
    });
