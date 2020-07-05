@@ -80,6 +80,12 @@ autumnblaze.connect = () => {
          console.warn("if this pops up then something is def wrong");
       }
       console.log("connection success!!");
+      autumnblaze.bot.user.setPresence({
+         activity: {
+            name: "\"" + autumnblaze.opts.prefix + "help\"",
+            type: 0
+         }
+      });
    }).catch(err => {
       console.log("connection failed lol");
       console.log(err);
