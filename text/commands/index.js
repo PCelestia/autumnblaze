@@ -10,14 +10,25 @@
 // cmds.description = command description
 // cmds.usage = usage of the command
 
-const cmds = {};
+// return value: string
+// rv.dm = boolean (whether or not the response should be sent in dm)
 
+// ------OR--------
+// return value: object
+// rv.dm = string (message to send in dm)
+// rv.guildchannel = string (message to send to channel in guild)
+
+// example: person does "autumn help"
+// bot responds with "check your dms"
+// bot dms user with the help message
+
+const cmds = {};
+cmds._process = require("./_process");
 // tmp test cmds
 cmds.test1 = require("./test1");
 cmds.test2 = require("./test2");
 cmds.test3 = require("./test3");
 
-// help cmd
 // ping (useful thou)
 // query
 // list
