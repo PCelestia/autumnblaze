@@ -36,7 +36,6 @@ const autumnblaze = (opts = {}) => {
    // console.log(opts);
    // debug
 
-   // connect to mongo needed here --------------------------------------------------------------------------------------------------------
    const bot = new discord.Client();
    bot.on("warn", m => console.warn(m));
    // bot.on("debug", m => console.debug(m));
@@ -62,8 +61,9 @@ const autumnblaze = (opts = {}) => {
       const sentcmd = message.content.substring(autumnblaze.opts.prefix.length);
 
       for (const cmd in autumnblaze.commands) if (sentcmd.substring(0, cmd.length + 1) === cmd + " ") {
-         message.channel.send(autumnblaze.commands[cmd](sentcmd.substring(cmd.length + 1)));
+         let response = autumnblaze.commands[cmd](sentcmd.substring(cmd.length + 1));
          // need to check response for nullness and undefinedness lol
+         message.channel.send(response);
          return;
       }
    });
@@ -73,7 +73,7 @@ const autumnblaze = (opts = {}) => {
 };
 autumnblaze.defaultopts = defaultopts;
 
-autumnblaze.connect = () => {
+autumnblaze.connectbot = () => {
    autumnblaze.bot.login(autumnblaze.opts.token).then(token => {
       token = "erased";
       if (token !== "erased") {
@@ -91,11 +91,29 @@ autumnblaze.connect = () => {
       console.log("connection failed lol");
       console.log(err);
    });
+   return autumnblaze;
+};
+autumnblaze.connectdb = () => {
+   require("./mango")(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.mongodatabase, (db, serv) => {
+      autumnblaze.db = db;
+      autumnblaze.dbserv = serv;
+   });
+   return autumnblaze;
+};
+autumnblaze.connect = () => {
+   autumnblaze.connectbot().connectdb();
 };
 
 process.on("SIGINT", () => {
    // cleanup things here
+
+   // close connection with discord
    autumnblaze.bot.destroy();
+
+   // close connection with mongo
+   autumnblaze.dbserv.close();
+
+   console.log("closey");
 });
 
 module.exports = autumnblaze;
