@@ -47,8 +47,15 @@ const autumnblaze = (opts = {}) => {
    autumnblaze.text = require("./text");
    autumnblaze.commands = autumnblaze.text.commands;
 
-   // process potential command
+   // process a message
    bot.on("message", (message) => {
+      // if cant find nsfw, its dm, reply with "dms off'D"
+      // BUT only if the author isn't the bot lol
+      if (!message.nsfw && (message.author != bot.user)) {
+         // dm!
+         message.channel.send("direct messages don't do anything");
+      }
+
       // if no prefix, log it then get out
       if (!(message.content.substring(0, autumnblaze.opts.prefix.length) === autumnblaze.opts.prefix)) {
          console.log(randutils.logmsg(message));
