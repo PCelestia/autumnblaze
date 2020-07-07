@@ -51,7 +51,7 @@ const autumnblaze = (opts = {}) => {
    bot.on("message", (message) => {
       // if cant find nsfw, its dm, reply with "dms off'D"
       // BUT only if the author isn't the bot lol
-      if (!message.nsfw && (message.author != bot.user)) {
+      if (!(message.nsfw === undefined) && (message.author != bot.user)) {
          // dm!
          message.channel.send("direct messages don't do anything");
       }
