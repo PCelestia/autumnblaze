@@ -2,7 +2,7 @@
   "name": "autumnblaze",
   "version": "0.1.0",
   "description": "(eventually) the code behind Autumn Blaze#1324",
-  "main": "index.js",
+  "main": "lebottieinitthig.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
