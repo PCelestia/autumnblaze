@@ -10,9 +10,11 @@ require("console-stamp")(console, {
 const discord = require("discord.js");
 // default options
 const defaultopts = {
-   prefix: "autumn ",
+   mongodbconnectionstring: "mongodb://localhost:27017",
    mongodatabase: "autumnblazebot",
-   radiostreamurl: "http://fancynoise.xyz:8000/radio"
+   radiostreamurl: "http://fancynoise.xyz:8000/radio",
+   prefix: "autumn ",
+   debug: false
 };
 
 // the main creating bot thingie
