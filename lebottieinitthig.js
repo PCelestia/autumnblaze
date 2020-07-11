@@ -101,8 +101,7 @@ autumnblaze.connectdb = () => {
 autumnblaze.connect = () => {
    autumnblaze.connectbot().connectdb();
 };
-
-process.on("SIGINT", () => {
+autumnblaze.stop = () => {
    // cleanup things here
 
    // close connection with discord
@@ -112,6 +111,7 @@ process.on("SIGINT", () => {
    autumnblaze.dbserv.close();
 
    console.log("closey");
-});
+};
+process.on("SIGINT", autumnblaze.stop);
 
 module.exports = autumnblaze;
