@@ -1,4 +1,4 @@
-module.exports = (mongodatabase, guild, callback) => {
+module.exports = (mongodatabase, guild, callback, defaultconfig) => {
    mongodatabase.collection(guild.id).findOne({ name: "guildsettings" }, (err, res) => {
       if (err) {
          // err
@@ -13,7 +13,7 @@ module.exports = (mongodatabase, guild, callback) => {
          return;
       } else {
          // not gottem
-         require("./index").createdefaultservconfig(mongodatabase, guild, callback);
+         require("./index").createdefaultservconfig(mongodatabase, guild, callback, defaultconfig);
       }
    });
 };

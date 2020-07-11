@@ -1,6 +1,4 @@
-module.exports = (mongodatabase, guild, callback, defaultconfig = {
-   name: "guildsettings"
-}) => {
+module.exports = (mongodatabase, guild, callback, defaultconfig) => {
    mongodatabase.collection(guild.id).insertOne(defaultconfig, (err, res) => {
       if (err) {
          // err

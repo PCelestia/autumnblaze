@@ -16,7 +16,9 @@ const defaultopts = {
    prefix: "autumn ",
    debug: false
 };
-
+const defaultguildsettings = {
+   name: "guildsettings"
+};
 // the main creating bot thingie
 const autumnblaze = (opts = {}) => {
    // return a bott
