@@ -99,6 +99,7 @@ autumnblaze.connectdb = () => {
    return autumnblaze;
 };
 autumnblaze.connect = () => {
+   console.log("running autumnblaze v" + require("./package.json").version);
    return autumnblaze.connectbot().connectdb();
 };
 autumnblaze.stop = () => {
