@@ -121,6 +121,11 @@ autumnblaze.stop = () => {
 
    console.log("closey");
 };
-process.on("SIGINT", autumnblaze.stop);
+autumnblaze.fullstop = () => {
+   // this to fully stop the process
+   autumnblaze.stop();
+   setTimeout(() => process.exit(0), 3000);
+};
+process.on("SIGINT", autumnblaze.fullstop);
 
 module.exports = autumnblaze;
