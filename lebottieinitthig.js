@@ -99,7 +99,7 @@ autumnblaze.connectdb = () => {
    return autumnblaze;
 };
 autumnblaze.connect = () => {
-   autumnblaze.connectbot().connectdb();
+   return autumnblaze.connectbot().connectdb();
 };
 autumnblaze.stop = () => {
    // cleanup things here
