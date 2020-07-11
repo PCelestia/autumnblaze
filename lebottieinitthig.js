@@ -103,6 +103,8 @@ autumnblaze.connect = () => {
    return autumnblaze.connectbot().connectdb();
 };
 autumnblaze.stop = () => {
+   // dont run if already rubbish'd
+   if (autumnblaze.isrubbish) return;
    // cleanup things here
 
    // close connection with discord
@@ -110,6 +112,10 @@ autumnblaze.stop = () => {
 
    // close connection with mongo
    autumnblaze.dbserv.close();
+
+   // declare rubbish
+   autumnblaze.isrubbish = true;
+   process.removeListener("SIGINT", autumnblaze.stop);
 
    console.log("closey");
 };
