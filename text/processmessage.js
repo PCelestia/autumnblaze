@@ -1,4 +1,10 @@
 module.exports = (message, autumnblaze) => {
+   if ((message.content === "h") && ((autumnblaze.h + autumnblaze.hcooldown) > Date.now())) {
+      // h (idea) by Thorinair on A State of Sugar Discord server
+      // sloppy reimplementation by me lol
+      autumnblaze.h = Date.now();
+      message.channel.send("h");
+   }
    // if cant find nsfw, its dm, reply with "dms off'D"
    // BUT only if the author isn't the bot lol
    if (!(message.nsfw === undefined) && (message.author != autumnblaze.bot.user)) {

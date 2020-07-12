@@ -71,6 +71,8 @@ autumnblaze.connectbot = () => {
          console.warn("if this pops up then something is def wrong");
       }
       console.log("connection success!!");
+      autumnblaze.hcooldown = (1000 * 30);
+      autumnblaze.h = Date.now() - autumnblaze.hcooldown;
    }).catch(err => {
       console.log("connection failed lol");
       console.log(err);
