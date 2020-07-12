@@ -63,7 +63,6 @@ const autumnblaze = (opts = {}) => {
       // if no prefix, get out
       if (!(message.content.substring(0, autumnblaze.opts.prefix.length) === autumnblaze.opts.prefix)) return;
 
-
       autumnblaze.commands._process(message, autumnblaze);
    });
 
