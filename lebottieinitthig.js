@@ -57,14 +57,13 @@ const autumnblaze = (opts = {}) => {
       // BUT only if the author isn't the bot lol
       if (!(message.nsfw === undefined) && (message.author != bot.user)) {
          // dm!
-         message.channel.send("direct messages don't do anything");
+         message.channel.send("direct messages don't do anything (yet lol)");
       }
 
-      // if no prefix, log it then get out
-      if (!(message.content.substring(0, autumnblaze.opts.prefix.length) === autumnblaze.opts.prefix)) {
-         console.log(randutils.logmsg(message));
-         return;
-      }
+      // if no prefix, get out
+      if (!(message.content.substring(0, autumnblaze.opts.prefix.length) === autumnblaze.opts.prefix)) return;
+
+
       autumnblaze.commands._process(message, autumnblaze);
    });
 
@@ -117,7 +116,7 @@ autumnblaze.stop = () => {
 
    // declare rubbish
    autumnblaze.isrubbish = true;
-   process.removeListener("SIGINT", autumnblaze.stop);
+   process.removeListener("SIGINT", autumnblaze.stop)
 
    console.log("closey");
 };
