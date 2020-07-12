@@ -1,3 +1,5 @@
+"use strict";
+
 const thecmd = cmd => {
    return "le test cmd 22 " + cmd;
 };

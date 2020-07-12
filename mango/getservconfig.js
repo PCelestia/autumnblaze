@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = (mongodatabase, guild, callback, defaultconfig) => {
    mongodatabase.collection(guild.id).findOne({ name: "guildsettings" }, (err, res) => {
       if (err) {

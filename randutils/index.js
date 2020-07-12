@@ -1,3 +1,5 @@
+"use strict";
+
 var randutils = {};
 
 randutils.copyobj = require("./copyobj");

@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = (ar, ar2 = null, ar3 = null, ar4 = null) => {
    // assuming all arrays are the same length
    const i = Math.floor(Math.random() * ar.length);

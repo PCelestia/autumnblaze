@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = (message, autumnblaze) => {
    // strip out the prefix, and process it
    const sentcmd = message.content.substring(autumnblaze.opts.prefix.length);
