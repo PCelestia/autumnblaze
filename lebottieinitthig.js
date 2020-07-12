@@ -117,7 +117,7 @@ autumnblaze.stop = () => {
 
    // declare rubbish
    autumnblaze.isrubbish = true;
-   process.removeListener("SIGINT", autumnblaze.stop)
+   process.removeListener("SIGINT", autumnblaze.stop);
 
    console.log("closey");
 };
