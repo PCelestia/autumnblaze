@@ -105,6 +105,9 @@ autumnblaze.connect = () => {
    return autumnblaze.connectbot().connectdb();
 };
 autumnblaze.stop = () => {
+   process.emit("SIGINT");
+};
+const fullstop = () => {
    // dont run if already rubbish'd
    if (autumnblaze.isrubbish) return;
    // cleanup things here
@@ -121,11 +124,6 @@ autumnblaze.stop = () => {
 
    console.log("closey");
 };
-autumnblaze.fullstop = () => {
-   // this to fully stop the process
-   autumnblaze.stop();
-   setTimeout(() => process.exit(0), 3000);
-};
-process.on("SIGINT", autumnblaze.fullstop);
+process.once("SIGINT", fullstop);
 
 module.exports = autumnblaze;
