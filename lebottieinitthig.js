@@ -54,18 +54,8 @@ const autumnblaze = (opts = {}) => {
    autumnblaze.commands = autumnblaze.text.commands;
 
    // process a message
-   bot.on("message", (message) => {
-      // if cant find nsfw, its dm, reply with "dms off'D"
-      // BUT only if the author isn't the bot lol
-      if (!(message.nsfw === undefined) && (message.author != bot.user)) {
-         // dm!
-         message.channel.send("direct messages don't do anything (yet lol)");
-      }
-
-      // if no prefix, get out
-      if (!(message.content.substring(0, autumnblaze.opts.prefix.length) === autumnblaze.opts.prefix)) return;
-
-      autumnblaze.commands._process(message, autumnblaze);
+   bot.on("message", msg => {
+      autumnblaze.text.processmessage(msg, autumnblaze);
    });
 
 
