@@ -25,6 +25,4 @@ module.exports = (message, autumnblaze) => {
          return;
       }
    }
-   // if here its not a command
-   console.log(autumnblaze.randutils.logmsg(message));
 };
