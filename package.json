@@ -20,6 +20,7 @@
     "@discordjs/opus": "^0.3.2",
     "console-stamp": "^0.2.9",
     "discord.js": "^12.2.0",
-    "mongodb": "^3.5.9"
+    "mongodb": "^3.5.9",
+    "validator": "^13.1.1"
   }
 }
