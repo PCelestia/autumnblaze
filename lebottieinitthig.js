@@ -1,12 +1,5 @@
 "use strict";
 
-require("console-stamp")(console, {
-   pattern: "dd-mm-yyyy HH:MM:ss.l",
-   colors: {
-      stamp: "white",
-      label: "orange"
-   }
-});
 const discord = require("discord.js");
 // default options
 const defaultopts = {
@@ -27,6 +20,15 @@ const autumnblaze = (opts = {}) => {
       console.warn("you need to supply a bot token.\nfor example:\nconst bot = require(\"autumnblaze\")({\n   token: \"put-your-discord-bot-token-here\",\n   otheropts: \"other things\"\n});\n\ncreate a bot account and get a bot token at \"https://discord.com/developers\"\nif you need help, do a google search, there are plenty of guides on how to create a bot account and how to add it to your server");
       process.exit(1);
    }
+
+   // stamp le console
+   require("console-stamp")(console, {
+      pattern: "dd-mm-yyyy HH:MM:ss.l",
+      colors: {
+         stamp: "white",
+         label: "orange"
+      }
+   });
    // take defaults, put in opts if not present
    // for (const key in defaultopts) if (opts[key] === undefined) opts[key] = defaultopts[key];
 
