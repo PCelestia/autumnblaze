@@ -54,8 +54,8 @@ const autumnblaze = (opts = {}) => {
    autumnblaze.commands = autumnblaze.text.commands;
 
    // process a message
-   bot.on("message", msg => {
-      autumnblaze.text.processmessage(msg, autumnblaze);
+   autumnblaze.bot.on("message", message => {
+      autumnblaze.text.processmessage(message, autumnblaze);
    });
 
 
