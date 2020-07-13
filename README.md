@@ -1,5 +1,5 @@
 # autumnblaze
-a discord moderation bot. i wrote my own because i don't feel really satisfied with existing bots, and so i know the ins and outs of it and can customise it to my needs. also its sort of a fun project!
+another general purpose discord bot. i wrote my own because i don't feel really satisfied with existing bots, and so i know the ins and outs of it and can customise it to my needs. also its sort of a fun project!
 this bot uses [discord.js](https://discord.js.org) and [MongoDB](https://mongodb.com).
 
 ## requirements
