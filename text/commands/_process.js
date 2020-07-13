@@ -17,12 +17,9 @@ module.exports = (message, autumnblaze) => {
          // has space between cmd and args lol
          // this caused me so much issues lol
          const response = autumnblaze.commands[cmd](sentcmd.substring(cmd.length + 1));
-         if (response) {
-            if (!(response.toString() === "[object Promise]")) message.channel.send(response);
-            else response.then(val => {
-               if (val) message.channel.send(response);
-            });
-         }
+         Promise.resolve(response).then(val => {
+            if (val !== undefined) message.channel.send(response);
+         });
          return;
       }
    }
