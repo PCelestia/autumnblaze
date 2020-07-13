@@ -28,9 +28,11 @@ cmds._process = require("./_process");
 cmds.test1 = require("./test1");
 cmds.test2 = require("./test2");
 cmds.test3 = require("./test3");
+// proper below here
 cmds.ping = require("./ping");
+cmds.about = require("./about");
 
-// ping (useful thou)
+// ping (useful ping thou lol)
 // query
 // list
 // togglerole
