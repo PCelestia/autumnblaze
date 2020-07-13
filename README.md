@@ -23,6 +23,6 @@ require("autumnblaze")({
 
 ## other stuffs
 - more config options available soonish
-- current version of the bot (used in [L&T Discord Server](https://love-tolerance.com/discord)) is closed source because the way i wrote it introduced a lot of design flaws (including committing the token)
+- ~current version of the bot (used in [L&T Discord Server](https://love-tolerance.com/discord)) is closed source because the way i wrote it introduced a lot of design flaws (including committing the token)~ it has been retired and replaced with this!
 - my hosted bot *may* be opened to public use in the future (probably not though, since i dont have money lol)
 - more details: see [DETAILED-README.md](https://github.com/pcelestia/autumnblaze/blob/main/DETAILED-README.md)
