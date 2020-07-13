@@ -12,7 +12,7 @@ const thecmd = async cmd => {
 
    embed.setTitle("About");
 
-   let desc = "another (very eventually) all purpose discord bot that does like stuff\n";
+   let desc = "another general purpose discord bot\n";
    desc = desc + "written by <@379800645571575810>";
 
    if (autumnblaze.opts.operatoruserid) desc = desc + ", hosted by <@" + autumnblaze.opts.operatoruserid + ">";
