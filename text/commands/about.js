@@ -23,7 +23,6 @@ const thecmd = async cmd => {
    embed.setDescription(desc);
 
    const app = await autumnblaze.bot.fetchApplication();
-   console.log(app.iconURL(4096));
    if (autumnblaze.opts.reponame) embed.setFooter(autumnblaze.opts.reponame + " v", version, app.iconURL(64));
    else embed.setFooter("pcelestia/autumnblaze v" + version, app.iconURL(64));
 
