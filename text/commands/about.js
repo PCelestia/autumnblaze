@@ -2,10 +2,10 @@
 
 const thecmd = async cmd => {
    const { version } = require("../../package.json");
-   const colors = ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"];
    const { randfromarray } = require("../../randutils");
    const discord = require("discord.js");
    const autumnblaze = require("../../lebottieinitthig");
+   const colors = autumnblaze.opts.embedcolors;
    const embed = new discord.MessageEmbed();
 
    embed.setColor(randfromarray(colors));

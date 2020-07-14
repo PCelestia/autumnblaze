@@ -7,7 +7,8 @@ const defaultopts = {
    mongodatabase: "autumnblazebot",
    radiostreamurl: "http://fancynoise.xyz:8000/radio",
    prefix: "autumn ",
-   debug: false
+   debug: false,
+   embedcolors: ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"]
 };
 const defaultguildsettings = {
    name: "guildsettings"
