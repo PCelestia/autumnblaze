@@ -15,7 +15,7 @@ const thecmd = async cmd => {
    let desc = "another general purpose discord bot\n";
    desc = desc + "written by <@379800645571575810>";
 
-   if (autumnblaze.opts.operatoruserid) desc = desc + ", hosted by <@" + autumnblaze.opts.operatoruserid + ">";
+   if (autumnblaze.opts.host) desc = desc + ", hosted by " + autumnblaze.opts.host;
    else desc = desc + ", running";
 
    desc = desc + " as " + autumnblaze.bot.user.username + "#" + autumnblaze.bot.user.discriminator;
