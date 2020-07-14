@@ -5,5 +5,7 @@ const thecmd = cmd => {
 };
 
 thecmd.description = "Pling mee";
+thecmd.showinhelp = true;
+thecmd.category = "misc";
 
 module.exports = thecmd;

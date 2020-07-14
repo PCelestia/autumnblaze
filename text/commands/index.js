@@ -23,7 +23,18 @@
 // bot dms user with the help message
 
 const cmds = {};
+
 cmds._process = require("./_process");
+const determinecategories = () => {
+   const categories = [];
+   for (const cmdhandler in cmds) {
+      if ((cmdhandler.charAt(0) === "_") || (cmdhandler === "")) continue;
+      if (cmds[cmdhandler].category === undefined) continue;
+      if (categories.includes(cmds[cmdhandler].category)) continue;
+      categories.push(cmds[cmdhandler].category);
+   }
+   return categories;
+};
 // tmp test cmds
 cmds.test1 = require("./test1");
 cmds.test2 = require("./test2");
@@ -37,18 +48,35 @@ cmds.about = require("./about");
 // list
 // togglerole
 
-const helpcmd = cmd => {
-   if (cmd !== "") {
-      let helpstr = "help for command \"" + cmd + "\"";
-      if (cmds[cmd] !== undefined) helpstr = helpstr + "\n" + cmds[cmd].description;
-      return helpstr;
+const help = async cmd => {
+   if (!cmds._categories) cmds._categories = determinecategories();
+
+   console.log(cmds._categories);
+   const { version } = require("../../package.json");
+   const { randfromarray } = require("../../randutils");
+   const discord = require("discord.js");
+   const autumnblaze = require("../../lebottieinitthig");
+   const colors = autumnblaze.opts.embedcolors;
+   const categories = cmds._categories;
+   const embed = new discord.MessageEmbed();
+
+   embed.setColor(randfromarray(colors));
+
+   if (cmd === "") {
+      embed.setTitle("Command Help");
+      categories.forEach((category) => {
+         embed.addField(category, autumnblaze.opts.prefix + " " + category, true);
+      });
+
+      const app = await autumnblaze.bot.fetchApplication();
+      if (autumnblaze.opts.reponame) embed.setFooter(autumnblaze.opts.reponame + " v", version, app.iconURL(64));
+      else embed.setFooter("pcelestia/autumnblaze v" + version, app.iconURL(64));
+      return embed;
    }
-   let helpstr = "help";
-   for (const cmdhandler in cmds) if (cmds[cmdhandler].showinhelp) helpstr = helpstr + "\n**" + cmdhandler + "** - " + cmds[cmdhandler].description;
-   helpstr = helpstr + "\n\nhave fun yo";
-   return helpstr;
+   // handle arg cmd thing here
+   // for (const cmdhandler in cmds) if (cmds[cmdhandler])
 };
-helpcmd.description = "";
-cmds.help = helpcmd;
+
+cmds.help = help;
 
 module.exports = cmds;

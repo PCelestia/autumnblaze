@@ -32,5 +32,6 @@ const thecmd = async cmd => {
 
 thecmd.description = "displays \"useful\" information about this bot";
 thecmd.showinhelp = true;
+thecmd.category = "misc";
 
 module.exports = thecmd;

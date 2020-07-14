@@ -5,5 +5,7 @@ const thecmd = cmd => {
 };
 
 thecmd.description = "this is a test command #1";
+thecmd.showinhelp = true;
+thecmd.category = "test";
 
 module.exports = thecmd;
