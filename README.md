@@ -1,6 +1,9 @@
 # autumnblaze
 another general purpose discord bot. i wrote my own because i don't feel really satisfied with existing bots, and so i know the ins and outs of it and can customise it to my needs. also its sort of a fun project!
+
 this bot uses [discord.js](https://discord.js.org) and [MongoDB](https://mongodb.com).
+
+you can view my plans and things for the bot at [my trello board thing](https://trello.com/b/6o7eZylC/autumnblaze-bot).
 
 ## requirements
 `node.js` and `npm` required. tested and working on `npm 6.14.5` and `node v14.4.0`, but `12.18.2 LTS` and `14.5.0 Current` (as well as all future "current" and "LTS" versions) should work.
