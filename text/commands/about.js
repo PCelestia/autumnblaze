@@ -19,6 +19,7 @@ const thecmd = async cmd => {
    else desc = desc + ", running";
 
    desc = desc + " as " + autumnblaze.bot.user.username + "#" + autumnblaze.bot.user.discriminator;
+   if (autumnblaze.opts.location) desc = desc + "\nrunning in " + autumnblaze.opts.location;
    if (cmd !== "") desc = desc + "\nalso i got the rest, it just doesnt do anything ~~yet~~";
    embed.setDescription(desc);
 
