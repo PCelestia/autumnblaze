@@ -80,7 +80,8 @@ autumnblaze.connectbot = () => {
    return autumnblaze;
 };
 autumnblaze.connectdb = () => {
-   require("./mango")(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.mongodatabase, (db, serv) => {
+   autumnblaze.mango = require("./mango");
+   autumnblaze.mango(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.mongodatabase, (db, serv) => {
       autumnblaze.db = db;
       autumnblaze.dbserv = serv;
    });
