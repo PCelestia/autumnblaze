@@ -9,8 +9,8 @@ module.exports = (mongodatabase, guild, callback, defaultconfig) => {
          callback(undefined);
          return;
       }
-      if (res && (res.ok === 1) && (res.n === 1)) {
-         callback(res);
+      if (res && (res.result.ok === 1) && (res.result.n === 1)) {
+         callback(defaultconfig);
       } else {
          console.warn("silly error callback didnt return a value but didnt err, hmmmmm (mango/createdefaultservconfig)");
       }

@@ -7,6 +7,12 @@ module.exports = (message, autumnblaze) => {
       autumnblaze.h = Date.now();
       message.channel.send("h");
    }
+   if (message.content === "lalalaa") {
+      const config = autumnblaze.mango.getservconfig(autumnblaze.db, message.guild, console.log, {
+         name: "guildsettings",
+         testproperty: "lol"
+      });
+   }
    // if cant find nsfw, its dm, reply with "dms off'D"
    // BUT only if the author isn't the bot lol
    if (!(message.nsfw === undefined) && (message.author != autumnblaze.bot.user)) {
