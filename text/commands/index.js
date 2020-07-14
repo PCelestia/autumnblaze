@@ -51,7 +51,6 @@ cmds.about = require("./about");
 const help = async cmd => {
    if (!cmds._categories) cmds._categories = determinecategories();
 
-   console.log(cmds._categories);
    const { version } = require("../../package.json");
    const { randfromarray } = require("../../randutils");
    const discord = require("discord.js");
@@ -65,7 +64,7 @@ const help = async cmd => {
    if (cmd === "") {
       embed.setTitle("Command Help");
       categories.forEach((category) => {
-         embed.addField(category, autumnblaze.opts.prefix + " " + category, true);
+         embed.addField(category, "`" + autumnblaze.opts.prefix + "help " + category + "`", true);
       });
 
       const app = await autumnblaze.bot.fetchApplication();
