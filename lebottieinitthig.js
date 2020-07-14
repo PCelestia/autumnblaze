@@ -1,5 +1,10 @@
 "use strict";
 
+if (require.main === module) {
+   console.warn("are you trying to invoke this directly? go see how to use it on the github repo! (https://github.com/pcelestia/autumnblaze#very-basic-use)");
+   process.exit(1);
+}
+
 const discord = require("discord.js");
 // default options
 const defaultopts = {
