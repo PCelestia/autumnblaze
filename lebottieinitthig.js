@@ -113,5 +113,6 @@ const fullstop = () => {
    console.log("closey");
 };
 process.once("SIGINT", fullstop);
+process.once("SIGTERM", fullstop);
 
 module.exports = autumnblaze;
