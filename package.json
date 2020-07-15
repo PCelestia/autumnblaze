@@ -1,6 +1,6 @@
 {
   "name": "autumnblaze",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "another general purpose discord bot",
   "main": "lebottieinitthig.js",
   "scripts": {
@@ -22,6 +22,7 @@
     "console-stamp": "^0.2.9",
     "discord.js": "^12.2.0",
     "mongodb": "^3.5.9",
-    "validator": "^13.1.1"
+    "validator": "^13.1.1",
+    "ytdl-core": "^3.1.2"
   }
 }
