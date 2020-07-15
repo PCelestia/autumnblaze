@@ -21,6 +21,7 @@
     "bad-words": "^3.0.3",
     "console-stamp": "^0.2.9",
     "discord.js": "^12.2.0",
+    "fs": "0.0.1-security",
     "mongodb": "^3.5.9",
     "validator": "^13.1.1",
     "ytdl-core": "^3.1.2"
