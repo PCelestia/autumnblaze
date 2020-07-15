@@ -1,5 +1,5 @@
-// and help
 "use strict";
+// and help
 
 // this file contains the function that processes the commands.
 // prefix and top level command has been removed already (only args/subcommands remain):
@@ -21,6 +21,7 @@
 // example: person does "autumn help"
 // bot responds with "check your dms"
 // bot dms user with the help message
+const fs = require("fs");
 
 const cmds = {};
 
@@ -35,13 +36,13 @@ const determinecategories = () => {
    }
    return categories;
 };
-// tmp test cmds
-cmds.test1 = require("./test1");
-cmds.test2 = require("./test2");
-cmds.test3 = require("./test3");
-// proper below here
-cmds.ping = require("./ping");
-cmds.about = require("./about");
+
+// automatically read all files from this directory
+const commandfiles = fs.readdirSync("./text/commands").filter(file => file.endsWith(".js") && file !== "index.js" && file !== "_process.js");
+commandfiles.forEach(cmd => {
+   const cmdnoext = cmd.slice(0, cmd.length - 3);
+   cmds[cmdnoext] = require("./" + cmd);
+});
 
 // ping (useful ping thou lol)
 // query
