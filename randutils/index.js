@@ -7,5 +7,6 @@ var randutils = {};
 randutils.copyobj = require("./copyobj");
 randutils.randfromarray = require("./randfromarray");
 randutils.botpinged = require("./botpinged");
+randutils.checkperms = require("./checkperms");
 
 module.exports = randutils;
