@@ -1,5 +1,9 @@
-// mongodb connection and things thewjo
 "use strict";
+// mongodb connection and things thewjo
+
+// i know i could use the same method to autofill everything as i did with commands,
+// but these aren't gonna grow so fast and its easier to just do it this way
+// when it gets big enough i will
 
 const mongodb = require("mongodb");
 const mango = (connectionstr, dbname, callback) => {
@@ -22,5 +26,6 @@ const mango = (connectionstr, dbname, callback) => {
 };
 mango.getservconfig = require("./getservconfig");
 mango.createdefaultservconfig = require("./createdefaultservconfig");
+mango.updateservconfig = require("./updateservconfig");
 
 module.exports = mango;
