@@ -6,7 +6,6 @@ module.exports = (message, autumnblaze) => {
       message.channel.send("you called?\nmy prefix is `autumn `, for example `autumn help`");
       return;
    }
-   console.log(message.content);
    // strip out the prefix if not dm, dms cannot use prefix
    let sentcmd = message.content;
    let dm = false;
