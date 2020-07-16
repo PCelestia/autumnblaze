@@ -14,7 +14,7 @@ module.exports = (message, autumnblaze) => {
    for (const cmd in autumnblaze.commands) {
       if (sentcmd === cmd) {
          // exactly the command, no args
-         const response = autumnblaze.commands[cmd]("");
+         const response = autumnblaze.commands[cmd]("", message);
          Promise.resolve(response).then(val => {
             if ((val !== undefined) && (val !== "")) message.channel.send(val).catch(console.warn);
          }).catch(err => {
@@ -26,7 +26,7 @@ module.exports = (message, autumnblaze) => {
       if (sentcmd.substring(0, cmd.length + 1) === (cmd + " ")) {
          // has space between cmd and args lol
          // this caused me so much issues lol
-         const response = autumnblaze.commands[cmd](sentcmd.substring(cmd.length + 1));
+         const response = autumnblaze.commands[cmd](sentcmd.substring(cmd.length + 1), message);
          Promise.resolve(response).then(val => {
             if ((val !== undefined) && (val !== "")) message.channel.send(val).catch(console.warn);
          }).catch(err => {
