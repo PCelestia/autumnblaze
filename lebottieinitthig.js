@@ -68,6 +68,7 @@ const autumnblaze = (opts = {}) => {
    return autumnblaze;
 };
 autumnblaze.defaultopts = defaultopts;
+autumnblaze.defaultguildsettings = defaultguildsettings;
 
 autumnblaze.connectbot = () => {
    autumnblaze.bot.login(autumnblaze.opts.token).then(token => {
