@@ -21,6 +21,7 @@
 // example: person does "autumn help"
 // bot responds with "check your dms"
 // bot dms user with the help message
+
 const fs = require("fs");
 
 const cmds = {};
@@ -29,10 +30,20 @@ cmds._process = require("./_process");
 const determinecategories = () => {
    const categories = [];
    for (const cmdhandler in cmds) {
+      // if _process or "" or smth skip it
       if ((cmdhandler.charAt(0) === "_") || (cmdhandler === "")) continue;
-      if (cmds[cmdhandler].category === undefined) continue;
-      if (categories.includes(cmds[cmdhandler].category)) continue;
-      categories.push(cmds[cmdhandler].category);
+
+      const category = cmds[cmdhandler].category;
+      // if cmd.category is undefined skip it
+      if (category === undefined) continue;
+      // if category already exists
+      if (categories.includes(category)) {
+         categories[category].push(cmdhandler);
+         continue;
+      }
+      categories.push(category);
+      categories[category] = [];
+      categories[category].push(cmdhandler);
    }
    return categories;
 };
@@ -64,6 +75,7 @@ const help = async cmd => {
 
    if (cmd === "") {
       embed.setTitle("Command Help");
+      embed.setDescription("to get help on commands in a category, run the command shown below");
       categories.forEach((category) => {
          embed.addField(category, "`" + autumnblaze.opts.prefix + "help " + category + "`", true);
       });
@@ -73,8 +85,10 @@ const help = async cmd => {
       else embed.setFooter("pcelestia/autumnblaze v" + version, app.iconURL(64));
       return embed;
    }
-   // handle arg cmd thing here
-   // for (const cmdhandler in cmds) if (cmds[cmdhandler])
+   // cmd has an arg
+   if (!categories[cmd]) return embed.setTitle("category not found");
+   else return embed.setTitle("success but not implemented yet lol");
+   // return categories[cmd];
 };
 
 cmds.help = help;
