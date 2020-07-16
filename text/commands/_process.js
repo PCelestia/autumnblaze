@@ -1,6 +1,12 @@
 "use strict";
 
 module.exports = (message, autumnblaze) => {
+   const leet = autumnblaze.randutils.botpinged(message);
+   if (leet[0]) if (leet[1]) {
+      message.channel.send("you called?\nmy prefix is `autumn `, for example `autumn help`");
+      return;
+   }
+   console.log(message.content);
    // strip out the prefix if not dm, dms cannot use prefix
    let sentcmd = message.content;
    let dm = false;
@@ -36,6 +42,6 @@ module.exports = (message, autumnblaze) => {
          return;
       }
    }
-   // no command found, if reg channel is ok, if dm then send error
-   if (dm) message.channel.send("command not found");
+   // no command found, if reg channel ignore, if dm then send error
+   if (dm) message.channel.send("command not found").catch(console.log);
 };
