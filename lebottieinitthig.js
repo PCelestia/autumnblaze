@@ -16,6 +16,7 @@ const defaultopts = {
    embedcolors: ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"]
 };
 const defaultguildsettings = {
+   // lol i guess if a field is undefined it uses the default
    name: "guildsettings"
 };
 // the main creating bot thingie
