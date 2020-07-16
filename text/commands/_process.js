@@ -16,7 +16,7 @@ module.exports = (message, autumnblaze) => {
          // exactly the command, no args
          const response = autumnblaze.commands[cmd]("");
          Promise.resolve(response).then(val => {
-            if ((val !== undefined) || (val !== "")) message.channel.send(val);
+            if ((val !== undefined) && (val !== "")) message.channel.send(val).catch(console.warn);
          }).catch(err => {
             console.log("err processing cmd " + cmd);
             console.log(err);
@@ -28,7 +28,7 @@ module.exports = (message, autumnblaze) => {
          // this caused me so much issues lol
          const response = autumnblaze.commands[cmd](sentcmd.substring(cmd.length + 1));
          Promise.resolve(response).then(val => {
-            if ((val !== undefined) || (val !== "")) message.channel.send(val);
+            if ((val !== undefined) && (val !== "")) message.channel.send(val).catch(console.warn);
          }).catch(err => {
             console.log("err processing cmd " + cmd);
             console.log(err);
