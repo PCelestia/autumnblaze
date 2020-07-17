@@ -29,8 +29,6 @@ const cmds = {};
 
 cmds._process = require("./_process");
 const determinecategories = () => {
-   console.log("dsdfsdfsdfsdfs");
-   console.log(path.resolve(__dirname, "."));
    const categories = [];
    for (const cmdhandler in cmds) {
       // if _process or "" or smth skip it
@@ -52,7 +50,7 @@ const determinecategories = () => {
 };
 
 // automatically read all files from this directory
-const commandfiles = fs.readdirSync("./node_modules/autumnblaze/text/commands").filter(file => file.endsWith(".js") && file !== "index.js" && file !== "_process.js");
+const commandfiles = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file.endsWith(".js") && file !== "index.js" && file !== "_process.js");
 commandfiles.forEach(cmd => {
    const cmdnoext = cmd.slice(0, cmd.length - 3);
    cmds[cmdnoext] = require("./" + cmd);
