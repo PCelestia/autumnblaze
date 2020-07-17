@@ -16,7 +16,7 @@ module.exports = async (message, autumnblaze) => {
             if (servconfig === undefined) return reject("failed to create/get server config");
             if (servconfig.prefix === undefined) return resolve(autumnblaze.opts.prefix);
             resolve(servconfig.prefix);
-         }, autumnblaze.defaultguildsettings)
+         }, autumnblaze.defaultguildsettings);
       });
       if (sentcmd.startsWith(prefix)) sentcmd = sentcmd.substring(prefix.length);
       else return;
