@@ -1,53 +1,52 @@
 "use strict";
 
-module.exports = (message, autumnblaze) => {
-   // react to ping lol
-   const leet = autumnblaze.randutils.botpinged(message);
-   if (leet[0]) {
-      if (leet[1]) {
-         message.channel.send("you called?\nmy prefix here is `autumn `, for example `autumn help`");
-         return;
-      }
-      message.channel.send("i see i've been pinged");
-      return;
-   }
-   // strip out the prefix if not dm, dms cannot use prefix
-   let sentcmd = message.content;
-   let dm = false;
-
+module.exports = async (message, autumnblaze) => {
    // ignore thyself
    if (message.author === autumnblaze.bot.user) return;
-   if (message.channel.type === "dm") {
-      dm = true;
-   } else sentcmd = sentcmd.substring(autumnblaze.opts.prefix.length);
 
+   // get out contents
+   let sentcmd = message.content;
+
+   //see if dm
+   let dm = message.channel.type === "dm";
+   if (!dm) {
+      // (try to) remove prefix if guild
+      const prefix = await new Promise((resolve, reject) => {
+         autumnblaze.mango.getservconfig(autumnblaze.db, message.guild, servconfig => {
+            if (servconfig === undefined) return reject("failed to create/get server config");
+            if (servconfig.prefix === undefined) return resolve(autumnblaze.opts.prefix);
+            resolve(servconfig.prefix);
+         }, autumnblaze.defaultguildsettings)
+      });
+      if (sentcmd.startsWith(prefix)) sentcmd = sentcmd.substring(prefix.length);
+      else return;
+   }
    for (const cmd in autumnblaze.commands) {
-      if (sentcmd === cmd) {
-         // exactly the command, no args
-         const response = autumnblaze.commands[cmd]("", message);
-         goham(message, response, cmd);
-         return;
-      }
-      if (sentcmd.substring(0, cmd.length + 1) === (cmd + " ")) {
-         // has space between cmd and args lol
-         // this caused me so much issues lol
-         const response = autumnblaze.commands[cmd](sentcmd.substring(cmd.length + 1), message);
-         goham(message, response, cmd);
-         return;
+      // process sentcmd, if it ain't then continue
+      if (sentcmd.substring(0, cmd.length + 1) === (cmd + " ")) sentcmd = sentcmd.substring(cmd.length + 1);
+      else if (sentcmd === cmd) sentcmd = "";
+      else continue;
+
+      if (dm) {
+         if (autumnblaze.commands[cmd].allowdm !== true) return;
+         // is dm, allowed to run in dm
+         respond(cmd, sentcmd, message, autumnblaze);
+      } else {
+         if (autumnblaze.commands[cmd].allowguild !== true) return;
+         // is guild, allowed to run in guild
+         respond(cmd, sentcmd, message, autumnblaze);
       }
    }
-   // no command found, if reg channel ignore, if dm then send error
-   if (dm) message.channel.send("command not found").catch(console.log);
+   //dm: check if cmd allowed to run in dm, then run
+   //not dm: check if cmd allowed to run in guild, check perms, then run
+
 };
 
-const goham = (message, response, cmd) => {
-   message.channel.startTyping();
-   Promise.resolve(response).then(val => {
-      if ((val !== undefined) && (val !== "")) message.channel.send(val).catch(console.warn);
-   }).catch(err => {
-      console.log("err processing cmd " + cmd);
-      console.log(err);
-   }).finally(() => {
-      message.channel.stopTyping();
+const respond = (cmd, arg, msg, autumnblaze) => {
+   msg.channel.startTyping();
+   Promise.resolve(autumnblaze.commands[cmd](arg, msg)).then(val => {
+      if ((val !== undefined) && (val !== "")) msg.channel.send(val).catch(console.warn);
+   }).catch(console.warn).finally(() => {
+      msg.channel.stopTyping();
    });
-};
+}
