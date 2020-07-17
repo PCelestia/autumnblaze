@@ -1,0 +1,9 @@
+@discordjs/opus: for voice functionality
+bad-words: automod (filter swearing and such) and to make the bot not swear (echo cmd)
+console-stamp: stamp console with timestamps and things
+discord.js: connect to discord and do things
+fs: read dirs to autofill things such as mango, randutils, and commands
+mongodb: connect to database and do things
+path: resolve path for fs to read
+validator: validate url for music functionality
+ytdl-core: access youtube api for music functionality
