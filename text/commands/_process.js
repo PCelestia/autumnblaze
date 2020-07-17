@@ -18,6 +18,11 @@ module.exports = async (message, autumnblaze) => {
             resolve(servconfig.prefix);
          }, autumnblaze.defaultguildsettings);
       });
+      if (autumnblaze.randutils.botpinged(message)[0]) {
+         let pingstring = "i see i've been pinged\n";
+         pingstring = pingstring + "my prefix here is `" + prefix + "`, for example `" + prefix + "help`";
+         message.channel.send(pingstring);
+      }
       if (sentcmd.startsWith(prefix)) sentcmd = sentcmd.substring(prefix.length);
       else return;
    }
