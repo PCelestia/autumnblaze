@@ -5,4 +5,4 @@ module.exports = (str, subcmd) => {
    if (str === subcmd) return [true, ""];
    const argz = str.substring(subcmd.length + 1);
    if (argz === subcmd + " ") return [true, argz];
-}
+};
