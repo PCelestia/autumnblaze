@@ -8,5 +8,6 @@ randutils.copyobj = require("./copyobj");
 randutils.randfromarray = require("./randfromarray");
 randutils.botpinged = require("./botpinged");
 randutils.checkperms = require("./checkperms");
+randutils.checksubcmd = require("./checksubcmd");
 
 module.exports = randutils;
