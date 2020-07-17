@@ -23,11 +23,14 @@
 // bot dms user with the help message
 
 const fs = require("fs");
+const path = require("path");
 
 const cmds = {};
 
 cmds._process = require("./_process");
 const determinecategories = () => {
+   console.log("dsdfsdfsdfsdfs");
+   console.log(path.resolve(__dirname, "."));
    const categories = [];
    for (const cmdhandler in cmds) {
       // if _process or "" or smth skip it
