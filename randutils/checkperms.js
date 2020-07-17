@@ -6,4 +6,4 @@ module.exports = (msg) => {
 
    for (const perm in allperms) if (msg.member.hasPermission(perm)) hasperms.push(perm);
    return hasperms;
-}
+};
