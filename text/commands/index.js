@@ -90,7 +90,8 @@ const help = async cmd => {
    else return embed.setTitle("success but not implemented yet lol");
    // return categories[cmd];
 };
-
+help.allowdm = true;
+help.allowguild = true;
 cmds.help = help;
 
 module.exports = cmds;
