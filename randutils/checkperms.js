@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = (msg) => {
    const allperms = require("discord.js").Permissions.FLAGS;
    const hasperms = [];

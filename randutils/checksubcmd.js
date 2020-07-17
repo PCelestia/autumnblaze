@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = (str, subcmd) => {
    if (!str.startsWith(subcmd)) return [false];
    if (str === subcmd) return [true, ""];
