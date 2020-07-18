@@ -33,12 +33,12 @@ module.exports = async (message, autumnblaze) => {
       else continue;
 
       if (dm) {
-         if (autumnblaze.commands[cmd].allowdm !== true) return;
+         if (autumnblaze.commands[cmd].allowdm !== true) continue;
          // is dm, allowed to run in dm
          respond(cmd, sentcmd, message, autumnblaze);
          return;
       } else {
-         if (autumnblaze.commands[cmd].allowguild !== true) return;
+         if (autumnblaze.commands[cmd].allowguild !== true) continue;
          // is guild, allowed to run in guild
          respond(cmd, sentcmd, message, autumnblaze);
          return;
