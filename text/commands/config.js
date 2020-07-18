@@ -1,26 +1,34 @@
 "use strict";
 
-const thecmd = (cmd, msg) => {
-   return new Promise((resolve, reject) => {
-      const { updateservconfig } = require("../../mango");
-      const autumnblaze = require("../../lebottieinitthig");
-      const discord = require("discord.js");
-      const embed = new discord.MessageEmbed();
-      embed.setColor(autumnblaze.randutils.randfromarray(autumnblaze.opts.embedcolors));
+const thecmd = async (cmd, msg) => {
+   if (msg.channel.type === "dm") return "not allowed in dms yet";
+   const autumnblaze = require("../../lebottieinitthig");
 
-      if (msg.channel.type === "dm") return resolve(embed.setTitle("Not allowed in DMs"));
+   const set = autumnblaze.randutils.checksubcmd(cmd, "set");
+   if (set[0]) return "sorry doesnt work yet got set";
 
-      updateservconfig(autumnblaze.db, msg.channel.guild, { testt: cmd }, (success, err) => {
-         if (msg.author.id !== "379800645571575810") return resolve(embed.setTitle("NO"));
-         if (success) {
-            embed.setTitle("Success");
-            resolve(embed);
-         } else {
-            embed.setTitle("An error occured");
-            reject(err);
-         }
+   const get = autumnblaze.randutils.checksubcmd(cmd, "get");
+   if (get[0]) {
+      return new Promise((resolve, reject) => {
+         autumnblaze.mango.getservconfig(autumnblaze.db, msg.guild, result => {
+            result = result[get[1]];
+            if (result === null) return resolve("null");
+
+            if (result === undefined) return resolve("undefined");
+
+            if (result === "") return resolve("<nothing>");
+
+            if (result.replace(/\s/g).length === 0) return resolve("<spaces>");
+            return resolve("`" + result + "`");
+         }, autumnblaze.defaultguildsettings);
       });
-   });
+   }
+
+   return "that can't be right";
+
+   // autumnblaze.mango.updateservconfig(autumnblaze.db, msg.channel.guild, )
 };
 
+thecmd.allowguild = true;
+thecmd.allowdm = true;
 module.exports = thecmd;
