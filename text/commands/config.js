@@ -12,9 +12,9 @@ const thecmd = async (cmd, msg) => {
       return new Promise((resolve, reject) => {
          autumnblaze.mango.getservconfig(autumnblaze.db, msg.guild, result => {
             result = result[get[1]];
-            if (result === null) return resolve("null");
+            if (result === null) return resolve("\"null\"");
 
-            if (result === undefined) return resolve("undefined");
+            if (result === undefined) return resolve("\"undefined\" or default");
 
             if (result === "") return resolve("<nothing>");
 
