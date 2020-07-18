@@ -36,15 +36,23 @@ module.exports = async (message, autumnblaze) => {
          if (autumnblaze.commands[cmd].allowdm !== true) return;
          // is dm, allowed to run in dm
          respond(cmd, sentcmd, message, autumnblaze);
+         return;
       } else {
          if (autumnblaze.commands[cmd].allowguild !== true) return;
          // is guild, allowed to run in guild
          respond(cmd, sentcmd, message, autumnblaze);
+         return;
       }
    }
    //dm: check if cmd allowed to run in dm, then run
    //not dm: check if cmd allowed to run in guild, check perms, then run
+   if (dm) cmdnotfound(message).catch(console.warn);
+};
 
+const cmdnotfound = async (msg) => {
+   msg.channel.startTyping();
+   await msg.channel.send("command not found");
+   msg.channel.stopTyping();
 };
 
 const respond = (cmd, arg, msg, autumnblaze) => {
@@ -54,4 +62,4 @@ const respond = (cmd, arg, msg, autumnblaze) => {
    }).catch(console.warn).finally(() => {
       msg.channel.stopTyping();
    });
-}
+};
