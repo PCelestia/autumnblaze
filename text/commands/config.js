@@ -6,14 +6,19 @@ const thecmd = async (cmd, msg) => {
 
    const set = autumnblaze.randutils.checksubcmd(cmd, "set");
    if (set[0]) {
+      // verify perms
+      await autumnblaze.randutils.hasperms(msg, "MANAGE_GUILD");
+
+      // get key and value from arg
       const args = set[1];
       const keytoset = args.substring(0, args.indexOf(" "));
       let valuetoset = args.substring(args.indexOf(" ") + 1);
 
       if ((keytoset === "") && (valuetoset === args)) return "need to specify what to set the value to";
 
-      // valuetoset = valuetoset.substring(1, valuetoset.length - 1);
-      if ((valuetoset.startsWith("\"") && valuetoset.endsWith("\"")) || (valuetoset.startsWith("'") && valuetoset.endsWith("'"))) {
+      // check for quotes (single double backtick) and remove
+      // looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong line
+      if ((valuetoset.startsWith("\"") && valuetoset.endsWith("\"")) || (valuetoset.startsWith("'") && valuetoset.endsWith("'")) || (valuetoset.startsWith("`") && valuetoset.endsWith("`"))) {
          valuetoset = valuetoset.substring(1, valuetoset.length - 1);
       }
       return await setcmd(autumnblaze, msg, keytoset, valuetoset);

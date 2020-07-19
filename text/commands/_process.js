@@ -59,7 +59,10 @@ const respond = (cmd, arg, msg, autumnblaze) => {
    msg.channel.startTyping();
    Promise.resolve(autumnblaze.commands[cmd](arg, msg)).then(val => {
       if ((val !== undefined) && (val !== "")) msg.channel.send(val).catch(console.warn);
-   }).catch(console.warn).finally(() => {
+   }).catch(val => {
+      if (val) if (val.send === true) msg.channel.send(val.content).catch(console.warn);
+      else console.warn(val);
+   }).finally(() => {
       msg.channel.stopTyping();
    });
 };
