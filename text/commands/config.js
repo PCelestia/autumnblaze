@@ -35,8 +35,9 @@ const thecmd = async (cmd, msg) => {
 };
 
 thecmd.allowguild = true;
-
+thecmd.perms = ["MANAGE_GUILD"];
 module.exports = thecmd;
+
 
 const getcmd = async (autumnblaze, get, msg) => {
    return new Promise(resolve => {

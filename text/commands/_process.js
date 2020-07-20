@@ -7,8 +7,8 @@ module.exports = async (message, autumnblaze) => {
    // get out contents
    let sentcmd = message.content;
 
-   //see if dm
-   let dm = message.channel.type === "dm";
+   // see if dm
+   const dm = message.channel.type === "dm";
    if (!dm) {
       // (try to) remove prefix if guild
       const prefix = await new Promise((resolve, reject) => {
@@ -44,8 +44,8 @@ module.exports = async (message, autumnblaze) => {
          return;
       }
    }
-   //dm: check if cmd allowed to run in dm, then run
-   //not dm: check if cmd allowed to run in guild, check perms, then run
+   // dm: check if cmd allowed to run in dm, then run
+   // not dm: check if cmd allowed to run in guild, check perms, then run
    if (dm) cmdnotfound(message).catch(console.warn);
 };
 
@@ -55,9 +55,17 @@ const cmdnotfound = async (msg) => {
    msg.channel.stopTyping();
 };
 
-const respond = (cmd, arg, msg, autumnblaze) => {
+const respond = async (cmd, arg, msg, autumnblaze) => {
+   // if perms prop, check it, if none, assume everyone allowed to use it
+
    msg.channel.startTyping();
-   Promise.resolve(autumnblaze.commands[cmd](arg, msg)).then(val => {
+   Promise.resolve((async () => {
+      let perms = true;
+      if (autumnblaze.commands[cmd].perms !== undefined) if (autumnblaze.commands[cmd].perms.length > 0) {
+         perms = await autumnblaze.randutils.hasperms(msg, ...autumnblaze.commands[cmd].perms);
+      }
+      return autumnblaze.commands[cmd](arg, msg);
+   })()).then(val => {
       if ((val !== undefined) && (val !== "")) msg.channel.send(val).catch(console.warn);
    }).catch(val => {
       if (val) if (val.send === true) msg.channel.send(val.content).catch(console.warn);
@@ -66,3 +74,5 @@ const respond = (cmd, arg, msg, autumnblaze) => {
       msg.channel.stopTyping();
    });
 };
+
+// autumn config set prefix `autumn `
