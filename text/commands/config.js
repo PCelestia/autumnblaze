@@ -16,6 +16,12 @@ const thecmd = async (cmd, msg) => {
 
       if ((keytoset === "") && (valuetoset === args)) return "need to specify what to set the value to";
 
+      // handle boolean values
+      if (keytoset !== "prefix") {
+         if (valuetoset.toLowerCase() === "true") return await setcmd(autumnblaze, msg, keytoset, true);
+         if (valuetoset.toLowerCase() === "false") return await setcmd(autumnblaze, msg, keytoset, false);
+      }
+
       // check for quotes (single double backtick) and remove
       // looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong line
       if ((valuetoset.startsWith("\"") && valuetoset.endsWith("\"")) || (valuetoset.startsWith("'") && valuetoset.endsWith("'")) || (valuetoset.startsWith("`") && valuetoset.endsWith("`"))) {
