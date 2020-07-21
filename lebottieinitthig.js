@@ -6,9 +6,10 @@ if (require.main === module) {
 }
 
 const discord = require("discord.js");
+
 // default options
+// required options (token, mongodb connection string) obviously not here, can't default that
 const defaultopts = {
-   mongodbconnectionstring: "mongodb://localhost:27017",
    mongodatabase: "autumnblazebot",
    radiostreamurl: "http://fancynoise.xyz:8000/radio",
    prefix: "autumn ",
@@ -24,7 +25,7 @@ const autumnblaze = (opts = {}) => {
    // return a bott
    if (opts.token === undefined) {
       // warn and exit when no token supplied
-      console.warn("you need to supply a bot token.\nfor example:\nconst bot = require(\"autumnblaze\")({\n   token: \"put-your-discord-bot-token-here\",\n   otheropts: \"other things\"\n});\n\ncreate a bot account and get a bot token at \"https://discord.com/developers\"\nif you need help, do a google search, there are plenty of guides on how to create a bot account and how to add it to your server");
+      console.warn("you need to supply a bot token.\nfor example:\nconst bot = require(\"autumnblaze\")({\n   token: \"put-your-discord-bot-token-here\",\n   otheropts: \"other things\"\n});\n\ncreate a bot account and get a bot token at \"https://discord.com/developers\"\nthe readme at \"https://github.com/pcelestia/autumnblaze/\" might also be helpful\nif you need help, do a google search, there are plenty of guides on how to create a bot account and how to add it to your server");
       process.exit(1);
    }
 
@@ -36,8 +37,6 @@ const autumnblaze = (opts = {}) => {
          label: "orange"
       }
    });
-   // take defaults, put in opts if not present
-   // for (const key in defaultopts) if (opts[key] === undefined) opts[key] = defaultopts[key];
 
    // take opts and patch it into the default opts (faster)
    const randutils = require("./randutils");
@@ -46,12 +45,9 @@ const autumnblaze = (opts = {}) => {
    var patchedopts = randutils.copyobj(defaultopts);
    for (const key in opts) patchedopts[key] = opts[key];
 
-   // console.log(opts);
-   // debug
 
    const bot = new discord.Client();
-   bot.on("warn", m => console.warn(m));
-   // bot.on("debug", m => console.debug(m));
+   bot.on("warn", console.warn);
 
 
    autumnblaze.bot = bot;
@@ -68,6 +64,8 @@ const autumnblaze = (opts = {}) => {
 
    return autumnblaze;
 };
+autumnblaze.packagejson = require("./package.json");
+autumnblaze.version = autumnblaze.packagejson.version;
 autumnblaze.defaultopts = defaultopts;
 autumnblaze.defaultguildsettings = defaultguildsettings;
 
@@ -96,7 +94,7 @@ autumnblaze.connectdb = () => {
    return autumnblaze;
 };
 autumnblaze.connect = () => {
-   console.log("running autumnblaze v" + require("./package.json").version);
+   console.log("running autumnblaze v" + autumnblaze.version);
    return autumnblaze.connectbot().connectdb();
 };
 autumnblaze.stop = () => {
