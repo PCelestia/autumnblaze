@@ -64,10 +64,10 @@ commandfiles.forEach(cmd => {
 const help = async cmd => {
    if (!cmds._categories) cmds._categories = determinecategories();
 
-   const { version } = require("../../package.json");
-   const { randfromarray } = require("../../randutils");
    const discord = require("discord.js");
+   const { version } = require("../../package.json");
    const autumnblaze = require("../../lebottieinitthig");
+   const { randfromarray } = autumnblaze.randutils.randfromarray;
    const colors = autumnblaze.opts.embedcolors;
    const categories = cmds._categories;
    const embed = new discord.MessageEmbed();
