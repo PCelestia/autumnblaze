@@ -21,13 +21,19 @@ const defaultguildsettings = {
    name: "guildsettings"
 };
 // the main creating bot thingie
+const warnmissingreq = (one, two) => {
+   console.warn("you need to supply a " + one + ".\nfor example:\nconst bot = require(\"autumnblaze\")({\n   " + two + ": \"put-your-" + two + "-here\",\n   otheropts: \"other things\"\n});\n\nthe readme at \"https://github.com/pcelestia/autumnblaze/\" might be helpful");
+   process.exit(1);
+};
 const autumnblaze = (opts = {}) => {
-   // return a bott
-   if (opts.token === undefined) {
-      // warn and exit when no token supplied
-      console.warn("you need to supply a bot token.\nfor example:\nconst bot = require(\"autumnblaze\")({\n   token: \"put-your-discord-bot-token-here\",\n   otheropts: \"other things\"\n});\n\ncreate a bot account and get a bot token at \"https://discord.com/developers\"\nthe readme at \"https://github.com/pcelestia/autumnblaze/\" might also be helpful\nif you need help, do a google search, there are plenty of guides on how to create a bot account and how to add it to your server");
-      process.exit(1);
+   // check for missing token and mongodbconnectionstring
+   if ((opts.token === undefined)) {
+      warnmissingreq("bot token", "token");
    }
+   if (opts.mongodbconnectionstring === undefined) {
+      warnmissingreq("mongodb connection string", "mongodbconnectionstring");
+   }
+
 
    // stamp le console
    require("console-stamp")(console, {
@@ -53,8 +59,6 @@ const autumnblaze = (opts = {}) => {
    autumnblaze.bot = bot;
    autumnblaze.opts = patchedopts;
 
-   autumnblaze.text = require("./text");
-   autumnblaze.commands = autumnblaze.text.commands;
 
    // process a message
    autumnblaze.bot.on("message", message => {
@@ -68,6 +72,9 @@ autumnblaze.packagejson = require("./package.json");
 autumnblaze.version = autumnblaze.packagejson.version;
 autumnblaze.defaultopts = defaultopts;
 autumnblaze.defaultguildsettings = defaultguildsettings;
+
+autumnblaze.text = require("./text");
+autumnblaze.commands = autumnblaze.text.commands;
 
 autumnblaze.connectbot = () => {
    autumnblaze.bot.login(autumnblaze.opts.token).then(token => {
@@ -85,11 +92,12 @@ autumnblaze.connectbot = () => {
    });
    return autumnblaze;
 };
+let dbserv;
 autumnblaze.connectdb = () => {
    autumnblaze.mango = require("./mango");
    autumnblaze.mango(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.mongodatabase, (db, serv) => {
       autumnblaze.db = db;
-      autumnblaze.dbserv = serv;
+      dbserv = serv;
    });
    return autumnblaze;
 };
@@ -109,11 +117,10 @@ const fullstop = () => {
    autumnblaze.bot.destroy();
 
    // close connection with mongo
-   autumnblaze.dbserv.close();
+   dbserv.close();
 
    // declare rubbish
    autumnblaze.isrubbish = true;
-   process.removeListener("SIGINT", autumnblaze.stop);
 
    console.log("closey");
 };
