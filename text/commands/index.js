@@ -65,7 +65,6 @@ const help = async cmd => {
    if (!cmds._categories) cmds._categories = determinecategories();
 
    const discord = require("discord.js");
-   const { version } = require("../../package.json");
    const autumnblaze = require("../../lebottieinitthig");
    const randfromarray = autumnblaze.randutils.randfromarray;
    const colors = autumnblaze.opts.embedcolors;
@@ -82,8 +81,8 @@ const help = async cmd => {
       });
 
       const app = await autumnblaze.bot.fetchApplication();
-      if (autumnblaze.opts.reponame) embed.setFooter(autumnblaze.opts.reponame + " v", version, app.iconURL(64));
-      else embed.setFooter("pcelestia/autumnblaze v" + version, app.iconURL(64));
+      if (autumnblaze.opts.reponame) embed.setFooter(autumnblaze.opts.reponame + " v", autumnblaze.version, app.iconURL(64));
+      else embed.setFooter("pcelestia/autumnblaze v" + autumnblaze.version, app.iconURL(64));
       return embed;
    }
    // cmd has an arg
