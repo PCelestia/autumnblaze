@@ -60,9 +60,11 @@ const respond = async (cmd, arg, msg, autumnblaze) => {
 
    msg.channel.startTyping();
    Promise.resolve((async () => {
-      let perms = true;
+      // let perms = true;
       if (autumnblaze.commands[cmd].perms !== undefined) if (autumnblaze.commands[cmd].perms.length > 0) {
-         perms = await autumnblaze.randutils.hasperms(msg, ...autumnblaze.commands[cmd].perms);
+         // hasperms() throws if not enough perms
+         // perms = await autumnblaze.randutils.hasperms(msg, ...autumnblaze.commands[cmd].perms);
+         await autumnblaze.randutils.hasperms(msg, ...autumnblaze.commands[cmd].perms);
       }
       return autumnblaze.commands[cmd](arg, msg);
    })()).then(val => {
