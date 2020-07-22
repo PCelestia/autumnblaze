@@ -14,6 +14,8 @@ const thecmd = async (cmd, msg) => {
       const keytoset = args.substring(0, args.indexOf(" "));
       let valuetoset = args.substring(args.indexOf(" ") + 1);
 
+      // if theres no space, then keytoset === "" and valuetoset equals the original value
+      // so this is a check to see if specified enough args
       if ((keytoset === "") && (valuetoset === args)) return "need to specify what to set the value to";
 
       // handle boolean values
@@ -21,6 +23,10 @@ const thecmd = async (cmd, msg) => {
          if (valuetoset.toLowerCase() === "true") return await setcmd(autumnblaze, msg, keytoset, true);
          if (valuetoset.toLowerCase() === "false") return await setcmd(autumnblaze, msg, keytoset, false);
       }
+
+      // handle num values
+      const numvaluetoset = Number(valuetoset);
+      if (!isNaN(numvaluetoset)) return await setcmd(autumnblaze, msg, keytoset, numvaluetoset);
 
       // check for quotes (single double backtick) and remove
       // looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong line
