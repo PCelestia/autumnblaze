@@ -67,7 +67,7 @@ const help = async cmd => {
    const discord = require("discord.js");
    const { version } = require("../../package.json");
    const autumnblaze = require("../../lebottieinitthig");
-   const { randfromarray } = autumnblaze.randutils.randfromarray;
+   const randfromarray = autumnblaze.randutils.randfromarray;
    const colors = autumnblaze.opts.embedcolors;
    const categories = cmds._categories;
    const embed = new discord.MessageEmbed();
