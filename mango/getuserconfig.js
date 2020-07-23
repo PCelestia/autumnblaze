@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = (mongodatabase, guild, callback) => {
-   mongodatabase.collection(guild.id).findOne({ name: "guildsettings" }, (err, res) => {
+module.exports = (mongodatabase, user, callback) => {
+   mongodatabase.collection("user" + user.id).findOne({ name: "usersettings" }, (err, res) => {
       if (err) {
          // err
          console.warn("mongoerror in getting server config");
@@ -15,7 +15,7 @@ module.exports = (mongodatabase, guild, callback) => {
          return;
       } else {
          // not gottem
-         require("./index").createdefaultservconfig(mongodatabase, guild, callback);
+         require("./index").createdefaultuserconfig(mongodatabase, user, callback);
       }
    });
 };
