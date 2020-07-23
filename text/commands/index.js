@@ -50,7 +50,7 @@ const determinecategories = () => {
 };
 
 // automatically read all files from this directory
-const commandfiles = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file.endsWith(".js") && file !== "index.js" && file !== "_process.js");
+const commandfiles = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file.endsWith(".js") && file !== "index.js" && !file.startsWith("_"));
 commandfiles.forEach(cmd => {
    const cmdnoext = cmd.slice(0, cmd.length - 3);
    cmds[cmdnoext] = require("./" + cmd);

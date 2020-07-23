@@ -26,7 +26,7 @@ const mango = (connectionstr, dbname, callback) => {
       }
    });
 };
-const mangofiles = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file.endsWith(".js") && file !== "index.js");
+const mangofiles = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file.endsWith(".js") && file !== "index.js" && !file.startsWith("_"));
 mangofiles.forEach(fruit => {
    const fruitnoext = fruit.slice(0, fruit.length - 3);
    mango[fruitnoext] = require("./" + fruit);
