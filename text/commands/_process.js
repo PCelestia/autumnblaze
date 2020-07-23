@@ -66,7 +66,7 @@ const respond = async (cmd, arg, msg, autumnblaze) => {
          // perms = await autumnblaze.randutils.hasperms(msg, ...autumnblaze.commands[cmd].perms);
          await autumnblaze.randutils.hasperms(msg, ...autumnblaze.commands[cmd].perms);
       }
-      return autumnblaze.commands[cmd](arg, msg);
+      return autumnblaze.commands[cmd](arg, msg, autumnblaze);
    })()).then(val => {
       if ((val !== undefined) && (val !== "")) msg.channel.send(val).catch(console.warn);
    }).catch(val => {
