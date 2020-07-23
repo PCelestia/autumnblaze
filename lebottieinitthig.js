@@ -16,11 +16,9 @@ const defaultopts = {
    debug: false,
    embedcolors: ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"]
 };
-const defaultguildsettings = {
-   // lol i guess if a field is undefined it uses the default
-   name: "guildsettings"
-};
-// the main creating bot thingie
+
+// default guild/user settings in mango/defaultconfigs.js
+
 const warnmissingreq = (one, two) => {
    console.warn("you need to supply a " + one + ".\nfor example:\nconst bot = require(\"autumnblaze\")({\n   " + two + ": \"put-your-" + two + "-here\",\n   otheropts: \"other things\"\n});\n\nthe readme at \"https://github.com/pcelestia/autumnblaze/\" might be helpful");
    process.exit(1);
@@ -71,7 +69,6 @@ const autumnblaze = (opts = {}) => {
 autumnblaze.packagejson = require("./package.json");
 autumnblaze.version = autumnblaze.packagejson.version;
 autumnblaze.defaultopts = defaultopts;
-autumnblaze.defaultguildsettings = defaultguildsettings;
 
 autumnblaze.text = require("./text");
 autumnblaze.commands = autumnblaze.text.commands;
@@ -99,6 +96,8 @@ autumnblaze.connectdb = () => {
       autumnblaze.db = db;
       dbserv = serv;
    });
+   autumnblaze.defaultguildsettings = autumnblaze.mango.defaultconfigs.defaultguildsettings;
+   autumnblaze.defaultusersettings = autumnblaze.mango.defaultconfigs.defaultusersettings;
    return autumnblaze;
 };
 autumnblaze.connect = () => {
