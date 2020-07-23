@@ -4,8 +4,10 @@
 // i know i could use the same method to autofill everything as i did with commands,
 // but these aren't gonna grow so fast and its easier to just do it this way
 // when it gets big enough i will
-
+const fs = require("fs");
+const path = require("path");
 const mongodb = require("mongodb");
+
 const mango = (connectionstr, dbname, callback) => {
    mongodb.MongoClient.connect(connectionstr, { useUnifiedTopology: true }, (err, res) => {
       if (err) {
@@ -24,8 +26,10 @@ const mango = (connectionstr, dbname, callback) => {
       }
    });
 };
-mango.getservconfig = require("./getservconfig");
-mango.createdefaultservconfig = require("./createdefaultservconfig");
-mango.updateservconfig = require("./updateservconfig");
+const mangofiles = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file.endsWith(".js") && file !== "index.js");
+mangofiles.forEach(fruit => {
+   const fruitnoext = fruit.slice(0, fruit.length - 3);
+   mango[fruitnoext] = require("./" + fruit);
+});
 
 module.exports = mango;
