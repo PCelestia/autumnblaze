@@ -1,8 +1,13 @@
 "use strict";
 
-var text = {};
+const fs = require("fs");
+const path = require("path");
+const text = {};
 
-text.commands = require("./commands");
-text.processmessage = require("./processmessage");
+const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
+files.forEach(file => {
+   if (file.endsWith(".js")) file = file.slice(0, file.length - 3);
+   text[file] = require("./" + file);
+});
 
 module.exports = text;

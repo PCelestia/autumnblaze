@@ -26,10 +26,10 @@ const mango = (connectionstr, dbname, callback) => {
       }
    });
 };
-const mangofiles = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file.endsWith(".js") && file !== "index.js" && !file.startsWith("_"));
-mangofiles.forEach(fruit => {
-   const fruitnoext = fruit.slice(0, fruit.length - 3);
-   mango[fruitnoext] = require("./" + fruit);
+const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
+files.forEach(file => {
+   if (file.endsWith(".js")) file = file.slice(0, file.length - 3);
+   mango[file] = require("./" + file);
 });
 
 module.exports = mango;

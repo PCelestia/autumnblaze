@@ -50,10 +50,10 @@ const determinecategories = () => {
 };
 
 // automatically read all files from this directory
-const commandfiles = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file.endsWith(".js") && file !== "index.js" && !file.startsWith("_"));
-commandfiles.forEach(cmd => {
-   const cmdnoext = cmd.slice(0, cmd.length - 3);
-   cmds[cmdnoext] = require("./" + cmd);
+const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
+files.forEach(file => {
+   if (file.endsWith(".js")) file = file.slice(0, file.length - 3);
+   cmds[file] = require("./" + file);
 });
 
 // ping (useful ping thou lol)
