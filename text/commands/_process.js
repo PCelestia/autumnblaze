@@ -76,5 +76,3 @@ const respond = async (cmd, arg, msg, autumnblaze) => {
       msg.channel.stopTyping();
    });
 };
-
-// autumn config set prefix `autumn `
