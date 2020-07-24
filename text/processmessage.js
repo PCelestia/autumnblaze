@@ -1,6 +1,9 @@
 "use strict";
 
 module.exports = (message, autumnblaze) => {
+   // ignore thyself
+   if (message.author === autumnblaze.bot.user) return;
+
    if ((message.content === "h") && ((autumnblaze.h + autumnblaze.hcooldown) < Date.now())) {
       // h (idea) by Thorinair on A State of Sugar Discord server
       // github username: thorinair

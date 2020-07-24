@@ -1,8 +1,6 @@
 "use strict";
 
 module.exports = async (message, autumnblaze) => {
-   // ignore thyself
-   if (message.author === autumnblaze.bot.user) return;
 
    // get out contents
    let sentcmd = message.content;
