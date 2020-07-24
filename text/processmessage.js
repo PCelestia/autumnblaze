@@ -16,4 +16,5 @@ module.exports = (message, autumnblaze) => {
 
    // process the message for commands
    autumnblaze.commands._process(message, autumnblaze);
+   autumnblaze.automatedactions._run(message, autumnblaze);
 };
