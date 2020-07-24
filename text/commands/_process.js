@@ -68,7 +68,20 @@ const respond = async (cmd, arg, msg, autumnblaze) => {
       }
       return autumnblaze.commands[cmd](arg, msg, autumnblaze);
    })()).then(val => {
-      if ((val !== undefined) && (val !== "")) msg.channel.send(val).catch(console.warn);
+      if ((val !== undefined) && (val !== "")) {
+         if (Array.isArray(val)) {
+            // send the message bit by bit
+            console.log("Arr");
+            let i = 0;
+            const interval = setInterval(() => {
+               msg.channel.send(val[i]).catch(console.warn);
+               i++;
+               if (i === val.length) clearInterval(interval);
+            }, 1000);
+            return;
+         }
+         msg.channel.send(val).catch(console.warn);
+      }
    }).catch(val => {
       if (val) if (val.send === true) msg.channel.send(val.content).catch(console.warn);
       else console.warn(val);
