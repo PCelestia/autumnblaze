@@ -24,3 +24,15 @@
 - [ ] mute members
 - [ ] move members
 - [ ] priority speaker
+
+## things to implement
+- [ ] lvls, xp, message count tracking
+- [ ] auto actions
+- [ ] automod (bad-words)
+- [ ] music bot type thing
+- [ ] radio, specify radio link
+
+## commands to implement
+- [ ] echo
+- [ ] config
+- [ ] derpi
