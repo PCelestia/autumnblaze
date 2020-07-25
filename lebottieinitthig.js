@@ -90,12 +90,15 @@ autumnblaze.connectbot = () => {
 };
 let dbserv;
 autumnblaze.connectdb = () => {
-   autumnblaze.mango = require("./mango")(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.mongodatabase, (db, serv) => {
-      autumnblaze.db = db;
-      dbserv = serv;
-   }, autumnblaze.opts.allowcache);
-   autumnblaze.defaultguildsettings = autumnblaze.mango.defaultconfigs.defaultguildsettings;
-   autumnblaze.defaultusersettings = autumnblaze.mango.defaultconfigs.defaultusersettings;
+   require("./mango")(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.allowcache).then(val => {
+      autumnblaze.db = val[0].db(autumnblaze.opts.database);
+      dbserv = val[0];
+      autumnblaze.mango = val[1];
+      autumnblaze.defaultguildsettings = autumnblaze.mango.defaultconfigs.defaultguildsettings;
+      autumnblaze.defaultusersettings = autumnblaze.mango.defaultconfigs.defaultusersettings;
+   }).catch(errrrr=> {
+      console.log(errrrr);
+   });
    return autumnblaze;
 };
 autumnblaze.connect = () => {

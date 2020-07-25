@@ -8,28 +8,34 @@ const fs = require("fs");
 const path = require("path");
 const mongodb = require("mongodb");
 
-const mango = (connectionstr, dbname, callback) => {
-   mongodb.MongoClient.connect(connectionstr, { useUnifiedTopology: true }, (err, res) => {
-      if (err) {
-         console.warn("mongoerror in connectingg");
-         console.warn(err);
-         callback(undefined);
-         return;
-      }
-      if (res) {
-         // gottem
-         callback(res.db(dbname), res);
-         return;
-      } else {
-         console.warn("mmmMMM????");
-         process.exit(1);
-      }
+module.exports = async (connectionstr, allowcache) => {
+   return new Promise((resolve, reject) => {
+      const rv = [];
+      mongodb.MongoClient.connect(connectionstr, { useUnifiedTopology: true }, (err, res) => {
+         if (err) {
+            reject(err);
+            console.log("mongoerror in connectingg, stop the bot NOW\nor i will myself in 5s");
+            setTimeout(() => process.exit(1), 5000);
+            return;
+         }
+         if (!res) {
+            reject("something stupidly strange happened");
+            console.warn("mmmMMM????");
+            process.exit(1);
+         }
+         rv[0] = res;
+
+         const realmango = {};
+         let reqprefix = "./";
+         if (allowcache) reqprefix = "./_cache_";
+
+         const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
+         files.forEach(file => {
+            if (file.endsWith(".js")) file = file.slice(0, file.length - 3);
+            realmango[file] = require(reqprefix + file);
+         });
+         rv[1] = realmango;
+         resolve(rv);
+      });
    });
 };
-const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
-files.forEach(file => {
-   if (file.endsWith(".js")) file = file.slice(0, file.length - 3);
-   mango[file] = require("./" + file);
-});
-
-module.exports = mango;
