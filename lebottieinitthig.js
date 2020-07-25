@@ -10,11 +10,12 @@ const discord = require("discord.js");
 // default options
 // required options (token, mongodb connection string) obviously not here, can't default that
 const defaultopts = {
-   mongodatabase: "autumnblazebot",
+   database: "autumnblazebot",
    radiostreamurl: "http://fancynoise.xyz:8000/radio",
    prefix: "autumn ",
    debug: false,
-   embedcolors: ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"]
+   embedcolors: ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"],
+   allowcache: false
 };
 
 // default guild/user settings in mango/defaultconfigs.js
@@ -49,20 +50,16 @@ const autumnblaze = (opts = {}) => {
    var patchedopts = randutils.copyobj(defaultopts);
    for (const key in opts) patchedopts[key] = opts[key];
 
-
    const bot = new discord.Client();
    bot.on("warn", console.warn);
 
-
    autumnblaze.bot = bot;
    autumnblaze.opts = patchedopts;
-
 
    // process a message
    autumnblaze.bot.on("message", message => {
       autumnblaze.text.processmessage(message, autumnblaze);
    });
-
 
    return autumnblaze;
 };
@@ -76,12 +73,13 @@ autumnblaze.commands = autumnblaze.text.commands;
 
 autumnblaze.connectbot = () => {
    autumnblaze.bot.login(autumnblaze.opts.token).then(token => {
+      // why did i do this? i really dont know
       token = "erased";
       if (token !== "erased") {
          console.warn("token not erased or smth idk lol, ignore this lol");
          console.warn("if this pops up then something is def wrong");
       }
-      console.log("connection success!!");
+      console.log("connection to discord success!!");
       autumnblaze.hcooldown = (1000 * 30);
       autumnblaze.h = Date.now() - autumnblaze.hcooldown;
    }).catch(err => {
@@ -92,11 +90,10 @@ autumnblaze.connectbot = () => {
 };
 let dbserv;
 autumnblaze.connectdb = () => {
-   autumnblaze.mango = require("./mango");
-   autumnblaze.mango(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.mongodatabase, (db, serv) => {
+   autumnblaze.mango = require("./mango")(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.mongodatabase, (db, serv) => {
       autumnblaze.db = db;
       dbserv = serv;
-   });
+   }, autumnblaze.opts.allowcache);
    autumnblaze.defaultguildsettings = autumnblaze.mango.defaultconfigs.defaultguildsettings;
    autumnblaze.defaultusersettings = autumnblaze.mango.defaultconfigs.defaultusersettings;
    return autumnblaze;
