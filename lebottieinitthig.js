@@ -71,6 +71,7 @@ autumnblaze.version = autumnblaze.packagejson.version;
 autumnblaze.defaultopts = defaultopts;
 
 autumnblaze.text = require("./text");
+autumnblaze.automatedactions = autumnblaze.text.automatedactions;
 autumnblaze.commands = autumnblaze.text.commands;
 
 autumnblaze.connectbot = () => {
