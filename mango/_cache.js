@@ -34,6 +34,4 @@
 // }
 
 // here it is... lol
-module.exports = {
-   letestproperty: 0
-};
+module.exports = {};
