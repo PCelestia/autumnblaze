@@ -1,9 +1,10 @@
 "use strict";
 
 module.exports = (mongodatabase, user, callback) => {
+   const cache = require("./_cache");
    require("./getuserconfig")(mongodatabase, user, val => {
       if (!val) callback(undefined);
-      require("./_cache")["user" + user.id] = {
+      cache["user" + user.id] = {
          usersettings: {
             lastupdate: Date.now(),
             needsupdate: false,
