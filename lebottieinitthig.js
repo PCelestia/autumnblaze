@@ -116,8 +116,11 @@ const fullstop = () => {
    // close connection with discord
    autumnblaze.bot.destroy();
 
-   // close connection with mongo
-   dbserv.close();
+   // (dump, then) close connection with mongo
+   if (autumnblaze.opts.allowcache) autumnblaze.mango.dump(autumnblaze).then(() => {
+      dbserv.close();
+   });
+   else dbserv.close();
 
    // declare rubbish
    autumnblaze.isrubbish = true;
