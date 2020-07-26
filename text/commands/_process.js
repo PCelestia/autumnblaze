@@ -69,7 +69,7 @@ const respond = async (cmd, arg, msg, autumnblaze) => {
       if ((val !== undefined) && (val !== "")) {
          if (Array.isArray(val)) {
             // send the message bit by bit
-            console.log("Arr");
+            // console.log("Arr");
             let i = 0;
             const interval = setInterval(() => {
                msg.channel.send(val[i]).catch(console.warn);
