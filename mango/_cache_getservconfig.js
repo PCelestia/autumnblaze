@@ -15,7 +15,7 @@ module.exports = (mongodatabase, guild, callback) => {
          return;
       } else {
          // not gottem
-         require("./index").createdefaultservconfig(mongodatabase, guild, callback);
+         require("./createdefaultservconfig")(mongodatabase, guild, callback);
       }
    });
 };

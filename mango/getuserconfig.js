@@ -15,7 +15,7 @@ module.exports = (mongodatabase, user, callback) => {
          return;
       } else {
          // not gottem
-         require("./index").createdefaultuserconfig(mongodatabase, user, callback);
+         require("./createdefaultuserconfig")(mongodatabase, user, callback);
       }
    });
 };

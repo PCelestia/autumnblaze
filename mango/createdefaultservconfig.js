@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = (mongodatabase, guild, callback) => {
-   const defaultconfig = require("./index").defaultconfigs.defaultguildsettings;
+   const defaultconfig = require("./defaultconfigs").defaultguildsettings;
    mongodatabase.collection(guild.id).insertOne(defaultconfig, (err, res) => {
       if (err) {
          // err
