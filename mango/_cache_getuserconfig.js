@@ -1,21 +1,15 @@
 "use strict";
 
 module.exports = (mongodatabase, user, callback) => {
-   mongodatabase.collection("user" + user.id).findOne({ name: "usersettings" }, (err, res) => {
-      if (err) {
-         // err
-         console.warn("mongoerror in getting server config");
-         console.warn(err);
-         callback(undefined);
-         return;
-      }
-      if (res) {
-         // gottem
-         callback(res);
-         return;
-      } else {
-         // not gottem
-         require("./createdefaultuserconfig")(mongodatabase, user, callback);
-      }
+   require("./getuserconfig")(mongodatabase, user, val => {
+      if (!val) callback(undefined);
+      require("./_cache")["user" + user.id] = {
+         usersettings: {
+            lastupdate: Date.now(),
+            needsupdate: false,
+            the: val
+         }
+      };
+      callback(val);
    });
 };

@@ -34,6 +34,7 @@ module.exports = async (connectionstr, allowcache) => {
             if (file.endsWith(".js")) file = file.slice(0, file.length - 3);
             realmango[file] = require(reqprefix + file);
          });
+         if (allowcache) realmango["dump"] = require("./_dump");
          rv[1] = realmango;
          resolve(rv);
       });
