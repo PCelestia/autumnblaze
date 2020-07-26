@@ -11,6 +11,6 @@ module.exports = (mongodatabase, guild, callback) => {
             the: val
          }
       };
-      callback(val);
+      callback(require("../randutils").copyobj(val));
    });
 };
