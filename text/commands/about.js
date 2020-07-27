@@ -32,7 +32,7 @@ const thecmd = async cmd => {
 
 thecmd.description = "displays \"useful\" information about this bot";
 thecmd.showinhelp = true;
-thecmd.category = "misc";
+thecmd.category = "other";
 thecmd.allowdm = true;
 thecmd.allowguild = true;
 

@@ -48,6 +48,9 @@ const thecmd = async (cmd, msg) => {
 
 thecmd.allowguild = true;
 thecmd.perms = ["MANAGE_GUILD"];
+thecmd.description = "change bot configuration for this guild (ex. prefix, enable/disable things, etc)";
+thecmd.showinhelp = true;
+thecmd.category = "utility";
 module.exports = thecmd;
 
 

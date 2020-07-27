@@ -32,7 +32,7 @@ const determinecategories = () => {
    const categories = [];
    for (const cmdhandler in cmds) {
       // if _process or "" or smth skip it
-      if ((cmdhandler.charAt(0) === "_") || (cmdhandler === "")) continue;
+      if ((cmdhandler.startsWith("_")) || (cmdhandler === "")) continue;
 
       const category = cmds[cmdhandler].category;
       // if cmd.category is undefined skip it
@@ -75,7 +75,7 @@ const help = async cmd => {
 
    if (cmd === "") {
       embed.setTitle("Command Help");
-      embed.setDescription("to get help on commands in a category, run the command shown below");
+      embed.setDescription("to get help on commands in a category, run the command shown for that category");
       categories.forEach((category) => {
          embed.addField(category, "`" + autumnblaze.opts.prefix + "help " + category + "`", true);
       });
@@ -87,7 +87,11 @@ const help = async cmd => {
    }
    // cmd has an arg
    if (!categories[cmd]) return embed.setTitle("category not found");
-   else return embed.setTitle("success but not implemented yet lol");
+   embed.setTitle("category " + cmd);
+   categories[cmd].forEach(cmd => {
+      embed.addField(cmd, cmds[cmd].description, true);
+   });
+   return embed;
    // return categories[cmd];
 };
 help.allowdm = true;
