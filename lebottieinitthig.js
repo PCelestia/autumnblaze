@@ -15,7 +15,7 @@ const defaultopts = {
    prefix: "autumn ",
    debug: false,
    embedcolors: ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"],
-   allowcache: false
+   usecache: false
 };
 
 // default guild/user settings in mango/defaultconfigs.js
@@ -90,7 +90,7 @@ autumnblaze.connectbot = () => {
 };
 let dbserv;
 autumnblaze.connectdb = () => {
-   require("./mango")(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.allowcache).then(val => {
+   require("./mango")(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.usecache).then(val => {
       autumnblaze.db = val[0].db(autumnblaze.opts.database);
       dbserv = val[0];
       autumnblaze.mango = val[1];
@@ -117,7 +117,7 @@ const fullstop = () => {
    autumnblaze.bot.destroy();
 
    // (dump, then) close connection with mongo
-   if (autumnblaze.opts.allowcache) autumnblaze.mango.dump(autumnblaze).then(() => {
+   if (autumnblaze.opts.usecache) autumnblaze.mango.dump(autumnblaze).then(() => {
       dbserv.close();
    });
    else dbserv.close();

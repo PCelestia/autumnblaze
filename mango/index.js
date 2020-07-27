@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 const mongodb = require("mongodb");
 
-module.exports = async (connectionstr, allowcache) => {
+module.exports = async (connectionstr, usecache) => {
    return new Promise((resolve, reject) => {
       const rv = [];
       mongodb.MongoClient.connect(connectionstr, { useUnifiedTopology: true }, (err, res) => {
@@ -27,12 +27,11 @@ module.exports = async (connectionstr, allowcache) => {
 
          const realmango = {};
          let reqprefix = "./";
-         if (allowcache === "old") {
+         if (usecache === "old") {
             console.warn("using old, unsupported, buggy, and never completed cache");
             reqprefix = "./_cache_";
-         } else if (allowcache === true) {
-            console.warn("not using cache, since there isn't actually any new cache yet");
-            // reqprefix = "./_cache_new_";
+         } else if (usecache === true) {
+            reqprefix = "./_cache_new_";
          }
 
          const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
@@ -40,7 +39,7 @@ module.exports = async (connectionstr, allowcache) => {
             if (file.endsWith(".js")) file = file.slice(0, file.length - 3);
             realmango[file] = require(reqprefix + file);
          });
-         if (allowcache) realmango["dump"] = require("./_dump");
+         if (usecache) realmango["dump"] = require("./_dump");
          rv[1] = realmango;
          resolve(rv);
       });
