@@ -27,7 +27,11 @@ module.exports = async (connectionstr, allowcache) => {
 
          const realmango = {};
          let reqprefix = "./";
-         if (allowcache) reqprefix = "./_cache_";
+         if (allowcache === "old") {
+            console.warn("using old, unsupported, buggy, and never completed cache");
+            reqprefix = "./_cache_";
+         }
+         else if (allowcache === true) reqprefix = "./_cache_new_";
 
          const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
          files.forEach(file => {
