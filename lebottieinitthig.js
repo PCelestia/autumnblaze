@@ -43,10 +43,10 @@ const autumnblaze = (opts = {}) => {
       }
    });
 
-   // take opts and patch it into the default opts (faster)
    const randutils = require("./randutils");
    autumnblaze.randutils = randutils;
 
+   // take opts and patch it into the default opts
    var patchedopts = randutils.copyobj(defaultopts);
    for (const key in opts) patchedopts[key] = opts[key];
 
