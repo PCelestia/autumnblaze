@@ -74,26 +74,29 @@ fns.set = (key, thing, doc, needsupdate = false) => {
    };
 };
 fns.dump = () => {
-   console.log("dumpppppppp");
-   // temp dump everything to console
-   for (const key in cache) for (const thing in cache[key]) for (const cacheentryprop in cache[key][thing]) {
-      console.log(key + "." + thing + "." + cacheentryprop + ": " + cache[key][thing][cacheentryprop]);
-      if ((cacheentryprop === "the") || (cacheentryprop === "update")) for (const key4lol in cache[key][thing][cacheentryprop]) console.log("key4444." + key4lol + "." + cache[key][thing][cacheentryprop][key4lol]);
-   }
+   return new Promise((resolve, reject) => {
+      console.log("dumpppppppp");
+      // temp dump everything to console
+      for (const key in cache) for (const thing in cache[key]) for (const cacheentryprop in cache[key][thing]) {
+         console.log(key + "." + thing + "." + cacheentryprop + ": " + cache[key][thing][cacheentryprop]);
+         if ((cacheentryprop === "the") || (cacheentryprop === "update")) for (const key4lol in cache[key][thing][cacheentryprop]) console.log("key4444." + key4lol + "." + cache[key][thing][cacheentryprop][key4lol]);
+      }
 
-   // console.log("dumping everything...");
-   // for (const collection in cache) for (const doc in cache[collection]) {
-   //    const cacheentry = cache[collection][doc];
-   //    if (cacheentry.needsupdate) {
-   //       // needs updating, use regular since cache just puts in cache lol
-   //       // since we dont have a guild, we can fake one lol
-   //       const fakeguild = { id: collection };
-   //       require("./updateservconfig")(autumnblaze.db, fakeguild, cache[collection][doc].the, success => {
-   //          if (!success) console.log("dump failed somewhere");
-   //       });
-   //    }
-   // }
-   console.log("done");
+      // console.log("dumping everything...");
+      // for (const collection in cache) for (const doc in cache[collection]) {
+      //    const cacheentry = cache[collection][doc];
+      //    if (cacheentry.needsupdate) {
+      //       // needs updating, use regular since cache just puts in cache lol
+      //       // since we dont have a guild, we can fake one lol
+      //       const fakeguild = { id: collection };
+      //       require("./updateservconfig")(autumnblaze.db, fakeguild, cache[collection][doc].the, success => {
+      //          if (!success) console.log("dump failed somewhere");
+      //       });
+      //    }
+      // }
+      console.log("done");
+      resolve();
+   });
 };
 
 module.exports = fns;
