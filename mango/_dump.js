@@ -1,4 +1,4 @@
 "use strict";
 module.exports = () => {
-   require("./_cache").dump();
+   return require("./_cache").dump();
 };
