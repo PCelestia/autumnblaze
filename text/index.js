@@ -1,5 +1,7 @@
 "use strict";
 
+// in this directory there are automated things (except command cause obviously)
+
 const fs = require("fs");
 const path = require("path");
 const text = {};
