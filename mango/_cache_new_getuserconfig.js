@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = (mongodatabase, user, callback) => {
-   console.log("a query has baen made");
+   console.log("updateservconfig cache version needs doing");
    mongodatabase.collection("user" + user.id).findOne({ name: "usersettings" }, (err, res) => {
       if (err) {
          // err

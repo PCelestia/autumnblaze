@@ -6,7 +6,7 @@ module.exports = (mongodatabase, guild, callback) => {
    const cacheconfig = cache.get(guild.id, "guildsettings");
    if (cacheconfig) return cacheconfig;
 
-   // noep
+   // noep, get from le Mangodb
    console.log("a query has baen made");
    require("./getservconfig")(mongodatabase, guild, val => {
       if (!val) return callback(undefined);

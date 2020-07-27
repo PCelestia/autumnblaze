@@ -1,6 +1,7 @@
 "use strict";
 
 module.exports = (mongodatabase, guild, callback) => {
+   console.log("createdefaultservconfig cache version needs doing");
    const defaultconfig = require("./defaultconfigs").defaultguildsettings;
    mongodatabase.collection(guild.id).insertOne(defaultconfig, (err, res) => {
       if (err) {

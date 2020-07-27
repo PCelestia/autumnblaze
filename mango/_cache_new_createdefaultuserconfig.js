@@ -1,6 +1,7 @@
 "use strict";
 
 module.exports = (mongodatabase, user, callback) => {
+   console.log("createdefaultuserconfig cache version needs doing");
    const defaultconfig = require("./defaultconfigs").defaultusersettings;
    mongodatabase.collection("user" + user.id).insertOne(defaultconfig, (err, res) => {
       if (err) {
