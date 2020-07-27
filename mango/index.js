@@ -30,8 +30,10 @@ module.exports = async (connectionstr, allowcache) => {
          if (allowcache === "old") {
             console.warn("using old, unsupported, buggy, and never completed cache");
             reqprefix = "./_cache_";
+         } else if (allowcache === true) {
+            console.warn("not using cache, since there isn't actually any new cache yet");
+            // reqprefix = "./_cache_new_";
          }
-         else if (allowcache === true) reqprefix = "./_cache_new_";
 
          const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
          files.forEach(file => {
