@@ -41,7 +41,8 @@ const autumnblaze = (opts = {}) => {
       debug: false,
       embedcolors: ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"],
       usecache: false,
-      sharded: false
+      sharded: false,
+      shardnum: 0
    };
 
    const randutils = require("./randutils");
@@ -50,12 +51,23 @@ const autumnblaze = (opts = {}) => {
    // take opts and patch it into the default opts
    var patchedopts = randutils.copyobj(defaultopts);
    for (const key in opts) patchedopts[key] = opts[key];
+   autumnblaze.opts = patchedopts;
+
+   // log some opts (manually on purpose)
+   const l = msg => console.log(msg);
+   l("using database " + autumnblaze.opts.database);
+   l("radiostreamurl " + autumnblaze.opts.radiostreamurl);
+   l("default prefix " + autumnblaze.opts.prefix);
+   l("is sharded     " + autumnblaze.opts.sharded);
+   l("cache          " + autumnblaze.opts.cache);
+   if (autumnblaze.opts.sharded) l("shardnum       " + autumnblaze.opts.shardnum);
+   if (autumnblaze.opts.host) l("host           " + autumnblaze.opts.host);
+   if (autumnblaze.opts.location) l("location       " + autumnblaze.opts.location);
 
    const bot = new discord.Client();
    bot.on("warn", console.warn);
 
    autumnblaze.bot = bot;
-   autumnblaze.opts = patchedopts;
 
    // process a message
    autumnblaze.bot.on("message", message => {
