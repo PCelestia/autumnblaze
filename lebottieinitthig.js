@@ -30,10 +30,13 @@ const autumnblaze = (opts = {}) => {
       console.warn("cache is not usable, disabling");
       opts.usecache = false;
    }
+   if (opts.derpiapikey === undefined) {
+      console.warn("derpi api key not specified, derpi api command won't work");
+   }
 
    const discord = require("discord.js");
 
-   // required options (token, mongodb connection string) obviously not here, can't default that
+   // required options (token, mongodb connection string etc) obviously not here, can't default that
    const defaultopts = {
       database: "autumnblazebot",
       radiostreamurl: "http://fancynoise.xyz:8000/radio",
