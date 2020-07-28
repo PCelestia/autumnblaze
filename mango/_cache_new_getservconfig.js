@@ -11,6 +11,6 @@ module.exports = (mongodatabase, guild, callback) => {
    require("./getservconfig")(mongodatabase, guild, val => {
       if (!val) return callback(undefined);
       cache.set(guild.id, "guildsettings", val);
-      callback(require("../randutils").copyobj(val));
+      callback(val);
    });
 };
