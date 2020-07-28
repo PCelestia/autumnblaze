@@ -1,5 +1,14 @@
 "use strict";
 
+// stamp le console
+require("console-stamp")(console, {
+   pattern: "dd-mm-yyyy HH:MM:ss.l",
+   colors: {
+      stamp: "white",
+      label: "orange"
+   }
+});
+
 if (require.main === module) {
    console.warn("are you trying to invoke this directly?");
    process.exit(1);
@@ -17,15 +26,10 @@ const autumnblaze = (opts = {}) => {
    if (opts.mongodbconnectionstring === undefined) {
       warnmissingreq("mongodb connection string", "mongodbconnectionstring");
    }
-
-   // stamp le console
-   require("console-stamp")(console, {
-      pattern: "dd-mm-yyyy HH:MM:ss.l",
-      colors: {
-         stamp: "white",
-         label: "orange"
-      }
-   });
+   if (opts.usecache === true) {
+      console.warn("cache is not usable, disabling");
+      opts.usecache = false;
+   }
 
    const discord = require("discord.js");
 
