@@ -1,24 +1,9 @@
 "use strict";
 
 if (require.main === module) {
-   console.warn("are you trying to invoke this directly? go see how to use it on the github repo! (https://github.com/pcelestia/autumnblaze#very-basic-use)");
+   console.warn("are you trying to invoke this directly?");
    process.exit(1);
 }
-
-const discord = require("discord.js");
-
-// default options
-// required options (token, mongodb connection string) obviously not here, can't default that
-const defaultopts = {
-   database: "autumnblazebot",
-   radiostreamurl: "http://fancynoise.xyz:8000/radio",
-   prefix: "autumn ",
-   debug: false,
-   embedcolors: ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"],
-   usecache: false
-};
-
-// default guild/user settings in mango/defaultconfigs.js
 
 const warnmissingreq = (one, two) => {
    console.warn("you need to supply a " + one + ".\nfor example:\nconst bot = require(\"autumnblaze\")({\n   " + two + ": \"put-your-" + two + "-here\",\n   otheropts: \"other things\"\n});\n\nthe readme at \"https://github.com/pcelestia/autumnblaze/\" might be helpful");
@@ -33,7 +18,6 @@ const autumnblaze = (opts = {}) => {
       warnmissingreq("mongodb connection string", "mongodbconnectionstring");
    }
 
-
    // stamp le console
    require("console-stamp")(console, {
       pattern: "dd-mm-yyyy HH:MM:ss.l",
@@ -42,6 +26,19 @@ const autumnblaze = (opts = {}) => {
          label: "orange"
       }
    });
+
+   const discord = require("discord.js");
+
+   // required options (token, mongodb connection string) obviously not here, can't default that
+   const defaultopts = {
+      database: "autumnblazebot",
+      radiostreamurl: "http://fancynoise.xyz:8000/radio",
+      prefix: "autumn ",
+      debug: false,
+      embedcolors: ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"],
+      usecache: false,
+      sharded: false
+   };
 
    const randutils = require("./randutils");
    autumnblaze.randutils = randutils;
@@ -61,73 +58,98 @@ const autumnblaze = (opts = {}) => {
       autumnblaze.text.processmessage(message, autumnblaze);
    });
 
-   return autumnblaze;
-};
-autumnblaze.packagejson = require("./package.json");
-autumnblaze.version = autumnblaze.packagejson.version;
-autumnblaze.defaultopts = defaultopts;
+   autumnblaze.packagejson = require("./package.json");
+   autumnblaze.version = autumnblaze.packagejson.version;
+   autumnblaze.defaultopts = defaultopts;
 
-autumnblaze.text = require("./text");
-autumnblaze.automatedactions = autumnblaze.text.automatedactions;
-autumnblaze.commands = autumnblaze.text.commands;
+   autumnblaze.text = require("./text");
+   autumnblaze.automatedactions = autumnblaze.text.automatedactions;
+   autumnblaze.commands = autumnblaze.text.commands;
 
-autumnblaze.connectbot = () => {
-   autumnblaze.bot.login(autumnblaze.opts.token).then(token => {
-      // why did i do this? i really dont know
-      token = "erased";
-      if (token !== "erased") {
-         console.warn("token not erased or smth idk lol, ignore this lol");
-         console.warn("if this pops up then something is def wrong");
+   const connectionstatus = {
+      discord: false,
+      mongodb: false,
+      runwhendone: () => {
+         console.log("connected!!");
       }
-      console.log("connection to discord success!!");
-      autumnblaze.hcooldown = (1000 * 30);
-      autumnblaze.h = Date.now() - autumnblaze.hcooldown;
-   }).catch(err => {
-      console.log("connection failed lol");
-      console.log(err);
-   });
+   };
+   autumnblaze.connectbot = () => {
+      console.log("connecting to discord...");
+      autumnblaze.bot.login(autumnblaze.opts.token).then(token => {
+         // why did i do this? i really dont know
+         token = "erased";
+         if (token !== "erased") {
+            console.warn("token not erased or smth idk lol, ignore this lol");
+            console.warn("if this pops up then something is def wrong");
+         }
+         console.log("connection to discord success!!");
+         connectionstatus.discord = true;
+         if (connectionstatus.mongodb) connectionstatus.runwhendone();
+         autumnblaze.hcooldown = (1000 * 30);
+         autumnblaze.h = Date.now() - autumnblaze.hcooldown;
+      }).catch(err => {
+         console.log("connection failed lol");
+         console.log(err);
+         process.exit(1);
+      });
+      return autumnblaze;
+   };
+   let dbserv;
+   autumnblaze.connectdb = () => {
+      console.log("connecting to mongodb...");
+      require("./mango")(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.usecache).then(val => {
+         autumnblaze.db = val[0].db(autumnblaze.opts.database);
+         dbserv = val[0];
+         autumnblaze.mango = val[1];
+         autumnblaze.defaultguildsettings = autumnblaze.mango.defaultconfigs.defaultguildsettings;
+         autumnblaze.defaultusersettings = autumnblaze.mango.defaultconfigs.defaultusersettings;
+         console.log("connection to mongodb success!!");
+         connectionstatus.mongodb = true;
+         if (connectionstatus.discord) connectionstatus.runwhendone();
+      }).catch(errrrr=> {
+         console.log(errrrr);
+      });
+      return autumnblaze;
+   };
+   autumnblaze.connect = () => {
+      console.log("running autumnblaze v" + autumnblaze.version);
+      const rv = autumnblaze.connectbot().connectdb();
+      // const intervallol = setInterval(() => {
+      //    if (connectionstatus.discord && connectionstatus.mongodb) {
+      //       connectionstatus.runwhendone();
+      //       clearInterval(intervallol);
+      //    } else console.log("noop");
+      // }, 500);
+      return rv;
+   };
+   const stop = async () => {
+      if (autumnblaze.isrubbish) return;
+
+      console.log("disconnecting...");
+      autumnblaze.bot.destroy();
+      console.log("disconnected from discord");
+      if (autumnblaze.opts.usecache) autumnblaze.mango.dump(autumnblaze).then(() => {
+         stopmango();
+      });
+      else stopmango();
+      console.log("disconnected from mongodb");
+
+      autumnblaze.isrubbish = true;
+      console.log("disconnected!");
+   };
+   const stopmango = async () => {
+      return new Promise(resolve => {
+         dbserv.close(false, () => {
+            resolve();
+         });
+      });
+   };
+   autumnblaze.stop = stop;
+   process.on("SIGINT", stop);
+   process.on("SIGTERM", stop);
+   process.on("exit", stop);
+
    return autumnblaze;
 };
-let dbserv;
-autumnblaze.connectdb = () => {
-   require("./mango")(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.usecache).then(val => {
-      autumnblaze.db = val[0].db(autumnblaze.opts.database);
-      dbserv = val[0];
-      autumnblaze.mango = val[1];
-      autumnblaze.defaultguildsettings = autumnblaze.mango.defaultconfigs.defaultguildsettings;
-      autumnblaze.defaultusersettings = autumnblaze.mango.defaultconfigs.defaultusersettings;
-   }).catch(errrrr=> {
-      console.log(errrrr);
-   });
-   return autumnblaze;
-};
-autumnblaze.connect = () => {
-   console.log("running autumnblaze v" + autumnblaze.version);
-   return autumnblaze.connectbot().connectdb();
-};
-autumnblaze.stop = () => {
-   process.emit("SIGINT");
-};
-const fullstop = () => {
-   // dont run if already rubbish'd
-   if (autumnblaze.isrubbish) return;
-   // cleanup things here
-
-   // close connection with discord
-   autumnblaze.bot.destroy();
-
-   // (dump, then) close connection with mongo
-   if (autumnblaze.opts.usecache) autumnblaze.mango.dump(autumnblaze).then(() => {
-      dbserv.close();
-   });
-   else dbserv.close();
-
-   // declare rubbish
-   autumnblaze.isrubbish = true;
-
-   console.log("closey");
-};
-process.once("SIGINT", fullstop);
-process.once("SIGTERM", fullstop);
 
 module.exports = autumnblaze;
