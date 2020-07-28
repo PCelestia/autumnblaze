@@ -31,7 +31,7 @@ const autumnblaze = (opts = {}) => {
       opts.usecache = false;
    }
    if (opts.derpiapikey === undefined) {
-      console.warn("derpi api key not specified, derpi api command won't work");
+      console.log("derpi api key not specified");
    }
 
    const discord = require("discord.js");
