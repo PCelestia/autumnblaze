@@ -1,7 +1,6 @@
 "use strict";
 
 module.exports = async (message, autumnblaze) => {
-
    // get out contents
    let sentcmd = message.content;
 
@@ -14,7 +13,7 @@ module.exports = async (message, autumnblaze) => {
             if (servconfig === undefined) return reject("failed to create/get server config");
             if (servconfig.prefix === undefined) return resolve(autumnblaze.opts.prefix);
             resolve(servconfig.prefix);
-         }, autumnblaze.defaultguildsettings);
+         });
       });
       if (autumnblaze.randutils.botpinged(message)[0]) {
          let pingstring = "i see i've been pinged\n";
