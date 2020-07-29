@@ -1,13 +1,7 @@
 "use strict";
 
 // stamp le console
-require("console-stamp")(console, {
-   pattern: "dd-mm-yyyy HH:MM:ss.l",
-   colors: {
-      stamp: "white",
-      label: "orange"
-   }
-});
+
 
 if (require.main === module) {
    console.warn("are you trying to invoke this directly?");
@@ -56,6 +50,13 @@ const autumnblaze = (opts = {}) => {
    for (const key in opts) patchedopts[key] = opts[key];
    autumnblaze.opts = patchedopts;
 
+   const bot = new discord.Client();
+   bot.on("warn", console.warn);
+   autumnblaze.bot = bot;
+
+   // stamp le console
+   require("./patchconsole")(autumnblaze);
+
    // log some opts (manually on purpose)
    const l = msg => console.log(msg);
    l("using database " + autumnblaze.opts.database);
@@ -67,10 +68,6 @@ const autumnblaze = (opts = {}) => {
    if (autumnblaze.opts.host) l("host           " + autumnblaze.opts.host);
    if (autumnblaze.opts.location) l("location       " + autumnblaze.opts.location);
 
-   const bot = new discord.Client();
-   bot.on("warn", console.warn);
-
-   autumnblaze.bot = bot;
 
    // process a message
    autumnblaze.bot.on("message", message => {
