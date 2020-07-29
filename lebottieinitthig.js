@@ -145,12 +145,17 @@ const autumnblaze = (opts = {}) => {
       autumnblaze.bot.destroy();
       console.log("disconnected from discord");
       if (autumnblaze.opts.usecache) autumnblaze.mango.dump(autumnblaze).then(() => {
-         stopmango().then(() => console.log("disconnected from mongodb"));
+         stopmango().then(() => {
+            console.log("disconnected from mongodb");
+            console.log("disconnected!");
+         });
       });
-      else stopmango().then(() => console.log("disconnected from mongodb"));
+      else stopmango().then(() => {
+         console.log("disconnected from mongodb");
+         console.log("disconnected!");
+      });
 
       autumnblaze.isrubbish = true;
-      console.log("disconnected!");
    };
    const stopmango = async () => {
       return new Promise(resolve => {
