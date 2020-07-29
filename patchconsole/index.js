@@ -1,7 +1,12 @@
 "use strict";
 
 let consolestampwarn;
+let consolestamperr;
 let channel;
+const getstrofthing = thing => {
+   if (thing.stack) return thing.stack + "\n\n";
+   else return thing.toString();
+}
 module.exports = autumnblaze => {
    require("console-stamp")(console, {
       pattern: "dd-mm-yyyy HH:MM:ss.l",
@@ -10,18 +15,33 @@ module.exports = autumnblaze => {
          label: "orange"
       }
    });
-   consolestampwarn = console.warn;
    channel = autumnblaze.opts.warnchannel;
+
+   if (!channel) return;
+
+   consolestampwarn = console.warn;
    console.warn = (...stuff) => {
       consolestampwarn(...stuff);
-      if (!channel) return;
       let combinedstuff = "";
       stuff.forEach(thing => {
-         if (thing.stack && thing.message) combinedstuff = combinedstuff + thing.stack + "\n\n";
-         else combinedstuff = combinedstuff + thing.toString();
+         combinedstuff = combinedstuff + getstrofthing(thing);
       });
       autumnblaze.bot.channels.fetch(channel).then(channel => {
-         channel.send("```" + combinedstuff + "```");
+         channel.send("WARNING:\n```" + combinedstuff + "```");
+      }).catch(() => {});
+   };
+
+   consolestamperr = console.error;
+   console.error = (...stuff) => {
+      consolestamperr(...stuff);
+      let combinedstuff = "";
+      stuff.forEach(thing => {
+         combinedstuff = combinedstuff + getstrofthing(thing);
+      });
+      autumnblaze.bot.channels.fetch(channel).then(channel => {
+         channel.send("ERROR:\n```" + combinedstuff + "```");
       }).catch(() => {});
    };
 };
+// error
+// warn
