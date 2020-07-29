@@ -56,7 +56,7 @@ module.exports = async (message, autumnblaze) => {
 
 const cmdnotfound = async (msg) => {
    msg.channel.startTyping();
-   await msg.channel.send("command not found");
+   await msg.channel.send("command not found\nIf you're trying to use a prefix, there is no need to use a prefix in DMs.");
    msg.channel.stopTyping();
 };
 
