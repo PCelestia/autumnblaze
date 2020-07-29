@@ -57,18 +57,6 @@ const autumnblaze = (opts = {}) => {
    // stamp le console
    require("./patchconsole")(autumnblaze);
 
-   // log some opts (manually on purpose)
-   const l = msg => console.log(msg);
-   l("using database " + autumnblaze.opts.database);
-   l("radiostreamurl " + autumnblaze.opts.radiostreamurl);
-   l("default prefix " + autumnblaze.opts.prefix);
-   l("is sharded     " + autumnblaze.opts.sharded);
-   l("cache          " + autumnblaze.opts.cache);
-   if (autumnblaze.opts.sharded) l("shardnum       " + autumnblaze.opts.shardnum);
-   if (autumnblaze.opts.host) l("host           " + autumnblaze.opts.host);
-   if (autumnblaze.opts.location) l("location       " + autumnblaze.opts.location);
-
-
    // process a message
    autumnblaze.bot.on("message", message => {
       autumnblaze.text.processmessage(message, autumnblaze);
@@ -129,6 +117,16 @@ const autumnblaze = (opts = {}) => {
    };
    autumnblaze.connect = () => {
       console.log("running autumnblaze v" + autumnblaze.version);
+      // log some opts (manually on purpose)
+      console.log("using database " + autumnblaze.opts.database);
+      console.log("radiostreamurl " + autumnblaze.opts.radiostreamurl);
+      console.log("default prefix " + autumnblaze.opts.prefix);
+      console.log("is sharded     " + autumnblaze.opts.sharded);
+      console.log("cache          " + autumnblaze.opts.cache);
+      if (autumnblaze.opts.sharded) console.log("shardnum       " + autumnblaze.opts.shardnum);
+      if (autumnblaze.opts.host) console.log("host           " + autumnblaze.opts.host);
+      if (autumnblaze.opts.location) console.log("location       " + autumnblaze.opts.location);
+
       const rv = autumnblaze.connectbot().connectdb();
       // const intervallol = setInterval(() => {
       //    if (connectionstatus.discord && connectionstatus.mongodb) {
