@@ -122,7 +122,7 @@ const autumnblaze = (opts = {}) => {
       console.log("radiostreamurl " + autumnblaze.opts.radiostreamurl);
       console.log("default prefix " + autumnblaze.opts.prefix);
       console.log("is sharded     " + autumnblaze.opts.sharded);
-      console.log("cache          " + autumnblaze.opts.cache);
+      console.log("cache          " + (autumnblaze.opts.cache === true));
       if (autumnblaze.opts.sharded) console.log("shardnum       " + autumnblaze.opts.shardnum);
       if (autumnblaze.opts.host) console.log("host           " + autumnblaze.opts.host);
       if (autumnblaze.opts.location) console.log("location       " + autumnblaze.opts.location);
