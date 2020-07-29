@@ -17,7 +17,8 @@ module.exports = autumnblaze => {
       if (!channel) return;
       let combinedstuff = "";
       stuff.forEach(thing => {
-         combinedstuff = combinedstuff + thing.toString();
+         if (thing.stack && thing.message) combinedstuff = combinedstuff + thing.stack + "\n\n";
+         else combinedstuff = combinedstuff + thing.toString();
       });
       autumnblaze.bot.channels.fetch(channel).then(channel => {
          channel.send("```" + combinedstuff + "```");
