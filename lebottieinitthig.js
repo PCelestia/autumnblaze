@@ -8,11 +8,12 @@ if (require.main === module) {
    process.exit(1);
 }
 
-const warnmissingreq = (one, two) => {
-   console.warn("you need to supply a " + one + ".\nfor example:\nconst bot = require(\"autumnblaze\")({\n   " + two + ": \"put-your-" + two + "-here\",\n   otheropts: \"other things\"\n});\n\nthe readme at \"https://github.com/pcelestia/autumnblaze/\" might be helpful");
-   process.exit(1);
-};
 const autumnblaze = (opts = {}) => {
+   const warnmissingreq = (one, two) => {
+      console.warn("you need to supply a " + one + ".\nfor example:\nconst bot = require(\"autumnblaze\")({\n   " + two + ": \"put-your-" + two + "-here\",\n   otheropts: \"other things\"\n});\n\nthe readme at \"https://github.com/pcelestia/autumnblaze/\" might be helpful");
+      process.exit(1);
+   };
+
    // check for missing token and mongodbconnectionstring
    if ((opts.token === undefined)) {
       warnmissingreq("bot token", "token");
