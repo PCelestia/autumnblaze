@@ -26,6 +26,7 @@ const fs = require("fs");
 const path = require("path");
 
 const cmds = {};
+const catdesc = require("./_categorydesc");
 
 cmds._process = require("./_process");
 const determinecategories = () => {
@@ -42,8 +43,11 @@ const determinecategories = () => {
          categories[category].push(cmdhandler);
          continue;
       }
+      // category doesnt exist, create it
       categories.push(category);
       categories[category] = [];
+      if (catdesc[category]) categories[category].description = catdesc[category].description;
+      else categories[category].description = "no description available";
       categories[category].push(cmdhandler);
    }
    return categories;
@@ -61,11 +65,10 @@ files.forEach(file => {
 // list
 // togglerole
 
-const help = async cmd => {
+const help = async (cmd, msg, autumnblaze) => {
    if (!cmds._categories) cmds._categories = determinecategories();
 
    const discord = require("discord.js");
-   const autumnblaze = require("../../lebottieinitthig");
    const randfromarray = autumnblaze.randutils.randfromarray;
    const colors = autumnblaze.opts.embedcolors;
    const categories = cmds._categories;
@@ -88,6 +91,7 @@ const help = async cmd => {
    // cmd has an arg
    if (!categories[cmd]) return embed.setTitle("category not found");
    embed.setTitle("category " + cmd);
+   embed.setDescription(categories[cmd].description);
    categories[cmd].forEach(cmd => {
       embed.addField(cmd, cmds[cmd].description, true);
    });
