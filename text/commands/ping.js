@@ -6,7 +6,7 @@ const thecmd = (cmd, msg, autumnblaze) => {
 
 thecmd.description = "Pling mee";
 thecmd.showinhelp = true;
-thecmd.category = "not useful";
+thecmd.category = "other";
 thecmd.allowguild = true;
 
 module.exports = thecmd;
