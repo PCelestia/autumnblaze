@@ -21,7 +21,7 @@ module.exports = async (message, autumnblaze) => {
          pingstring = pingstring + "my prefix here is `" + config.prefix + "`, for example `" + config.prefix + "help`";
          message.channel.send(pingstring);
       }
-      if (sentcmd.startsWith(config.prefix)) sentcmd = sentcmd.substring(config.prefix.length);
+      if (sentcmd.toLowerCase().startsWith(config.prefix.toLowerCase())) sentcmd = sentcmd.substring(config.prefix.length);
       else return;
    } else {
       config = await new Promise((resolve, reject) => {
