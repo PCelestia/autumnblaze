@@ -7,7 +7,7 @@ cat.other = {
 cat.test = {
    description: "used to test various functions/things of the bot. Usually not active."
 };
-cat.utilty = {
+cat.utility = {
    description: "utility commands"
 };
 cat.pony = {
