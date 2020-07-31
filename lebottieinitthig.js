@@ -34,13 +34,13 @@ const autumnblaze = (opts = {}) => {
    // required options (token, mongodb connection string etc) obviously not here, can't default that
    const defaultopts = {
       database: "autumnblazebot",
-      radiostreamurl: "http://fancynoise.xyz:8000/radio",
-      prefix: "autumn ",
       debug: false,
       embedcolors: ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"],
-      usecache: false,
+      prefix: "autumn ",
+      radiostreamurl: "http://fancynoise.xyz:8000/radio",
       sharded: false,
-      shardnum: 0
+      shardnum: 0,
+      usecache: false
    };
 
    const randutils = require("./randutils");
