@@ -59,10 +59,7 @@ const autumnblaze = (opts = {}) => {
    require("./patchconsole")(autumnblaze);
 
    // handle different events and things
-   autumnblaze.events = require("./events");
-   autumnblaze.bot.on("message", message => {
-      autumnblaze.events.message(message, autumnblaze);
-   });
+   autumnblaze.events = require("./events")(autumnblaze);
 
    autumnblaze.packagejson = require("./package.json");
    autumnblaze.version = autumnblaze.packagejson.version;
