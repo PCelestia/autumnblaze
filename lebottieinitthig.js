@@ -70,11 +70,14 @@ const autumnblaze = (opts = {}) => {
    autumnblaze.automatedactions = autumnblaze.text.automatedactions;
    autumnblaze.commands = autumnblaze.text.commands;
 
-   const connectionstatus = {
+   autumnblaze.connectionstatus = {
       discord: false,
       mongodb: false,
-      runwhendone: () => {
+      runwhenconnected: () => {
          console.log("connected!!");
+      },
+      runwhendisconnected: () => {
+         console.log("disconnected!!");
       }
    };
    autumnblaze.connectbot = () => {
@@ -87,8 +90,8 @@ const autumnblaze = (opts = {}) => {
             console.warn("if this pops up then something is def wrong");
          }
          console.log("connection to discord success!!");
-         connectionstatus.discord = true;
-         if (connectionstatus.mongodb) connectionstatus.runwhendone();
+         autumnblaze.connectionstatus.discord = true;
+         if (autumnblaze.connectionstatus.mongodb) autumnblaze.connectionstatus.runwhenconnected();
          autumnblaze.hcooldown = (1000 * 30);
          autumnblaze.h = Date.now() - autumnblaze.hcooldown;
       }).catch(err => {
@@ -108,8 +111,8 @@ const autumnblaze = (opts = {}) => {
          autumnblaze.defaultguildsettings = autumnblaze.mango.defaultconfigs.defaultguildsettings;
          autumnblaze.defaultusersettings = autumnblaze.mango.defaultconfigs.defaultusersettings;
          console.log("connection to mongodb success!!");
-         connectionstatus.mongodb = true;
-         if (connectionstatus.discord) connectionstatus.runwhendone();
+         autumnblaze.connectionstatus.mongodb = true;
+         if (autumnblaze.connectionstatus.discord) autumnblaze.connectionstatus.runwhenconnected();
       }).catch(errrrr=> {
          console.log(errrrr);
       });
@@ -127,45 +130,37 @@ const autumnblaze = (opts = {}) => {
       if (autumnblaze.opts.host) console.log("host           " + autumnblaze.opts.host);
       if (autumnblaze.opts.location) console.log("location       " + autumnblaze.opts.location);
 
-      const rv = autumnblaze.connectbot().connectdb();
-      // const intervallol = setInterval(() => {
-      //    if (connectionstatus.discord && connectionstatus.mongodb) {
-      //       connectionstatus.runwhendone();
-      //       clearInterval(intervallol);
-      //    } else console.log("noop");
-      // }, 500);
-      return rv;
+      return autumnblaze.connectbot().connectdb();
    };
-   const stop = async () => {
+   autumnblaze.stop = async () => {
       if (autumnblaze.isrubbish) return;
 
       console.log("disconnecting...");
-      autumnblaze.bot.destroy();
-      console.log("disconnected from discord");
-      if (autumnblaze.opts.usecache) autumnblaze.mango.dump(autumnblaze).then(() => {
-         stopmango().then(() => {
-            console.log("disconnected from mongodb");
-            console.log("disconnected!");
-         });
-      });
-      else stopmango().then(() => {
-         console.log("disconnected from mongodb");
-         console.log("disconnected!");
-      });
+      autumnblaze.stopbot();
+      // if (autumnblaze.opts.usecache) autumnblaze.mango.dump(autumnblaze).then(stopmango);
+      // else
+      autumnblaze.stopmango();
 
       autumnblaze.isrubbish = true;
    };
-   const stopmango = async () => {
+   autumnblaze.stopmango = async () => {
       return new Promise(resolve => {
          dbserv.close(false, () => {
+            console.log("disconnected from mongodb");
+            if (!autumnblaze.connectionstatus.discord) autumnblaze.connectionstatus.runwhendisconnected();
             resolve();
          });
       });
    };
-   autumnblaze.stop = stop;
-   process.on("SIGINT", stop);
-   process.on("SIGTERM", stop);
-   process.on("exit", stop);
+   autumnblaze.stopbot = async () => {
+      autumnblaze.bot.destroy();
+      console.log("disconnected from discord");
+      if (!autumnblaze.connectionstatus.mongodb) autumnblaze.connectionstatus.runwhendisconnected();
+   };
+
+   process.on("SIGINT", autumnblaze.stop);
+   process.on("SIGTERM", autumnblaze.stop);
+   process.on("exit", autumnblaze.stop);
 
    return autumnblaze;
 };
