@@ -3,6 +3,8 @@
 module.exports = (message, autumnblaze) => {
    // ignore thyself
    if (message.author === autumnblaze.bot.user) return;
+   // ignore webhooks
+   if (message.webhookID) return;
 
    if ((message.content === "h") && ((autumnblaze.h + autumnblaze.hcooldown) < Date.now())) {
       // h (idea) by Thorinair on A State of Sugar Discord server
