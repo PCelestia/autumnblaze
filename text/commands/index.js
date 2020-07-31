@@ -53,6 +53,7 @@ const determinecategories = () => {
       // category doesnt exist, create it
       categories.push(category);
       categories[category] = [];
+      categories[category].name = category;
       if (catdesc[category]) categories[category].description = catdesc[category].description;
       else categories[category].description = "no description available";
       categories[category].push(cmdhandler);
@@ -94,14 +95,22 @@ const help = async (arg, msg, autumnblaze, dm, config) => {
       return embed;
    }
    // cmd has an arg
-   if (!categories[cmd]) return embed.setTitle("category not found");
-   embed.setTitle("category " + cmd);
-   embed.setDescription(categories[cmd].description);
-   categories[cmd].forEach(cmd => {
-      embed.addField(cmd, cmds[cmd].description, true);
+   const response = await new Promise(resolve => {
+      categories.forEach(category => {
+         const subcmdthing = autumnblaze.randutils.checksubcmd(arg, category);
+         if (subcmdthing[0] === false) return;
+         category = categories[category];
+         embed.setTitle("Category " + category.name);
+         embed.setDescription(category.description);
+         category.forEach(cmd => {
+            embed.addField(cmd, cmds[cmd].description, true);
+         });
+         resolve(true);
+      });
+      resolve(false);
    });
+   if (!response) return embed.setTitle("category not found");
    return embed;
-   // return categories[cmd];
 };
 help.allowdm = true;
 help.allowguild = true;

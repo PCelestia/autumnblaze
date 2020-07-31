@@ -38,6 +38,7 @@ const autumnblaze = (opts = {}) => {
       embedcolors: ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"],
       prefix: "autumn ",
       radiostreamurl: "http://fancynoise.xyz:8000/radio",
+      reponame: "pcelestia/autumnblaze",
       sharded: false,
       shardnum: 0,
       usecache: false
