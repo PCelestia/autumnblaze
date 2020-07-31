@@ -28,7 +28,14 @@ const path = require("path");
 const cmds = {};
 const catdesc = require("./_categorydesc");
 
+// automatically read all files from this directory
+const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
+files.forEach(file => {
+   if (file.endsWith(".js")) file = file.slice(0, file.length - 3);
+   cmds[file] = require("./" + file);
+});
 cmds._process = require("./_process");
+
 const determinecategories = () => {
    const categories = [];
    for (const cmdhandler in cmds) {
@@ -53,19 +60,12 @@ const determinecategories = () => {
    return categories;
 };
 
-// automatically read all files from this directory
-const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
-files.forEach(file => {
-   if (file.endsWith(".js")) file = file.slice(0, file.length - 3);
-   cmds[file] = require("./" + file);
-});
-
 // ping (useful ping thou lol)
 // query
 // list
 // togglerole
 
-const help = async (cmd, msg, autumnblaze) => {
+const help = async (arg, msg, autumnblaze, dm, config) => {
    if (!cmds._categories) cmds._categories = determinecategories();
 
    const discord = require("discord.js");
@@ -75,17 +75,22 @@ const help = async (cmd, msg, autumnblaze) => {
    const embed = new discord.MessageEmbed();
 
    embed.setColor(randfromarray(colors));
+   const app = await autumnblaze.bot.fetchApplication();
+   embed.setFooter(autumnblaze.opts.reponame + " v" + autumnblaze.version, app.iconURL(64));
 
-   if (cmd === "") {
+   if (arg === "") {
       embed.setTitle("Command Help");
       embed.setDescription("to get help on commands in a category, run the command shown for that category");
       categories.forEach((category) => {
-         embed.addField(category, "`" + autumnblaze.opts.prefix + "help " + category + "`", true);
+         let middlepart = "`";
+         if (!dm) {
+            if (config.prefix) middlepart = middlepart + config.prefix;
+            else middlepart = middlepart + autumnblaze.opts.prefix;
+         }
+         middlepart = middlepart + "help " + category + "`";
+         embed.addField(category, middlepart, true);
       });
 
-      const app = await autumnblaze.bot.fetchApplication();
-      if (autumnblaze.opts.reponame) embed.setFooter(autumnblaze.opts.reponame + " v", autumnblaze.version, app.iconURL(64));
-      else embed.setFooter("pcelestia/autumnblaze v" + autumnblaze.version, app.iconURL(64));
       return embed;
    }
    // cmd has an arg
