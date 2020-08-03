@@ -44,7 +44,7 @@ const autumnblaze = (opts = {}) => {
       usecache: false
    };
 
-   const randutils = require("./randutils");
+   const randutils = require("./randutils")(autumnblaze);
    autumnblaze.randutils = randutils;
 
    // take opts and patch it into the default opts
