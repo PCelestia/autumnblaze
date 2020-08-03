@@ -73,11 +73,7 @@ const help = async (arg, msg, autumnblaze, dm, config) => {
    const randfromarray = autumnblaze.randutils.randfromarray;
    const colors = autumnblaze.opts.embedcolors;
    const categories = cmds._categories;
-   const embed = new discord.MessageEmbed();
-
-   embed.setColor(randfromarray(colors));
-   const app = await autumnblaze.bot.fetchApplication();
-   embed.setFooter(autumnblaze.opts.reponame + " v" + autumnblaze.version, app.iconURL(64));
+   const embed = await autumnblaze.randutils.embed();
 
    if (arg === "") {
       embed.setTitle("Command Help");

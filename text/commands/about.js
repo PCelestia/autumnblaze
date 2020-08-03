@@ -1,13 +1,7 @@
 "use strict";
 
-const thecmd = async cmd => {
-   const { randfromarray } = require("../../randutils");
-   const discord = require("discord.js");
-   const autumnblaze = require("../../lebottieinitthig");
-   const colors = autumnblaze.opts.embedcolors;
-   const embed = new discord.MessageEmbed();
-
-   embed.setColor(randfromarray(colors));
+const thecmd = async (cmd, _, autumnblaze) => {
+   const embed = await autumnblaze.randutils.embed();
 
    embed.setTitle("About");
 
@@ -22,10 +16,6 @@ const thecmd = async cmd => {
    // desc = desc + "\nGitHub repository: [pcelestia/autumnblaze](https://github.com/pcelestia/autumnblaze/ \"GitHub repository\")";
    if (cmd !== "") desc = desc + "\nalso i got the rest, it just doesnt do anything ~~yet~~";
    embed.setDescription(desc);
-
-   const app = await autumnblaze.bot.fetchApplication();
-   if (autumnblaze.opts.reponame) embed.setFooter(autumnblaze.opts.reponame + " v", autumnblaze.version, app.iconURL(64));
-   else embed.setFooter("pcelestia/autumnblaze v" + autumnblaze.version, app.iconURL(64));
 
    return embed;
 };
