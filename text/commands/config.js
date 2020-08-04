@@ -1,8 +1,7 @@
 "use strict";
 
-const thecmd = async (cmd, msg) => {
-   if (msg.channel.type === "dm") return "not allowed in dms yet";
-   const autumnblaze = require("../../lebottieinitthig");
+const thecmd = async (cmd, msg, autumnblaze, dm) => {
+   if (dm) return "not allowed in dms yet";
 
    const set = autumnblaze.randutils.checksubcmd(cmd, "set");
    if (set[0]) {
