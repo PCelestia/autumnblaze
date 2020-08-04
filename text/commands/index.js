@@ -110,6 +110,9 @@ const help = async (arg, msg, autumnblaze, dm, config) => {
 };
 help.allowdm = true;
 help.allowguild = true;
+help.description = "this command that shows help, duh";
+help.showinhelp = true;
+help.category = "other";
 cmds.help = help;
 
 module.exports = cmds;
