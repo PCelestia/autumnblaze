@@ -13,8 +13,7 @@ files.forEach(file => {
 const _run = async (msg, config, autumnblaze) => {
    if (msg.channel.type === "dm") return;
    for (const action in actions) if (!action.startsWith("_")) {
-      console.log(action);
-      actions[action](msg, autumnblaze);
+      actions[action](msg, config, autumnblaze);
    }
 };
 
