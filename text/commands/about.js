@@ -1,7 +1,12 @@
 "use strict";
 
+let embed = undefined;
 const thecmd = async (cmd, _, autumnblaze) => {
-   const embed = await autumnblaze.randutils.embed();
+   if (embed !== undefined) {
+      embed.setColor(autumnblaze.randutils.randfromarray(autumnblaze.opts.embedcolors));
+      return embed;
+   }
+   embed = await autumnblaze.randutils.embed();
 
    embed.setTitle("About");
 
