@@ -1,35 +1,14 @@
 "use strict";
 
-module.exports = async (message, autumnblaze) => {
+module.exports = async (message, config, autumnblaze) => {
    // get out contents
    let sentcmd = message.content;
 
-   // see if dm
    const dm = message.channel.type === "dm";
-   let config;
+   if (dm) message.channel.startTyping();
    if (!dm) {
-      // (try to) remove prefix if guild
-      config = await new Promise((resolve, reject) => {
-         autumnblaze.mango.getservconfig(autumnblaze.db, message.guild, config => {
-            if (config === undefined) return reject("failed to create/get server config");
-            if (config.prefix === undefined) config.prefix = autumnblaze.opts.prefix;
-            resolve(config);
-         });
-      });
-      if (autumnblaze.randutils.botpinged(message)[0]) {
-         let pingstring = "i see i've been pinged\n";
-         pingstring = pingstring + "my prefix here is `" + config.prefix + "`, for example `" + config.prefix + "help`";
-         message.channel.send(pingstring);
-      }
       if (sentcmd.toLowerCase().startsWith(config.prefix.toLowerCase())) sentcmd = sentcmd.substring(config.prefix.length);
       else return;
-   } else {
-      config = await new Promise((resolve, reject) => {
-         autumnblaze.mango.getuserconfig(autumnblaze.db, message.author, config => {
-            if (config === undefined) return reject("failed to create/get user config");
-            resolve(config);
-         });
-      });
    }
    for (const cmd in autumnblaze.commands) {
       // process sentcmd, if it ain't then continue
@@ -51,13 +30,7 @@ module.exports = async (message, autumnblaze) => {
    }
    // dm: check if cmd allowed to run in dm, then run
    // not dm: check if cmd allowed to run in guild, check perms, then run
-   if (dm) cmdnotfound(message).catch(console.warn);
-};
-
-const cmdnotfound = async (msg) => {
-   msg.channel.startTyping();
-   await msg.channel.send("command not found\nIf you're trying to use a prefix, there is no need to use a prefix in DMs.");
-   msg.channel.stopTyping();
+   if (dm) await message.channel.send("command not found\nIf you're trying to use a prefix, there is no need to use a prefix in DMs.").catch(console.warn);
 };
 
 const respond = async (cmd, arg, msg, autumnblaze, dm, config) => {
