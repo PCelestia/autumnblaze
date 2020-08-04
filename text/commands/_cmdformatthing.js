@@ -11,10 +11,12 @@ const thecmd = async (arg, msg, autumnblaze, dm, config) => {
 thecmd.allowdm = true;
 thecmd.allowguild = true;
 // perms: see randutils/perms
+// obviously guild perms lol
 thecmd.perms = ["MANAGE_GUILD", "SEND_MESSAGES"];
 thecmd.showinhelp = true;
 thecmd.description = "a little thingie that i can reference when making new commands";
 thecmd.category = "other";
+thecmd.usetyping = true;
 module.exports = thecmd;
 
 // other methods and things can go below

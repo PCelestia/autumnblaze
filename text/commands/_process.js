@@ -63,7 +63,7 @@ const cmdnotfound = async (msg) => {
 const respond = async (cmd, arg, msg, autumnblaze, dm, config) => {
    // if perms prop, check it, if none, assume everyone allowed to use it
 
-   msg.channel.startTyping();
+   if (autumnblaze.commands[cmd].usetyping === true) msg.channel.startTyping();
    Promise.resolve((async () => {
       // let perms = true;
       if (autumnblaze.commands[cmd].perms !== undefined) if (autumnblaze.commands[cmd].perms.length > 0) {
@@ -91,6 +91,6 @@ const respond = async (cmd, arg, msg, autumnblaze, dm, config) => {
       if (val) if (val.send === true) msg.channel.send(val.content).catch(console.warn);
       else console.warn(val);
    }).finally(() => {
-      msg.channel.stopTyping();
+      if (autumnblaze.commands[cmd].usetyping === true) msg.channel.stopTyping();
    });
 };
