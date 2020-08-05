@@ -21,5 +21,4 @@ const availablevars = [
 availablevars.forEach(configvar => {
    if (process.env[configvar]) configobj[configvar.toLowerCase()] = process.env[configvar];
 });
-console.log("\""+ configobj.prefix + "\"");
 require("./lebottieinitthig")(configobj).connect();
