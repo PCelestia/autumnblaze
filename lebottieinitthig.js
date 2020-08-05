@@ -67,6 +67,7 @@ const autumnblaze = (opts = {}) => {
    autumnblaze.defaultopts = defaultopts;
 
    autumnblaze.text = require("./text");
+   // AUTOMATED ACTIONS ARE KNOWN AS MODULES TO THE USER
    autumnblaze.automatedactions = autumnblaze.text.automatedactions;
    autumnblaze.commands = autumnblaze.text.commands;
 

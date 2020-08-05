@@ -12,9 +12,9 @@ files.forEach(file => {
 
 const _run = async (msg, config, autumnblaze) => {
    if (msg.channel.type === "dm") return;
-   for (const action in actions) if (!action.startsWith("_")) {
-      actions[action](msg, config, autumnblaze);
-   }
+   config.enabledmodules.forEach(action => {
+      actions[action](msg, config, autumnblaze).catch(console.warn);
+   });
 };
 
 actions._run = _run;
