@@ -19,7 +19,7 @@ const thecmd = async (arg, msg, autumnblaze, dm, config) => {
    enabled = config.enabled;
    arg.forEach(e => {
       if (enabled.includes(e)) {
-         enabled[enabled.indexOf(e)] = enabled.pop();
+         enabled.splice(enabled.indexOf(e), 1);
          disabled.push(e);
       } else notchanged.push(e);
    });
