@@ -26,6 +26,7 @@ module.exports = async (connectionstr, usecache) => {
          rv[0] = res;
 
          const realmango = {};
+         realmango.promise = {};
          let reqprefix = "./";
          if (usecache === "old") {
             console.warn("using old, unsupported, buggy, and never completed cache");
@@ -38,6 +39,7 @@ module.exports = async (connectionstr, usecache) => {
          files.forEach(file => {
             if (file.endsWith(".js")) file = file.slice(0, file.length - 3);
             realmango[file] = require(reqprefix + file);
+            realmango.promise = require(reqprefix + "_" + file + "_promise");
          });
          if (usecache) realmango["dump"] = require("./_cache").dump;
          rv[1] = realmango;
