@@ -5,7 +5,7 @@ const thecmd = async (cmd) => {
    }
    console.log("other h stuff");
    console.log(cmd);
-   return [h, "i see you have other things for meee"];
+   return [h, "thanks for the extra stuff btw"];
 };
 thecmd.allowguild = true;
 thecmd.allowdm = true;
