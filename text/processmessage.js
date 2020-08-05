@@ -42,6 +42,6 @@ module.exports = async (message, autumnblaze) => {
    }
 
    // process the message for commands
-   autumnblaze.commands._process(message, config, autumnblaze);
-   autumnblaze.automatedactions._run(message, config, autumnblaze);
+   autumnblaze.commands._process(message, config, autumnblaze).catch(console.warn);
+   autumnblaze.automatedactions._run(message, config, autumnblaze).catch(console.warn);
 };

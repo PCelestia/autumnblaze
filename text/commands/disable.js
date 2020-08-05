@@ -24,7 +24,7 @@ const thecmd = async (arg, msg, autumnblaze, dm, config) => {
       } else notchanged.push(e);
    });
    if (disabled.length > 0) {
-      if (enabled.length === 1) rv = "module " + disabled[0] + " has been disabled" ;
+      if (disabled.length === 1) rv = "module " + disabled[0] + " has been disabled" ;
       else rv = "modules " + disabled.join(", ") + " have been disabled";
    }
    if (notchanged.length > 0) {
