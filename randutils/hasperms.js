@@ -1,15 +1,12 @@
 "use strict";
 
 module.exports = async (msg, ...perms) => {
-   // get list of user perms
-   const userperms = msg.member.permissions;
    const allperms = require("./perms").keyint;
    const doesnthave = [];
 
    // iterate through array of given perms, check each one is included in userperms
    perms.forEach(perm => {
-      if (!userperms.has(allperms[perm])) {
-         console.log("doesnthave");
+      if (!msg.member.permissions.has(allperms[perm])) {
          doesnthave.push(perm);
       }
    });
@@ -22,5 +19,5 @@ module.exports = async (msg, ...perms) => {
 
 const rejectval = perms => ({
    send: true,
-   content: "must have perms " + perms
+   content: "must have perms " + perms.join(", ")
 });
