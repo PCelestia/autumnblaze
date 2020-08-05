@@ -94,6 +94,16 @@ const autumnblaze = (opts = {}) => {
          if (autumnblaze.connectionstatus.mongodb) autumnblaze.connectionstatus.runwhenconnected();
          autumnblaze.hcooldown = (1000 * 30);
          autumnblaze.h = Date.now() - autumnblaze.hcooldown;
+
+         // TEMPORARY
+         autumnblaze.bot.user.setPresence({
+            status: "online",
+            afk: false,
+            activity: {
+               name: "PING ME LOL"
+            }
+         }).catch(console.error);
+         // END TEMPORARY
       }).catch(err => {
          console.log("connection failed lol");
          console.log(err);
