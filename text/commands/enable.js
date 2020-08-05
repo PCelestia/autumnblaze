@@ -10,6 +10,7 @@ const thecmd = async (arg, msg, autumnblaze, dm, config) => {
    let alreadyenabled = [];
    const enabled = [];
    const notchanged = [];
+
    let rv = "";
    if (config.enabled) alreadyenabled = config.enabled;
    arg.forEach(e => {
@@ -38,5 +39,6 @@ thecmd.perms = ["MANAGE_GUILD"];
 thecmd.showinhelp = true;
 thecmd.description = "enable a module, to disable use the `disable` command";
 thecmd.category = "utility";
+thecmd.usetyping = true;
 
 module.exports = thecmd;
