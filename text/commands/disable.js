@@ -12,11 +12,11 @@ const thecmd = async (arg, msg, autumnblaze, dm, config) => {
    const notchanged = [];
 
    let rv = "";
-   if (!config.enabled) {
+   if (!config.enabledmodules) {
       if (arg.length === 1) return "module " + arg[0] + " already disabled";
       return "modules " + arg.join(", ") + " already disabled";
    }
-   enabled = config.enabled;
+   enabled = config.enabledmodules;
    arg.forEach(e => {
       if (enabled.includes(e)) {
          enabled.splice(enabled.indexOf(e), 1);
@@ -33,7 +33,7 @@ const thecmd = async (arg, msg, autumnblaze, dm, config) => {
       if (notchanged.length === 1) rv = rv + "module " + notchanged[0] + " already disabled";
       else rv = rv + "modules " + notchanged.join(", ") + " already disabled";
    }
-   await autumnblaze.mango.promise.updateservconfig(autumnblaze.db, msg.guild, { enabled: enabled });
+   await autumnblaze.mango.promise.updateservconfig(autumnblaze.db, msg.guild, { enabledmodules: enabled });
    return rv;
 };
 
