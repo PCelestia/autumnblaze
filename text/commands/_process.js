@@ -64,6 +64,7 @@ const respond = async (cmd, arg, msg, autumnblaze, dm, config) => {
          if (val.send === true) {
             msg.channel.send(val.content).catch(console.warn);
             if (val.logcontent) console.warn(val.logcontent);
+            else console.warn(val.content);
          } else console.warn(val);
       } else console.warn("something went wrong, idk what since no err generated");
    }).finally(() => {
