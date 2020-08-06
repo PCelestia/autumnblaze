@@ -21,4 +21,5 @@ thecmd.allowguild = true;
 thecmd.description = "get a random pony image";
 thecmd.showinhelp = true;
 thecmd.category = "pony";
+thecmd.usetyping = true;
 module.exports = thecmd;
