@@ -3,9 +3,8 @@
 module.exports = async (message, config, autumnblaze) => {
    // get out contents
    let sentcmd = message.content;
-
    const dm = message.channel.type === "dm";
-   if (dm) message.channel.startTyping();
+
    if (!dm) {
       if (sentcmd.toLowerCase().startsWith(config.prefix.toLowerCase())) sentcmd = sentcmd.substring(config.prefix.length);
       else return;
