@@ -12,7 +12,8 @@ const thecmd = async (arg, msg, autumnblaze, dm, config) => {
       // send     whether or not to send the error message to the user, boolean
       // content  the content of the error messasge
       send: true,
-      content: "not quite a command lol"
+      content: "not quite a command lol",
+      logcontent: "content to put in the console.warn"
    };
 };
 
