@@ -1,81 +1,69 @@
 "use strict";
 
-const thecmd = async (cmd, msg, autumnblaze, dm) => {
-   if (dm) return "not allowed in dms yet";
+const thecmd = async (arg, msg, autumnblaze, dm, config) => {
+   if (dm) throw {
+      send: true,
+      content: "something went wrong, DM Autumn Blaze#2864 about it"
+   };
 
-   const set = autumnblaze.randutils.checksubcmd(cmd, "set");
-   if (set[0]) {
-      // verify perms
-      await autumnblaze.randutils.hasperms(msg, "MANAGE_GUILD");
-
-      // get key and value from arg
-      const args = set[1];
-      const keytoset = args.substring(0, args.indexOf(" "));
-      let valuetoset = args.substring(args.indexOf(" ") + 1);
-
-      // if theres no space, then keytoset === "" and valuetoset equals the original value
-      // so this is a check to see if specified enough args
-      if ((keytoset === "") && (valuetoset === args)) return "need to specify what to set the value to";
-
-      // handle boolean values
-      if (keytoset !== "prefix") {
-         if (valuetoset.toLowerCase() === "true") return await setcmd(autumnblaze, msg, keytoset, true);
-         if (valuetoset.toLowerCase() === "false") return await setcmd(autumnblaze, msg, keytoset, false);
-      }
-
-      // handle num values
-      const numvaluetoset = Number(valuetoset);
-      if (!isNaN(numvaluetoset)) return await setcmd(autumnblaze, msg, keytoset, numvaluetoset);
-
-      // check for quotes (single double backtick) and remove
-      // looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong line
-      if ((valuetoset.startsWith("\"") && valuetoset.endsWith("\"")) || (valuetoset.startsWith("'") && valuetoset.endsWith("'")) || (valuetoset.startsWith("`") && valuetoset.endsWith("`"))) {
-         valuetoset = valuetoset.substring(1, valuetoset.length - 1);
-      }
-      return await setcmd(autumnblaze, msg, keytoset, valuetoset);
-   }
-
-   const get = autumnblaze.randutils.checksubcmd(cmd, "get");
-   if (get[0]) {
-      return await getcmd(autumnblaze, get, msg);
-   }
-
-   return "that can't be right";
-
-   // autumnblaze.mango.updateservconfig(autumnblaze.db, msg.channel.guild, )
+   const subcmd = autumnblaze.randutils.getsubcmd(arg);
+   if (subcmd[0] === "empty") return "what should I do?";
+   if (subcmd[1] === "get") return get(subcmd, config);
+   if (subcmd[1] === "set") return await set(autumnblaze, msg, subcmd);
+   return "I don't understand that, sorry";
 };
 
 thecmd.allowguild = true;
 thecmd.perms = ["MANAGE_GUILD"];
-thecmd.description = "change bot configuration for this guild (ex. prefix, enable/disable things, etc)";
+
 thecmd.showinhelp = true;
+thecmd.description = "change bot configuration for this guild (ex. prefix, enable/disable things, etc)";
 thecmd.category = "utility";
 module.exports = thecmd;
 
-
-const getcmd = async (autumnblaze, get, msg) => {
-   return new Promise(resolve => {
-      autumnblaze.mango.getservconfig(autumnblaze.db, msg.guild, result => {
-         result = result[get[1]];
-         if (result === null) return resolve("null");
-
-         if (result === undefined) return resolve("undefined");
-
-         if (result === "") return resolve("<nothing>");
-
-         if (result.replace(/\s/g).length === 0) return resolve("<spaces>");
-         return resolve("`" + result + "`");
-      }, autumnblaze.defaultguildsettings);
-   });
+const get = (subcmd, config) => {
+   if (subcmd[0] === "noarg") return "what should I get?";
+   const args = subcmd[2].split(/ +/);
+   let rv = "";
+   for (let i = 0; i < args.length; i++) {
+      let val = config[args[i]];
+      if (typeof val === "string") val = "\"" + val + "\"";
+      rv = rv + "\n" + args[i] + " = " + val;
+   }
+   return rv.substring(1);
 };
 
-const setcmd = async (autumnblaze, msg, key, val) => {
+const set = (autumnblaze, msg, subcmd) => {
    return new Promise((resolve, reject) => {
-      const update = {};
-      update[key] = val;
-      autumnblaze.mango.updateservconfig(autumnblaze.db, msg.guild, update, () => {
-         resolve("done");
+      if (subcmd[0] === "noarg") resolve("what should I set?");
+      subcmd = autumnblaze.randutils.getsubcmd(subcmd[2]);
+      // verify only 2 "args"
+      if (subcmd[0] === "empty") reject({
+         send: true,
+         content: "something went wrong"
       });
-      // autumnblaze.mango.updateservconfig
+      if (subcmd[0] === "noarg") return resolve("what should i set \"" + subcmd[1] + "\" to?");
+      console.log("poggers");
+      // looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong line
+      if ((subcmd[2].startsWith("\"") && subcmd[2].endsWith("\"")) || (subcmd[2].startsWith("'") && subcmd[2].endsWith("'")) || (subcmd[2].startsWith("`") && subcmd[2].endsWith("`"))) {
+         subcmd[2] = subcmd[2].substring(1, subcmd[2].length - 1);
+      }
+      const update = {};
+      update[subcmd[1]] = subcmd[2];
+      autumnblaze.mango.promise.updateservconfig(autumnblaze.db, msg.guild, update).then(val => {
+         if (Array.isArray(val)) {
+            reject({
+               send: true,
+               content: "something went wrong :(",
+               logcontent: val[1]
+            });
+         } else if (val === true) {
+            msg.react("740800266269360188");
+         } else reject({
+            send: true,
+            content: "something went wrong :(",
+            logcontent: "config command, at the reactions area thing, val isnt true and val isnt array and something went wrong with _updateservconfig_promise and this is going to take you forever to fix i think"
+         });
+      });
    });
 };
