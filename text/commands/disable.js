@@ -2,7 +2,10 @@
 
 const thecmd = async (arg, msg, autumnblaze, dm, config) => {
    return "disabled for the time being~";
-   if (dm) return "something went wrong, DM Autumn Blaze#2864 about it";
+   if (dm) throw {
+      send: true,
+      content: "something went wrong, DM Autumn Blaze#2864 about it"
+   }
 
    if (arg === "") return "please specify what to disable";
    arg = arg.split(/ +/);
