@@ -65,7 +65,10 @@ const respond = async (cmd, arg, msg, autumnblaze, dm, config) => {
             msg.channel.send(val.content).catch(console.warn);
             if (val.logcontent) console.warn(val.logcontent);
             else console.warn(val.content);
-         } else console.warn(val);
+         } else {
+            msg.channel.send("sorry, someething went wrong...");
+            console.warn(val);
+         }
       } else console.warn("something went wrong, idk what since no err generated");
    }).finally(() => {
       if (autumnblaze.commands[cmd].usetyping === true) msg.channel.stopTyping();
