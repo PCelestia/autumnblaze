@@ -1,7 +1,9 @@
 "use strict";
 
 module.exports = (mongodatabase, user, callback) => {
-   const defaultconfig = require("./defaultconfigs").defaultusersettings;
+   let defaultconfig = require("./defaultconfigs");
+   defaultconfig.reset();
+   defaultconfig = defaultconfig.defaultusersettings;
    mongodatabase.collection("user" + user.id).insertOne(defaultconfig, (err, res) => {
       if (err) {
          // err
