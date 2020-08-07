@@ -1,6 +1,6 @@
 "use strict";
 
-const thecmd = async () => {
+const thecmd = async (_, __, autumnblaze) => {
    return new Promise((resolve, reject) => {
       const superagent = require("superagent");
       superagent.get("https://theponyapi.com/api/v1/pony/random").then(res => {
@@ -9,6 +9,7 @@ const thecmd = async () => {
             if (tag.startsWith("artist")) responsething = responsething + tag + "\n";
          });
          responsething = responsething + "source: <" + res.body.pony.sourceURL + ">\n" + res.body.pony.representations.full;
+         autumnblaze.mango.promise.putpony(autumnblaze.db, res.body.pony).catch(console.warn);
          resolve(responsething);
       }).catch(err => {
          console.warn(err);
