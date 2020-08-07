@@ -29,13 +29,16 @@ module.exports = async (message, config, autumnblaze) => {
    }
    // dm: check if cmd allowed to run in dm, then run
    // not dm: check if cmd allowed to run in guild, check perms, then run
-   if (dm) await message.channel.send("command not found\nIf you're trying to use a prefix, there is no need to use a prefix in DMs.").catch(console.warn);
+   if (dm) {
+      if (dm) if (config.___isnew) await message.channel.send(newuserdmmsg).catch(console.warn);
+      await message.channel.send("command not found").catch(console.warn);
+   }
 };
 
 const respond = async (cmd, arg, msg, autumnblaze, dm, config) => {
    // if perms prop, check it, if none, assume everyone allowed to use it
-
    if (autumnblaze.commands[cmd].usetyping === true) msg.channel.startTyping();
+   if (dm) if (config.___isnew) msg.channel.send(newuserdmmsg);
    Promise.resolve((async () => {
       // let perms = true;
       if (autumnblaze.commands[cmd].perms !== undefined) if (autumnblaze.commands[cmd].perms.length > 0) {
@@ -66,7 +69,7 @@ const respond = async (cmd, arg, msg, autumnblaze, dm, config) => {
             if (val.logcontent) console.warn(val.logcontent);
             else console.warn(val.content);
          } else {
-            msg.channel.send("sorry, someething went wrong...");
+            msg.channel.send("sorry, something went wrong...");
             console.warn(val);
          }
       } else console.warn("something went wrong, idk what since no err generated");
@@ -74,3 +77,5 @@ const respond = async (cmd, arg, msg, autumnblaze, dm, config) => {
       if (autumnblaze.commands[cmd].usetyping === true) msg.channel.stopTyping();
    });
 };
+
+const newuserdmmsg = "Hello!\nUnlike most other bots, I actually respond to DMs. In here, you can run some commands that don't require a guild to run.\nSince there is no other use for this DM channel, I will treat every message sent as a command, and there is also no need to use a prefix in this channel.";

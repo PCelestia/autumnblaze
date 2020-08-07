@@ -11,6 +11,7 @@ module.exports = (mongodatabase, user, callback) => {
          return;
       }
       if (res && (res.result.ok === 1) && (res.result.n === 1)) {
+         defaultconfig.___isnew = true;
          callback(defaultconfig);
       } else {
          console.warn("silly error callback didnt return a value but didnt err, hmmmmm (mango/createdefaultuserconfig)");
