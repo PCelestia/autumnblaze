@@ -1,81 +1,56 @@
 "use strict";
 
 module.exports = async (message, config, autumnblaze) => {
-   // get out contents
    let sentcmd = message.content;
    const dm = message.channel.type === "dm";
 
    if (!dm) {
       if (sentcmd.toLowerCase().startsWith(config.prefix.toLowerCase())) sentcmd = sentcmd.substring(config.prefix.length);
       else return;
-   }
-   for (const cmd in autumnblaze.commands) {
-      // process sentcmd, if it ain't then continue
-      if (sentcmd.substring(0, cmd.length + 1) === (cmd + " ")) sentcmd = sentcmd.substring(cmd.length + 1);
-      else if (sentcmd === cmd) sentcmd = "";
-      else continue;
+   } else if (config.___isnew) await message.channel.send(newuserdmmsg).catch(console.warn);
 
-      if (dm) {
-         if (autumnblaze.commands[cmd].allowdm !== true) continue;
-         // is dm, allowed to run in dm
-         respond(cmd, sentcmd, message, autumnblaze, dm, config);
-         return;
-      } else {
-         if (autumnblaze.commands[cmd].allowguild !== true) continue;
-         // is guild, allowed to run in guild
-         respond(cmd, sentcmd, message, autumnblaze, dm, config);
-         return;
-      }
-   }
-   // dm: check if cmd allowed to run in dm, then run
-   // not dm: check if cmd allowed to run in guild, check perms, then run
-   if (dm) {
-      if (dm) if (config.___isnew) await message.channel.send(newuserdmmsg).catch(console.warn);
-      await message.channel.send("command not found").catch(console.warn);
-   }
+   sentcmd = autumnblaze.randutils.getsubcmd(sentcmd);
+   if (sentcmd[0] === "empty") return;
+   if (autumnblaze.commands[sentcmd[1]]) {
+      if (dm && !autumnblaze.commands[sentcmd[1]].allowdm) return message.channel.send("command not found").catch(console.warn);
+      if (!dm && !autumnblaze.commands[sentcmd[1]].allowguild) return;
+      if (autumnblaze.commands[sentcmd[1]].usetyping) message.channel.startTyping();
+      Promise.resolve(execcmd(autumnblaze, sentcmd[1], sentcmd[2], message, dm, config)).then(val => {
+         if ((val !== undefined) && (val !== "")) {
+            if (Array.isArray(val)) {
+               let i = 0;
+               const interval = setInterval(() => {
+                  message.channel.send(val[i++]).catch(console.warn);
+                  if (i === val.length) clearInterval(interval);
+               }, 1100);
+               return;
+            }
+            // other special cases and things here (later)
+            message.channel.send(val).catch(console.warn);
+         }
+      }).catch(val => {
+         if (val) {
+            if (val.send === true) {
+               message.channel.send(val.content).catch(console.warn);
+               if (val.logcontent) console.warn(val.logcontent);
+               else console.warn(val.content);
+            } else {
+               message.channel.send("sorry, something went wrong...\nI've saved a report, my creaters will figure out what went wrong and fix it!");
+               console.warn(val);
+            }
+         } else {
+            message.channel.send("sorry, something went wrong...");
+            console.warn("something went wrong, idk what since no error generated");
+         }
+      }).finally(() => {
+         if (autumnblaze.commands[sentcmd[1]].usetyping === true) message.channel.stopTyping();
+      });
+   } else if (dm) message.channel.send("command not found");
 };
 
-const respond = async (cmd, arg, msg, autumnblaze, dm, config) => {
-   // if perms prop, check it, if none, assume everyone allowed to use it
-   if (autumnblaze.commands[cmd].usetyping === true) msg.channel.startTyping();
-   if (dm) if (config.___isnew) msg.channel.send(newuserdmmsg);
-   Promise.resolve((async () => {
-      // let perms = true;
-      if (autumnblaze.commands[cmd].perms !== undefined) if (autumnblaze.commands[cmd].perms.length > 0) {
-         // hasperms() throws if not enough perms
-         // perms = await autumnblaze.randutils.hasperms(msg, ...autumnblaze.commands[cmd].perms);
-         await autumnblaze.randutils.hasperms(msg, ...autumnblaze.commands[cmd].perms);
-      }
-      return autumnblaze.commands[cmd](arg, msg, autumnblaze, dm, config);
-   })()).then(val => {
-      if ((val !== undefined) && (val !== "")) {
-         if (Array.isArray(val)) {
-            // send the message bit by bit
-            console.log("Arr");
-            let i = 0;
-            const interval = setInterval(() => {
-               msg.channel.send(val[i]).catch(console.warn);
-               i++;
-               if (i === val.length) clearInterval(interval);
-            }, 1000);
-            return;
-         }
-         msg.channel.send(val).catch(console.warn);
-      }
-   }).catch(val => {
-      if (val) {
-         if (val.send === true) {
-            msg.channel.send(val.content).catch(console.warn);
-            if (val.logcontent) console.warn(val.logcontent);
-            else console.warn(val.content);
-         } else {
-            msg.channel.send("sorry, something went wrong...");
-            console.warn(val);
-         }
-      } else console.warn("something went wrong, idk what since no err generated");
-   }).finally(() => {
-      if (autumnblaze.commands[cmd].usetyping === true) msg.channel.stopTyping();
-   });
+const execcmd = async (autumnblaze, cmd, arg, msg, dm, config) => {
+   if (autumnblaze.commands[cmd].perms) if (autumnblaze.commands[cmd].perms.length > 0) await autumnblaze.randutils.hasperms(msg, ...autumnblaze.commands[cmd].perms);
+   return await autumnblaze.commands[cmd](arg, msg, autumnblaze, dm, config);
 };
 
 const newuserdmmsg = "Hello!\nUnlike most other bots, I actually respond to DMs. In here, you can run some commands that don't require a guild to run.\nSince there is no other use for this DM channel, I will treat every message sent as a command, and there is also no need to use a prefix in this channel.";
