@@ -9,7 +9,17 @@ const thecmd = async (_, __, autumnblaze) => {
             if (tag.startsWith("artist")) responsething = responsething + tag + "\n";
          });
          responsething = responsething + "source: <" + res.body.pony.sourceURL + ">\n" + res.body.pony.representations.full;
-         autumnblaze.mango.promise.putpony(autumnblaze.db, res.body.pony).catch(console.warn);
+
+         const dbpony = {};
+         dbpony.derpiId = res.body.pony.derpiId;
+         dbpony.id = res.body.pony.id;
+         dbpony.mimeType = res.body.pony.mimeType;
+         dbpony.originalFormat = res.body.pony.mimeType;
+         dbpony.representations = res.body.pony.representations;
+         dbpony.sourceURL = res.body.pony.sourceURL;
+         dbpony.tags = res.body.pony.tags;
+
+         autumnblaze.mango.promise.putpony(autumnblaze.db, dbpony).catch(console.warn);
          resolve(responsething);
       }).catch(err => {
          console.warn(err);
