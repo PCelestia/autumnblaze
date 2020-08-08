@@ -173,6 +173,7 @@ const autumnblaze = (opts = {}) => {
    process.on("SIGINT", autumnblaze.stop);
    process.on("SIGTERM", autumnblaze.stop);
    process.on("exit", autumnblaze.stop);
+   process.on("unhandledRejection", console.promiserejection);
 
    return autumnblaze;
 };
