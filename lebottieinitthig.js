@@ -21,9 +21,9 @@ const autumnblaze = (opts = {}) => {
    if (opts.mongodbconnectionstring === undefined) {
       warnmissingreq("mongodb connection string", "mongodbconnectionstring");
    }
-   if (opts.derpiapikey === undefined) {
-      warnmissingreq("derpibooru api key", "derpiapikey");
-   }
+   // if (opts.derpiapikey === undefined) {
+   //    warnmissingreq("derpibooru api key", "derpiapikey");
+   // }
    if (opts.usecache === true) {
       console.warn("cache is not usable, disabling");
       opts.usecache = false;
