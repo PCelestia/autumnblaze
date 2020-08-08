@@ -1,6 +1,10 @@
 # Changelog
 Will add changelog for older version when i have the chance
 
+## 0.16.2
+Changes:
+- rewrote member welcome a bit, likely handles promise rejection a bit better
+
 ## 0.16.1
 Changes:
 - rewrote patchconsole
