@@ -1,6 +1,6 @@
 "use strict";
 
-let consolestamp = {};
+const consolestamp = {};
 let channel;
 
 
