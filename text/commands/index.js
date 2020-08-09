@@ -69,9 +69,6 @@ const determinecategories = () => {
 const help = async (arg, msg, autumnblaze, dm, config) => {
    if (!cmds._categories) cmds._categories = determinecategories();
 
-   const discord = require("discord.js");
-   const randfromarray = autumnblaze.randutils.randfromarray;
-   const colors = autumnblaze.opts.embedcolors;
    const categories = cmds._categories;
    const embed = await autumnblaze.randutils.embed();
 
@@ -91,21 +88,23 @@ const help = async (arg, msg, autumnblaze, dm, config) => {
       return embed;
    }
    // cmd has an arg
-   const response = await new Promise(resolve => {
-      categories.forEach(category => {
-         const subcmdthing = autumnblaze.randutils.checksubcmd(arg, category);
-         if (subcmdthing[0] === false) return;
-         category = categories[category];
-         embed.setTitle("Category " + category.name);
-         embed.setDescription(category.description);
-         category.forEach(cmd => {
-            embed.addField(cmd, cmds[cmd].description, true);
-         });
-         resolve(true);
+
+   if (!categories.includes(arg)) return embed.setTitle("category not found");
+
+   const category = categories[arg];
+   embed.setTitle("Category " + category.name);
+   embed.setDescription(category.description);
+   const fields = [];
+   category.forEach(cmd => {
+      if ((dm && cmds[cmd].allowdm) || (!dm && cmds[cmd].allowguild)) fields.push({
+         name: cmd,
+         value: cmds[cmd].description,
+         inline: true
       });
-      resolve(false);
    });
-   if (!response) return embed.setTitle("category not found");
+   if (fields.length > 0) embed.addFields(...fields);
+   else embed.setDescription("No commands available");
+
    return embed;
 };
 help.allowdm = true;
