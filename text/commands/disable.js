@@ -1,19 +1,20 @@
 "use strict";
 
 const thecmd = async (arg, msg, autumnblaze, dm, config) => {
-   return "disabled for the time being~";
+   // return "disabled for the time being~";
    if (dm) throw {
       send: true,
       content: "something went wrong, DM Autumn Blaze#2864 about it"
-   }
+   };
 
    if (arg === "") return "please specify what to disable";
-   arg = arg.split(/ +/);
+   arg = arg.toLowerCase().split(/ +/);
    // remove duplicates
    arg = [...new Set(arg)];
    let enabled = [];
    const disabled = [];
    const notchanged = [];
+   const doesntexist = [];
 
    let rv = "";
    if (!config.enabledmodules) {
@@ -21,15 +22,22 @@ const thecmd = async (arg, msg, autumnblaze, dm, config) => {
       return "modules " + arg.join(", ") + " already disabled";
    }
    enabled = config.enabledmodules;
-   arg.forEach(e => {
+   arg.filter(e => !e.startsWith("_")).forEach(e => {
+      if (!autumnblaze.automatedactions[e]) return doesntexist.push(e);
       if (enabled.includes(e)) {
          enabled.splice(enabled.indexOf(e), 1);
          disabled.push(e);
       } else notchanged.push(e);
    });
+   if (doesntexist.length > 0) {
+      if (doesntexist.length === 1) rv = "module " + doesntexist[0] + " doesn't exist";
+      else rv = "modules " + doesntexist.join(", ") + " don't exist";
+   }
    if (disabled.length > 0) {
-      if (disabled.length === 1) rv = "module " + disabled[0] + " has been disabled" ;
-      else rv = "modules " + disabled.join(", ") + " have been disabled";
+      if (rv !== "") rv = rv + "\n";
+
+      if (disabled.length === 1) rv = rv + "module " + disabled[0] + " has been disabled" ;
+      else rv = rv + "modules " + disabled.join(", ") + " have been disabled";
    }
    if (notchanged.length > 0) {
       if (rv !== "") rv = rv + "\n";
