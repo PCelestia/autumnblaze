@@ -55,6 +55,7 @@ const autumnblaze = (opts = {}) => {
 
    const bot = new discord.Client();
    bot.on("warn", console.warn);
+   bot.on("error", console.error);
    autumnblaze.bot = bot;
 
    // stamp le console
