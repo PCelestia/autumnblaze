@@ -11,6 +11,7 @@ const availablevars = [
    "DERPIAPIKEY",
    "HOST",
    "LOCATION",
+   "OWNERID",
    "PREFIX",
    "RADIOSTREAMURL",
    "REPONAME",

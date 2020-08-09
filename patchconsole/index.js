@@ -22,7 +22,7 @@ module.exports = autumnblaze => {
          if (thing.stack) combinedstuff = combinedstuff + thing.stack + "\n\n";
          else combinedstuff = combinedstuff + thing.toString();
       });
-      autumnblaze.bot.channels.fetch(channel).then(channel => channel.send("**" + method.toUpperCase() + "**:\n```" + combinedstuff + "```")).catch(consolestamp.error);
+      autumnblaze.bot.channels.fetch(channel).then(channel => channel.send("<@" + autumnblaze.opts.ownerid + ">  **" + method.toUpperCase() + "**:\n```" + combinedstuff + "```")).catch(consolestamp.error);
    };
 
    consolestamp.warn = console.warn;
