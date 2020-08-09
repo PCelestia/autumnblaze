@@ -56,6 +56,17 @@ const autumnblaze = (opts = {}) => {
    const bot = new discord.Client();
    bot.on("warn", console.warn);
    bot.on("error", console.error);
+   bot.on("ready", () => {
+      // TEMPORARY
+      autumnblaze.bot.user.setPresence({
+         status: "online",
+         afk: false,
+         activity: {
+            name: "PING ME LOL"
+         }
+      }).catch(console.error);
+      // END TEMPORARY
+   });
    autumnblaze.bot = bot;
 
    // stamp le console
@@ -98,15 +109,6 @@ const autumnblaze = (opts = {}) => {
          autumnblaze.hcooldown = (1000 * 30);
          autumnblaze.h = Date.now() - autumnblaze.hcooldown;
 
-         // TEMPORARY
-         autumnblaze.bot.user.setPresence({
-            status: "online",
-            afk: false,
-            activity: {
-               name: "PING ME LOL"
-            }
-         }).catch(console.error);
-         // END TEMPORARY
       }).catch(err => {
          console.log("connection failed lol");
          console.log(err);
