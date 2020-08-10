@@ -28,6 +28,9 @@ const path = require("path");
 const cmds = {};
 const catdesc = require("./_categorydesc");
 
+let helpembed;
+const categoryembeds = {};
+
 // automatically read all files from this directory
 const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
 files.forEach(file => {
@@ -67,14 +70,18 @@ const determinecategories = () => {
 // togglerole
 
 const help = async (arg, msg, autumnblaze, dm, config) => {
+   if ((arg === "") && (helpembed !== undefined)) return helpembed.setColor(autumnblaze.randutils.randfromarray(autumnblaze.opts.embedcolors));
+   if ((arg !== "") && (categoryembeds[arg] !== undefined)) return categoryembeds[arg].setColor(autumnblaze.randutils.randfromarray(autumnblaze.opts.embedcolors));
+
    if (!cmds._categories) cmds._categories = determinecategories();
 
    const categories = cmds._categories;
-   const embed = await autumnblaze.randutils.embed();
 
    if (arg === "") {
-      embed.setTitle("Command Help");
-      embed.setDescription("to get help on commands in a category, run the command shown for that category");
+      helpembed = await autumnblaze.randutils.embed();
+
+      helpembed.setTitle("Command Help");
+      helpembed.setDescription("to get help on commands in a category, run the command shown for that category");
       categories.forEach((category) => {
          let middlepart = "`";
          if (!dm) {
@@ -82,12 +89,14 @@ const help = async (arg, msg, autumnblaze, dm, config) => {
             else middlepart = middlepart + autumnblaze.opts.prefix;
          }
          middlepart = middlepart + "help " + category + "`";
-         embed.addField(category, middlepart, true);
+         helpembed.addField(category, middlepart, true);
       });
 
-      return embed;
+      return helpembed;
    }
    // cmd has an arg
+   categoryembeds[arg] = await autumnblaze.randutils.embed();
+   const embed = categoryembeds[arg];
 
    if (!categories.includes(arg)) return embed.setTitle("category not found");
 
