@@ -84,54 +84,37 @@ const autumnblaze = (opts = {}) => {
    autumnblaze.automatedactions = autumnblaze.text.automatedactions;
    autumnblaze.commands = autumnblaze.text.commands;
 
-   autumnblaze.connectionstatus = {
-      discord: false,
-      mongodb: false,
-      runwhenconnected: () => {
-         console.log("connected!!");
-      },
-      runwhendisconnected: () => {
-         console.log("disconnected!!");
-      }
-   };
    autumnblaze.connectbot = () => {
-      console.log("connecting to discord...");
-      autumnblaze.bot.login(autumnblaze.opts.token).then(token => {
-         // why did i do this? i really dont know
-         token = "erased";
-         if (token !== "erased") {
-            console.warn("token not erased or smth idk lol, ignore this lol");
-            console.warn("if this pops up then something is def wrong");
-         }
-         console.log("connection to discord success!!");
-         autumnblaze.connectionstatus.discord = true;
-         if (autumnblaze.connectionstatus.mongodb) autumnblaze.connectionstatus.runwhenconnected();
-         autumnblaze.hcooldown = (1000 * 30);
-         autumnblaze.h = Date.now() - autumnblaze.hcooldown;
-
-      }).catch(err => {
-         console.log("connection failed lol");
-         console.log(err);
-         process.exit(1);
+      return new Promise(resolve => {
+         console.log("connecting to discord...");
+         autumnblaze.bot.login(autumnblaze.opts.token).then(token => {
+            // why did i do this? (token erase part) i really dont know
+            token = "erased";
+            if (token !== "erased") {
+               console.warn("token not erased or smth idk lol, ignore this lol");
+               console.warn("if this pops up then something is def wrong");
+            }
+            console.log("connection to discord success!!");
+            autumnblaze.hcooldown = (1000 * 30);
+            autumnblaze.h = Date.now() - autumnblaze.hcooldown;
+            resolve(autumnblaze);
+         });
       });
-      return autumnblaze;
    };
    let dbserv;
    autumnblaze.connectdb = () => {
-      console.log("connecting to mongodb...");
-      require("./mango")(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.usecache).then(val => {
-         autumnblaze.db = val[0].db(autumnblaze.opts.database);
-         dbserv = val[0];
-         autumnblaze.mango = val[1];
-         autumnblaze.defaultguildsettings = autumnblaze.mango.defaultconfigs.defaultguildsettings;
-         autumnblaze.defaultusersettings = autumnblaze.mango.defaultconfigs.defaultusersettings;
-         console.log("connection to mongodb success!!");
-         autumnblaze.connectionstatus.mongodb = true;
-         if (autumnblaze.connectionstatus.discord) autumnblaze.connectionstatus.runwhenconnected();
-      }).catch(errrrr=> {
-         console.log(errrrr);
+      return new Promise(resolve => {
+         console.log("connecting to mongodb...");
+         require("./mango")(autumnblaze.opts.mongodbconnectionstring, autumnblaze.opts.usecache).then(val => {
+            autumnblaze.db = val[0].db(autumnblaze.opts.database);
+            dbserv = val[0];
+            autumnblaze.mango = val[1];
+            autumnblaze.defaultguildsettings = autumnblaze.mango.defaultconfigs.defaultguildsettings;
+            autumnblaze.defaultusersettings = autumnblaze.mango.defaultconfigs.defaultusersettings;
+            console.log("connection to mongodb success!!");
+            resolve(autumnblaze);
+         });
       });
-      return autumnblaze;
    };
    autumnblaze.connect = () => {
       console.log("running autumnblaze v" + autumnblaze.version);
@@ -145,7 +128,7 @@ const autumnblaze = (opts = {}) => {
       if (autumnblaze.opts.host) console.log("host           " + autumnblaze.opts.host);
       if (autumnblaze.opts.location) console.log("location       " + autumnblaze.opts.location);
 
-      return autumnblaze.connectbot().connectdb();
+      return autumnblaze.connectdb().then(r => r.connectbot()).then(() => console.log("fully connected!!")).catch(console.warn);
    };
    autumnblaze.stop = async () => {
       if (autumnblaze.isrubbish) return;
@@ -162,7 +145,6 @@ const autumnblaze = (opts = {}) => {
       return new Promise(resolve => {
          dbserv.close(false, () => {
             console.log("disconnected from mongodb");
-            if (!autumnblaze.connectionstatus.discord) autumnblaze.connectionstatus.runwhendisconnected();
             resolve();
          });
       });
@@ -170,7 +152,6 @@ const autumnblaze = (opts = {}) => {
    autumnblaze.stopbot = async () => {
       autumnblaze.bot.destroy();
       console.log("disconnected from discord");
-      if (!autumnblaze.connectionstatus.mongodb) autumnblaze.connectionstatus.runwhendisconnected();
    };
 
    process.on("SIGINT", autumnblaze.stop);
