@@ -29,7 +29,6 @@ const cmds = {};
 const catdesc = require("./_categorydesc");
 
 let helpembed;
-const categoryembeds = {};
 
 // automatically read all files from this directory
 const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
@@ -71,7 +70,6 @@ const determinecategories = () => {
 
 const help = async (arg, msg, autumnblaze, dm, config) => {
    if ((arg === "") && (helpembed !== undefined)) return helpembed.setColor(autumnblaze.randutils.randfromarray(autumnblaze.opts.embedcolors));
-   if ((arg !== "") && (categoryembeds[arg] !== undefined)) return categoryembeds[arg].setColor(autumnblaze.randutils.randfromarray(autumnblaze.opts.embedcolors));
 
    if (!cmds._categories) cmds._categories = determinecategories();
 
@@ -94,9 +92,9 @@ const help = async (arg, msg, autumnblaze, dm, config) => {
 
       return helpembed;
    }
+
    // cmd has an arg
-   categoryembeds[arg] = await autumnblaze.randutils.embed();
-   const embed = categoryembeds[arg];
+   const embed = await autumnblaze.randutils.embed();
 
    if (!categories.includes(arg)) return embed.setTitle("category not found");
 
