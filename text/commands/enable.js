@@ -20,7 +20,7 @@ thecmd.exec = async (arg, msg, autumnblaze, dm, config) => {
    let rv = "";
    if (config.enabledmodules) alreadyenabled = config.enabledmodules;
    arg.filter(e => !e.startsWith("_")).forEach(e => {
-      if (!autumnblaze.automatedactions[e]) return doesntexist.push(e);
+      if (!autumnblaze.modules[e]) return doesntexist.push(e);
       if (alreadyenabled.includes(e)) notchanged.push(e);
       else {
          alreadyenabled.push(e);

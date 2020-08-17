@@ -7,15 +7,10 @@ const autumnblaze = (opts = {}) => {
    };
 
    // check for missing token and mongodbconnectionstring
-   if ((opts.token === undefined)) {
-      warnmissingreq("bot token", "token");
-   }
-   if (opts.mongodbconnectionstring === undefined) {
-      warnmissingreq("mongodb connection string", "mongodbconnectionstring");
-   }
-   // if (opts.derpiapikey === undefined) {
-   //    warnmissingreq("derpibooru api key", "derpiapikey");
-   // }
+   if ((opts.token === undefined)) warnmissingreq("bot token", "token");
+   if (opts.mongodbconnectionstring === undefined) warnmissingreq("mongodb connection string", "mongodbconnectionstring");
+
+   // if (opts.derpiapikey === undefined) warnmissingreq("derpibooru api key", "derpiapikey");}
    if (opts.usecache === true) {
       console.warn("cache is not usable, disabling");
       opts.usecache = false;
@@ -64,7 +59,7 @@ const autumnblaze = (opts = {}) => {
 
    autumnblaze.text = require("./text");
    // AUTOMATED ACTIONS ARE KNOWN AS MODULES TO THE USER
-   autumnblaze.automatedactions = autumnblaze.text.automatedactions;
+   autumnblaze.modules = autumnblaze.text.modules;
    autumnblaze.commands = autumnblaze.text.commands;
 
    autumnblaze.connectbot = () => {

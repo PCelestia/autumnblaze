@@ -24,7 +24,7 @@ thecmd.exec = async (arg, msg, autumnblaze, dm, config) => {
    }
    enabled = config.enabledmodules;
    arg.filter(e => !e.startsWith("_")).forEach(e => {
-      if (!autumnblaze.automatedactions[e]) return doesntexist.push(e);
+      if (!autumnblaze.modules[e]) return doesntexist.push(e);
       if (enabled.includes(e)) {
          enabled.splice(enabled.indexOf(e), 1);
          disabled.push(e);

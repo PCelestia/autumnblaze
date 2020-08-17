@@ -1,4 +1,5 @@
 "use strict";
+
 // this a template thing to document the command export format thing
 const thecmd = async (arg, msg, autumnblaze, dm, config) => {
    // arg           message.contents with prefix chopped off (if applicable) and top level command chopped off. if no args, is ""
@@ -35,3 +36,4 @@ thecmd.usetyping = true;
 module.exports = thecmd;
 
 // other methods and things can go below
+// or wherever, but preferrably below
