@@ -40,6 +40,7 @@ const autumnblaze = (opts = {}) => {
 
    const randutils = require("./randutils")(autumnblaze);
    autumnblaze.randutils = randutils;
+   autumnblaze.proto = require("./proto");
 
    // take opts and patch it into the default opts
    var patchedopts = randutils.copyobj(defaultopts);
