@@ -8,8 +8,7 @@ module.exports = autumnblaze => {
    const files = fs.readdirSync(path.resolve(__dirname, ".")).filter(file => file !== "index.js" && !file.startsWith("_"));
    files.forEach(file => {
       if (file.endsWith(".js")) file = file.slice(0, file.length - 3);
-      runners.push(require("./" + file)(autumnblaze));
-      console.log(file);
+      Promise.resolve(require("./" + file)(autumnblaze)).then(runners.push);
    });
    return () => runners.forEach(runner => runner());
 };
