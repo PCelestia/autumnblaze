@@ -1,13 +1,5 @@
 "use strict";
 
-// stamp le console
-
-
-if (require.main === module) {
-   console.warn("are you trying to invoke this directly?");
-   process.exit(1);
-}
-
 const autumnblaze = (opts = {}) => {
    const warnmissingreq = (one, two) => {
       console.warn("you need to supply a " + one + ".\nfor example:\nconst bot = require(\"autumnblaze\")({\n   " + two + ": \"put-your-" + two + "-here\",\n   otheropts: \"other things\"\n});\n\nthe readme at \"https://github.com/pcelestia/autumnblaze/\" might be helpful");
@@ -152,4 +144,29 @@ const autumnblaze = (opts = {}) => {
    return autumnblaze;
 };
 
-module.exports = autumnblaze;
+if (require.main === module) {
+   require("dotenv").config();
+   const configobj = {};
+   const availablevars = [
+      "TOKEN",
+      "MONGODBCONNECTIONSTRING",
+      "ENV",
+      "DATABASE",
+      "DEBUG",
+      "EMBEDCOLORS",
+      "DERPIAPIKEY",
+      "HOST",
+      "LOCATION",
+      "OWNERID",
+      "PREFIX",
+      "RADIOSTREAMURL",
+      "REPONAME",
+      "USECACHE",
+      "WARNCHANNEL"
+   ];
+
+   availablevars.forEach(configvar => {
+      if (process.env[configvar]) configobj[configvar.toLowerCase()] = process.env[configvar];
+   });
+   autumnblaze(configobj).connect();
+} else module.exports = autumnblaze;

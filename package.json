@@ -2,10 +2,10 @@
    "name": "autumnblaze",
    "version": "0.17.0",
    "description": "another general purpose discord bot",
-   "main": "lebottieinitthig.js",
+   "main": "index.js",
    "scripts": {
       "test": "echo im lazy lol",
-      "env": "node env"
+      "env": "node index"
    },
    "repository": {
       "type": "git",

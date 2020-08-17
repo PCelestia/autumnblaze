@@ -1,1 +1,1 @@
-bot: node env
+bot: node index
