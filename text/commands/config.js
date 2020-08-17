@@ -44,7 +44,6 @@ const set = (autumnblaze, msg, subcmd) => {
          content: "something went wrong"
       });
       if (subcmd[0] === "noarg") return resolve("what should i set \"" + subcmd[1] + "\" to?");
-      console.log("poggers");
       // looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong line
       if ((subcmd[2].startsWith("\"") && subcmd[2].endsWith("\"")) || (subcmd[2].startsWith("'") && subcmd[2].endsWith("'")) || (subcmd[2].startsWith("`") && subcmd[2].endsWith("`"))) {
          subcmd[2] = subcmd[2].substring(1, subcmd[2].length - 1);
