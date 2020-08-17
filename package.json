@@ -1,6 +1,6 @@
 {
    "name": "autumnblaze",
-   "version": "0.17.0",
+   "version": "0.17.1",
    "description": "another general purpose discord bot",
    "main": "index.js",
    "scripts": {
