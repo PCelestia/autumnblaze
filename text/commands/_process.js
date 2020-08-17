@@ -50,7 +50,7 @@ module.exports = async (message, config, autumnblaze) => {
 
 const execcmd = async (autumnblaze, cmd, arg, msg, dm, config) => {
    if (autumnblaze.commands[cmd].perms) if (autumnblaze.commands[cmd].perms.length > 0) await autumnblaze.randutils.hasperms(msg, ...autumnblaze.commands[cmd].perms);
-   return await autumnblaze.commands[cmd](arg, msg, autumnblaze, dm, config);
+   return await autumnblaze.commands[cmd].exec(arg, msg, autumnblaze, dm, config);
 };
 
 const newuserdmmsg = "Hello!\nUnlike most other bots, I actually respond to DMs. In here, you can run some commands that don't require a guild to run.\nSince there is no other use for this DM channel, I will treat every message sent as a command, and there is also no need to use a prefix in this channel.";

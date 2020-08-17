@@ -1,6 +1,7 @@
 "use strict";
 
-const thecmd = async (arg, msg, autumnblaze, dm, config) => {
+const thecmd = {};
+thecmd.exec = async (arg, msg, autumnblaze, dm, config) => {
    if (dm) throw {
       send: true,
       content: "something went wrong, DM Autumn Blaze#2864 about it"

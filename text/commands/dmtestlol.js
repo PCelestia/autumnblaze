@@ -1,6 +1,7 @@
 "use strict";
 
-const thecmd = async (cmd, msg, autumnblaze) => {
+const thecmd = {};
+thecmd.exec = async (cmd, msg, autumnblaze) => {
    return new Promise((resolve, reject) => {
       autumnblaze.mango.getuserconfig(autumnblaze.db, msg.author, val => {
          // stuff

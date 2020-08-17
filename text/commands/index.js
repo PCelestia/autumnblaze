@@ -26,7 +26,7 @@ const fs = require("fs");
 const path = require("path");
 
 const cmds = {};
-const catdesc = require("./_categorydesc");
+const categorydescriptions = require("./_categorydesc");
 
 let helpembed;
 
@@ -56,7 +56,7 @@ const determinecategories = () => {
       categories.push(category);
       categories[category] = [];
       categories[category].name = category;
-      if (catdesc[category]) categories[category].description = catdesc[category].description;
+      if (categorydescriptions[category]) categories[category].description = categorydescriptions[category].description;
       else categories[category].description = "no description available";
       categories[category].push(cmdhandler);
    }
@@ -68,7 +68,8 @@ const determinecategories = () => {
 // list
 // togglerole
 
-const help = async (arg, msg, autumnblaze, dm, config) => {
+const help = {};
+help.exec = async (arg, msg, autumnblaze, dm, config) => {
    if ((arg === "") && (helpembed !== undefined)) return helpembed.setColor(autumnblaze.randutils.randfromarray(autumnblaze.opts.embedcolors));
 
    if (!cmds._categories) cmds._categories = determinecategories();

@@ -1,6 +1,7 @@
 "use strict";
 
-const thecmd = (cmd, msg, autumnblaze) => {
+const thecmd = {};
+thecmd.exec = (cmd, msg, autumnblaze) => {
    return autumnblaze.randutils.randfromarray(["Pong!", "Plonkee!", "<:lurk:709864149173403781>", "okie then", "plongz"]);
 };
 

@@ -1,6 +1,7 @@
 "use strict";
 
-const thecmd = async (_, __, autumnblaze) => {
+const thecmd = {};
+thecmd.exec = async (_, __, autumnblaze) => {
    return new Promise((resolve, reject) => {
       const superagent = require("superagent");
       superagent.get("https://theponyapi.com/api/v1/pony/random").then(res => {

@@ -1,7 +1,8 @@
 "use strict";
 
 let embed;
-const thecmd = async (cmd, _, autumnblaze) => {
+const thecmd = {};
+thecmd.exec = async (cmd, _, autumnblaze) => {
    if (embed !== undefined) return embed.setColor(autumnblaze.randutils.randfromarray(autumnblaze.opts.embedcolors));
 
    embed = await autumnblaze.randutils.embed();

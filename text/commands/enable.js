@@ -1,6 +1,7 @@
 "use strict";
 
-const thecmd = async (arg, msg, autumnblaze, dm, config) => {
+const thecmd = {};
+thecmd.exec = async (arg, msg, autumnblaze, dm, config) => {
    // return "disabled for the time being~";
    if (dm) throw {
       send: true,

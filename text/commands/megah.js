@@ -1,5 +1,6 @@
 "use strict";
-const thecmd = async (cmd) => {
+const thecmd = {};
+thecmd.exec = async (cmd) => {
    if (cmd === "") {
       return h;
    }
