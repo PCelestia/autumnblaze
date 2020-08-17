@@ -5,6 +5,7 @@ const configobj = {};
 const availablevars = [
    "TOKEN",
    "MONGODBCONNECTIONSTRING",
+   "ENV",
    "DATABASE",
    "DEBUG",
    "EMBEDCOLORS",

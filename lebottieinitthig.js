@@ -36,6 +36,7 @@ const autumnblaze = (opts = {}) => {
       database: "autumnblazebot",
       debug: false,
       embedcolors: ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"],
+      env: "production",
       ownerid: "379800645571575810",
       prefix: "autumn ",
       radiostreamurl: "http://fancynoise.xyz:8000/radio",
