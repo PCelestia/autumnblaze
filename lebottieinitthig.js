@@ -57,17 +57,6 @@ const autumnblaze = (opts = {}) => {
    const bot = new discord.Client();
    bot.on("warn", console.warn);
    bot.on("error", console.error);
-   bot.on("ready", () => {
-      // TEMPORARY
-      autumnblaze.bot.user.setPresence({
-         status: "online",
-         afk: false,
-         activity: {
-            name: "PING ME LOL"
-         }
-      }).catch(console.error);
-      // END TEMPORARY
-   });
    autumnblaze.bot = bot;
 
    // stamp le console
