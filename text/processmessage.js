@@ -10,10 +10,8 @@ module.exports = async (message, autumnblaze) => {
       // h (idea) by Thorinair on A State of Sugar Discord server
       // github username: thorinair
       // (temporary) sloppy reimplementation by me lol
-      message.channel.startTyping();
       autumnblaze.h = Date.now();
       message.channel.send("h");
-      message.channel.stopTyping();
       return;
    }
 
