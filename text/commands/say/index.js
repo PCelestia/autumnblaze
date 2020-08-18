@@ -13,9 +13,9 @@ thecmd.exec = async (arg, msg, autumnblaze, dm, config, otherconfig) => {
    if (filter.isProfane(arg)) {
       numoftimes++;
       await autumnblaze.mango.promise.updateuserconfig(autumnblaze.db, msg.author, { sayrejectnum: numoftimes });
-      return getangryresponse(numoftimes);
+      return getangryresponse(numoftimes, dm);
    }
-   return getnormalresponse(numoftimes, arg);
+   return getnormalresponse(numoftimes, arg, dm);
 
 
 };
@@ -27,8 +27,17 @@ thecmd.category = "fun";
 module.exports = thecmd;
 
 const responses = require("./responses");
-const getangryresponse = numoftimes => responses[numoftimes - 1];
-const getnormalresponse = (numoftimes, arg) => {
-   if (numoftimes > responses.length) return undefined;
-   else return arg;
+const getangryresponse = (numoftimes, dm) => {
+   const response = responses[numoftimes - 1];
+   if (dm) {
+      if (response) return response;
+      return "command not found";
+   }
+   return response;
+};
+const getnormalresponse = (numoftimes, arg, dm) => {
+   if (numoftimes > responses.length) {
+      if (dm) return "command not found";
+      return undefined;
+   } else return arg;
 };
