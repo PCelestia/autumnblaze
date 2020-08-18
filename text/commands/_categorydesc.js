@@ -13,5 +13,8 @@ cat.utility = {
 cat.pony = {
    description: "commands related to ponies"
 };
+cat.fun = {
+   description: "fun"
+};
 
 module.exports = cat;
