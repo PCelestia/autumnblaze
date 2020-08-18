@@ -3,6 +3,11 @@ Will add changelog for older version when i have the chance
 [int] internal changes, doesnt directly affect user experience
 [ext] external changes, users see a difference
 
+## 0.18.1
+Changes:
+- [ext] increased h cooldown to 2 minutes from 30 seconds
+- [ext] removed typing indicator for h
+
 ## 0.18.0
 New:
 - [ext] say command, and the bot gets mad at you gradually as you keep trying to make it swear
