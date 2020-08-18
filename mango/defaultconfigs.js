@@ -6,16 +6,7 @@ module.exports = {
       name: "guildsettings"
    },
    defaultusersettings: {
-      name: "usersettings"
-   },
-   reset: () => {
-      module.exports = {
-         defaultguildsettings: {
-            name: "guildsettings"
-         },
-         defaultusersettings: {
-            name: "usersettings"
-         }
-      };
+      name: "usersettings",
+      new: true
    }
 };

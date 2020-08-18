@@ -17,8 +17,16 @@ module.exports = async (message, autumnblaze) => {
       return;
    }
 
-   let config;
+   // get config(s)
+   let config = await new Promise((resolve, reject) => {
+      autumnblaze.mango.getuserconfig(autumnblaze.db, message.author, config => {
+         if (config === undefined) return reject("failed to create/get user config");
+         resolve(config);
+      });
+   });
+   let otherconfig;
    if (!(message.channel.type === "dm")) {
+      otherconfig = config;
       // (try to) remove prefix if guild
       config = await new Promise((resolve, reject) => {
          autumnblaze.mango.getservconfig(autumnblaze.db, message.guild, config => {
@@ -32,16 +40,9 @@ module.exports = async (message, autumnblaze) => {
          pingstring = pingstring + "my prefix here is `" + config.prefix + "`, for example `" + config.prefix + "help`";
          message.channel.send(pingstring);
       }
-   } else {
-      config = await new Promise((resolve, reject) => {
-         autumnblaze.mango.getuserconfig(autumnblaze.db, message.author, config => {
-            if (config === undefined) return reject("failed to create/get user config");
-            resolve(config);
-         });
-      });
    }
 
    // process the message for commands
-   autumnblaze.commands._process(message, config, autumnblaze).catch(console.warn);
-   autumnblaze.modules._run(message, config, autumnblaze).catch(console.warn);
+   autumnblaze.commands._process(message, config, otherconfig, autumnblaze).catch(console.warn);
+   autumnblaze.modules._run(message, config, otherconfig, autumnblaze).catch(console.warn);
 };

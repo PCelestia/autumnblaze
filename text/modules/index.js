@@ -10,10 +10,10 @@ files.forEach(file => {
    actions[file] = require("./" + file);
 });
 
-const _run = async (msg, config, autumnblaze) => {
+const _run = async (msg, config, otherconfig, autumnblaze) => {
    if (msg.channel.type === "dm") return;
    if (config.enabledmodules) config.enabledmodules.forEach(action => {
-      actions[action](msg, config, autumnblaze).catch(console.warn);
+      actions[action](msg, config, autumnblaze, otherconfig).catch(console.warn);
    });
 };
 
