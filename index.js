@@ -73,7 +73,8 @@ const autumnblaze = (opts = {}) => {
                console.warn("if this pops up then something is def wrong");
             }
             console.log("connection to discord success!!");
-            autumnblaze.hcooldown = (1000 * 30);
+            // 2 minutes
+            autumnblaze.hcooldown = (1000 * 60 * 2);
             autumnblaze.h = Date.now() - autumnblaze.hcooldown;
             resolve(autumnblaze);
          });
