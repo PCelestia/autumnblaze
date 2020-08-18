@@ -3,6 +3,16 @@ Will add changelog for older version when i have the chance
 [int] internal changes, doesnt directly affect user experience
 [ext] external changes, users see a difference
 
+## 0.18.0
+New:
+- [ext] say command, and the bot gets mad at you gradually as you keep trying to make it swear
+- [ext] compliment command, pulls generated compliments from `https://complimentr.com/api`
+
+Changes:
+- [int] renamed automatedactions to modules (because thats what it should have been)
+- [int] command handlers now have access to user config when command sent in a guild
+- [int] misc improvements to pony command
+
 ## 0.17.1
 Changes:
 - [int] lebottieinitthig.js => index.js (no more strange names!)
