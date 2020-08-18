@@ -10,6 +10,6 @@ thecmd.exec = async () => {
 thecmd.allowguild = true;
 thecmd.allowdm = true;
 thecmd.showinhelp = true;
-thecmd.category = "other";
+thecmd.category = "fun";
 thecmd.usetyping = true;
 module.exports = thecmd;

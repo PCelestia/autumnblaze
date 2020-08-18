@@ -14,7 +14,7 @@ cat.pony = {
    description: "commands related to ponies"
 };
 cat.fun = {
-   description: "fun"
+   description: "non-serious things happen here"
 };
 
 module.exports = cat;
