@@ -1,7 +1,7 @@
 "use strict";
 
 const thecmd = {};
-thecmd.exec = async (_, __, autumnblaze) => {
+thecmd.exec = (_, __, autumnblaze) => {
    return new Promise((resolve, reject) => {
       const superagent = require("superagent");
       superagent.get("https://theponyapi.com/api/v1/pony/random").then(res => {
@@ -22,10 +22,11 @@ thecmd.exec = async (_, __, autumnblaze) => {
 
          autumnblaze.mango.promise.putpony(autumnblaze.db, dbpony).catch(console.warn);
          resolve(responsething);
-      }).catch(err => {
-         console.warn(err);
-         resolve("sorry, an error occured");
-      });
+      }).catch(err => reject({
+         send: true,
+         content: "sorry, an error occured",
+         logcontent: err
+      }));
    });
 };
 
