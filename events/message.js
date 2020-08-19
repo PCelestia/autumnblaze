@@ -1,7 +1,5 @@
 "use strict";
 
-module.exports = autumnblaze => {
-   return message => {
-      autumnblaze.text.processmessage(message, autumnblaze);
-   };
+module.exports = autumnblaze => message => {
+   autumnblaze.text.processmessage(message, autumnblaze);
 };
