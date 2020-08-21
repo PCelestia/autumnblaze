@@ -3,6 +3,10 @@ Will add changelog for older version when i have the chance
 [int] internal changes, doesnt directly affect user experience
 [ext] external changes, users see a difference
 
+## 0.18.2
+Changes:
+- [int] shortened some code that could be more concise
+
 ## 0.18.1
 Changes:
 - [ext] increased h cooldown to 2 minutes from 30 seconds
