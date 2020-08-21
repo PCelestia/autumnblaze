@@ -16,13 +16,16 @@ module.exports = autumnblaze => {
    if (!channel) return;
 
    const send = (method, stuff) => {
-      if (consolestamp[method]) consolestamp[method](...stuff);
+      sendnodiscord(method, stuff);
       let combinedstuff = "";
       stuff.forEach(thing => {
          if (thing.stack) combinedstuff = combinedstuff + thing.stack + "\n\n";
          else combinedstuff = combinedstuff + thing.toString();
       });
       autumnblaze.bot.channels.fetch(channel).then(channel => channel.send("<@" + autumnblaze.opts.ownerid + ">  **" + method.toUpperCase() + "**:\n```" + combinedstuff + "```")).catch(consolestamp.error);
+   };
+   const sendnodiscord = (method, stuff) => {
+      if (consolestamp[method]) consolestamp[method](...stuff);
    };
 
    consolestamp.warn = console.warn;
