@@ -3,6 +3,9 @@ Will add changelog for older version when i have the chance
 [int] internal changes, doesnt directly affect user experience
 [ext] external changes, users see a difference
 
+## 0.18.3
+- [int] updated some packages
+
 ## 0.18.2
 Changes:
 - [int] shortened some code that could be more concise
