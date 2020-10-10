@@ -10,6 +10,7 @@ thecmd.exec = async (arg, msg, autumnblaze, dm, config, otherconfig) => {
    else userconfig = otherconfig;
 
    let numoftimes = userconfig.sayrejectnum || 0;
+   if (arg.includes("@everyone")) return "haha NOPE";
    if (filter.isProfane(arg)) {
       numoftimes++;
       await autumnblaze.mango.promise.updateuserconfig(autumnblaze.db, msg.author, { sayrejectnum: numoftimes });
