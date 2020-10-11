@@ -1,7 +1,8 @@
 node_modules
-thebot.js
-notz
-voicetest.js
-yttest.ja
-testfolderlol
+build
+docs
 .env
+notz
+testfolderlol
+
+GIT-PLEASE-IGNORE-ME-*
