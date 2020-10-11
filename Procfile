@@ -1,1 +1,1 @@
-bot: node index
+bot: node js

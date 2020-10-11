@@ -53,7 +53,7 @@ const autumnblaze = (opts = {}) => {
    // handle different events and things
    autumnblaze.events = require("./events")(autumnblaze);
 
-   autumnblaze.packagejson = require("./package.json");
+   autumnblaze.packagejson = require("../package.json");
    autumnblaze.version = autumnblaze.packagejson.version;
    autumnblaze.defaultopts = defaultopts;
 
