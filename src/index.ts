@@ -8,6 +8,7 @@ import { AutumnBlaze } from "./bot";
 import { envisdev } from "./rando";
 import { BoopersSchmoopers } from "./text/commands/boop";
 import { Boopethieht } from "./text/commands/boopeth";
+import { HelpCommandthing } from "./text/commands/help";
 import { Mlemmer } from "./text/commands/mlem";
 
 
@@ -22,6 +23,7 @@ autumnblazebotthing.registerstoplistener("exit");
 autumnblazebotthing.registerstoplistener("SIGINT");
 autumnblazebotthing.registerstoplistener("SIGTERM");
 
+autumnblazebotthing.registercommand(new HelpCommandthing(autumnblazebotthing));
 autumnblazebotthing.registercommand(new BoopersSchmoopers());
 autumnblazebotthing.registercommand(new Boopethieht());
 autumnblazebotthing.registercommand(new Mlemmer());
