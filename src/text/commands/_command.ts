@@ -13,7 +13,7 @@ export abstract class Command {
       this.logger.debug(`${this.name} constructed!`);
    }
 
-   public abstract exec(message: Message): void;
+   public async abstract exec(message: Message): Promise<void>;
    public readonly abstract perms: Readonly<Array<PermissionFlags | PermissionString>>;
 
    public readonly abstract allowguild: boolean;

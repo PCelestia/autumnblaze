@@ -7,6 +7,7 @@
 import { AutumnBlaze } from "./bot";
 import { envisdev } from "./rando";
 import { BoopersSchmoopers } from "./text/commands/boop";
+import { Boopethieht } from "./text/commands/boopeth";
 
 
 if (envisdev()) (require("dotenv") as any).config();
@@ -21,5 +22,6 @@ autumnblazebotthing.registerstoplistener("SIGINT");
 autumnblazebotthing.registerstoplistener("SIGTERM");
 
 autumnblazebotthing.registercommand(new BoopersSchmoopers());
+autumnblazebotthing.registercommand(new Boopethieht());
 
 void autumnblazebotthing.start();

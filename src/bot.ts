@@ -77,4 +77,9 @@ export class AutumnBlaze {
          if (msg.channel.type === "dm" && command.allowdm || msg.channel.type === "text" && command.allowguild) command.exec(msg);
       });
    }
+
+   public getcommands(): Collection<string, Command> {
+      // clone to prevent modification
+      return this.commands.clone();
+   }
 }
