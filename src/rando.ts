@@ -4,7 +4,7 @@ import { transports } from "winston";
 import { Logger } from "winston";
 import { format } from "winston";
 import { createLogger } from "winston";
-import { devloglevel, prodloglevel } from "./consts";
+import { devloglevel, prodloglevel, labelshift, levelshift } from "./consts";
 
 export function normalise(str: string, shift: number): string {
    for (let i: number = str.length; i <= shift; i++) str = str + " ";
@@ -19,7 +19,7 @@ export function getlogger(name: string): Logger {
          format.timestamp(),
          format.label({ label: `[${name}]`, message: false }),
          format.printf(info => {
-            return `${info.timestamp} ${normalise(`[${info.level}]`, levelshift)} ${normalise(info.label, labelshift)} ${info.message}`;
+            return `${info.timestamp} ${normalise(info.label, labelshift)} ${normalise(`[${info.level}]`, levelshift)} ${info.message}`;
          })
       ),
       levels: {
@@ -35,10 +35,9 @@ export function getlogger(name: string): Logger {
    });
 }
 
-export const levelshift: number = 10;
-export const labelshift: number = 15;
 
-const logger: Logger = getlogger("_randologger");
+
+// const logger: Logger = getlogger("_rando");
 
 export function envisprod(): boolean {
    return process.env.NODE_ENV === "prod" || process.env.NODE_ENV === "production";
