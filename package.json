@@ -2,14 +2,16 @@
    "name": "autumnblaze",
    "version": "0.18.3",
    "description": "another general purpose discord bot",
-   "main": "index.js",
+   "main": "build/bot.js",
    "scripts": {
       "build": "tsc",
       "build:dev": "tsc --project tsconfig.dev.json",
+      "buildandrun": "npm run build && npm run start",
       "lint": "eslint --ext .ts src/",
       "test": "echo im lazy lol",
       "docs": "typedoc --out docs src",
-      "start": "node js"
+      "start": "node build",
+      "start:old": "node js"
    },
    "repository": {
       "type": "git",
@@ -47,6 +49,7 @@
       "superagent": "^5.3.1",
       "utf-8-validate": "^5.0.2",
       "validator": "^13.1.1",
+      "winston": "^3.3.3",
       "zlib-sync": "^0.1.7"
    },
    "devDependencies": {
