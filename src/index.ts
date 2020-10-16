@@ -20,6 +20,6 @@ autumnblazebotthing.registerstoplistener("exit");
 autumnblazebotthing.registerstoplistener("SIGINT");
 autumnblazebotthing.registerstoplistener("SIGTERM");
 
-autumnblazebotthing.registercommand(new BoopersSchmoopers(autumnblazebotthing));
+autumnblazebotthing.registercommand(new BoopersSchmoopers());
 
 void autumnblazebotthing.start();

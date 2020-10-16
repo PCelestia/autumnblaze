@@ -1,14 +1,11 @@
 import { Message, PermissionFlags, PermissionString, User } from "discord.js";
-import { AutumnBlaze } from "../../bot";
 import { maxboopspermessage } from "../../consts";
 import { categories, CategoryAndDataStuff, Command } from "./_command";
 
 export class BoopersSchmoopers extends Command {
-   private readonly autumnblaze: AutumnBlaze;
 
-   public constructor(autumnblaze: AutumnBlaze) {
+   public constructor() {
       super("boop");
-      this.autumnblaze = autumnblaze;
    }
 
    public exec(msg: Message): void {
