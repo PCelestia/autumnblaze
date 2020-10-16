@@ -74,7 +74,7 @@ export class AutumnBlaze {
          // command should figure out which type of channel its handling if it cares
 
          // ((msg.channel.type === "dm" && !command.allowdm) && (msg.channel.type === ""))
-         if (msg.channel.type === "dm" && command.allowdm || msg.channel.type === "text" && command.allowguild) command.exec(msg);
+         if (msg.channel.type === "dm" && command.allowdm || msg.channel.type === "text" && command.allowguild) void command.exec(msg);
       });
    }
 
