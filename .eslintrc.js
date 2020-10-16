@@ -429,7 +429,7 @@ module.exports = {
          allowTemplateLiterals: false
       }],
       "@typescript-eslint/require-array-sort-compare": warn,
-      "@typescript-eslint/require-await": warn,
+      "@typescript-eslint/require-await": off,
       "@typescript-eslint/restrict-plus-operands": [warn, {
          checkCompoundAssignments: true
       }],
