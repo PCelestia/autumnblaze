@@ -14,14 +14,14 @@ export abstract class Command {
    }
 
    public async abstract exec(message: Message): Promise<void>;
-   public readonly abstract perms: Readonly<Array<PermissionFlags | PermissionString>>;
+   public readonly abstract perms: ReadonlyArray<PermissionFlags | PermissionString>;
 
    public readonly abstract allowguild: boolean;
    public readonly abstract allowdm: boolean;
 
    public readonly abstract showinhelp: boolean;
    public readonly abstract category: CategoryAndDataStuff<CategoryNames>;
-   public readonly description: string | undefined = undefined;
+   public readonly abstract description: string | undefined;
 }
 
 // what

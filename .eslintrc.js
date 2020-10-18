@@ -205,8 +205,8 @@ module.exports = {
             requireLast: true
          },
          singleline: {
-            delimiter: "semi",
-            requireLast: true
+            delimiter: "comma",
+            requireLast: false
          }
       }],
       "@typescript-eslint/member-ordering": off,

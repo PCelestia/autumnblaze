@@ -6,10 +6,10 @@
 // ok eslint now SHUSH
 import { AutumnBlaze } from "./bot";
 import { envisdev } from "./rando";
-import { BoopersSchmoopers } from "./text/commands/boop";
-import { Boopethieht } from "./text/commands/boopeth";
+import { BoopersSchmoopers } from "./text/commands/boopie/boop";
+import { Boopethieht } from "./text/commands/boopie/boopeth";
 import { HelpCommandthing } from "./text/commands/help";
-import { Mlemmer } from "./text/commands/mlem";
+import { Mlemmer } from "./text/commands/boopie/mlem";
 
 
 if (envisdev()) (require("dotenv") as any).config();

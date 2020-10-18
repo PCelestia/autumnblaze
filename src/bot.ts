@@ -6,7 +6,7 @@ import { Command } from "./text/commands/_command";
 // TODO REMOVE THIS AND CONNECT THE DB
 const prefix: string = "autumnt ";
 export class AutumnBlaze {
-   public bot: Client;
+   public readonly bot: Client;
    private token: string;
    private started: boolean = false;
    private stopped: boolean = false;
