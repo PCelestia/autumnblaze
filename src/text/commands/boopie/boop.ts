@@ -1,6 +1,6 @@
 import { Message, PermissionFlags, PermissionString, User } from "discord.js";
-import { maxboopspermessage } from "../../consts";
-import { categories, CategoryAndDataStuff, Command } from "./_command";
+import { maxboopspermessage } from "../../../consts";
+import { categories, CategoryAndDataStuff, Command } from "../_command";
 
 export class BoopersSchmoopers extends Command {
    protected readonly boopstr: string = "BOOP";
@@ -15,10 +15,10 @@ export class BoopersSchmoopers extends Command {
       for (const user of mentionedusers) msg.channel.send(`*${this.boopstr}S* <@${user.id}>`).catch(this.logger.error);
    }
 
-   public perms: Array<PermissionFlags | PermissionString> = [];
-   public allowdm: boolean = false;
-   public allowguild: boolean = true;
-   public category: CategoryAndDataStuff<"fun"> = categories.fun;
-   public description: string = "tell me to boop others and yourself!";
-   public showinhelp: boolean = true;
+   public readonly perms: Array<PermissionFlags | PermissionString> = [];
+   public readonly allowdm: boolean = false;
+   public readonly allowguild: boolean = true;
+   public readonly category: CategoryAndDataStuff<"fun"> = categories.fun;
+   public readonly description: string = "tell me to boop others and yourself!";
+   public readonly showinhelp: boolean = true;
 }
