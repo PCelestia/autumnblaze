@@ -27,8 +27,8 @@ export abstract class Command {
 // what
 // the
 // hecc
-// big brain lol
-export type CategoryNames = "other" | "test" | "utility" | "pony" | "fun";
+// i big brained lol
+export type CategoryNames = "other" | "test" | "utility" | "pony" | "fun" | "voice";
 
 export interface CategoryAndDataStuff<N extends CategoryNames> {
    name: N;
@@ -37,7 +37,7 @@ export interface CategoryAndDataStuff<N extends CategoryNames> {
 
 export const categories: Readonly<{ [N in CategoryNames]: CategoryAndDataStuff<N> }> = {
    // i want to remove the duplicated name and key and stuff
-   // ehh it doesnt matter too much rn, name has to be the same as the key
+   // ehh it doesnt matter too much rn, name is checked to be the same as the key so whatever
    other: {
       name: "other",
       description: "some miscellaneous commands that don't really fit in any other category"
@@ -57,5 +57,9 @@ export const categories: Readonly<{ [N in CategoryNames]: CategoryAndDataStuff<N
    fun: {
       name: "fun",
       description: "non-serious things happen here"
+   },
+   voice: {
+      name: "voice",
+      description: "voice-channel and music related commands"
    }
 };

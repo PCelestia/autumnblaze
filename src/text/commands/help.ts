@@ -27,7 +27,6 @@ export class HelpCommandthing extends Command {
    }
 
    private makeembed(): void {
-      let everythingok: boolean = true;
       //                                                                                                                                                                    long noodle
       const commandcollection: Collection<CategoryNames, Array<Command>> = new Collection<CategoryNames, Array<Command>>();
       const embed: MessageEmbed = new MessageEmbed();
@@ -42,14 +41,11 @@ export class HelpCommandthing extends Command {
             thearr = commandcollection.get(cmd.category.name);
          }
          if (thearr === undefined) {
-            everythingok = false;
             return this.logger.emerg("something went wrong in the making of the embed");
          }
 
          thearr.push(cmd);
       });
-
-      if (!everythingok) return;
 
       commandcollection.array().sort((a, b) => {
          if (a[0].category.name > b[0].category.name) return 1;

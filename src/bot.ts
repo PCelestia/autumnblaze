@@ -13,7 +13,7 @@ export class AutumnBlaze {
    private readonly logger: Logger;
    private readonly commands: Collection<string, Command>;
 
-   public constructor(token: string, botoptions?: ClientOptions) {
+   public constructor(token: string, botoptions?: ClientOptions & { enablevoice?: boolean }) {
       this.token = token;
       this.bot = new Client(botoptions);
 
@@ -21,7 +21,7 @@ export class AutumnBlaze {
       this.commands = new Collection<string, Command>();
       this.registermessagelistener();
 
-      this.logger.debug("okie constructed");
+      this.logger.debug("okie constructed main bot");
    }
 
    public settoken(token: string): void {
@@ -32,7 +32,8 @@ export class AutumnBlaze {
       if (this.started) return;
 
       await this.bot.login(this.token);
-      this.logger.info("connected!!");
+      this.bot.on("warn", warning => this.logger.warn(warning));
+      this.logger.info("connected to discord!!");
       this.started = true;
    }
 
@@ -68,12 +69,11 @@ export class AutumnBlaze {
 
          // dont execute in news channels
          if (msg.channel.type === "news") return;
-         // if its a dm and you dont allow dms
-         // OR its a guild text channel and you dont allow guild text channels
-         // get out
+         // if its a dm and you allow dms
+         // OR its a guild text channel and you allow guild text channels
+         // execute!!
          // command should figure out which type of channel its handling if it cares
 
-         // ((msg.channel.type === "dm" && !command.allowdm) && (msg.channel.type === ""))
          if (msg.channel.type === "dm" && command.allowdm || msg.channel.type === "text" && command.allowguild) void command.exec(msg);
       });
    }

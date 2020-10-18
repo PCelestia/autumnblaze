@@ -437,7 +437,7 @@ module.exports = {
       "@typescript-eslint/return-await": off,
       "@typescript-eslint/semi": error,
       "@typescript-eslint/space-before-function-paren": [error, never],
-      "@typescript-eslint/strict-boolean-expressions": error,
+      "@typescript-eslint/strict-boolean-expressions": off,
       "@typescript-eslint/switch-exhaustiveness-check": error,
       "@typescript-eslint/triple-slash-reference": [error, {
          path: never,

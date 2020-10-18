@@ -112,3 +112,7 @@ export function getnextarg(messagecontent: string): [string, string] {
       messagecontent.substring(spacelocation + 1)
    ];
 }
+
+export function yeet(err: any): void {
+   throw err;
+}
