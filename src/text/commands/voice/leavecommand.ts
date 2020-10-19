@@ -15,7 +15,7 @@ export class LeaveCommand extends Command {
       if (!msg.guild) return void this.logger.emerg("Holy HECK this leave command message doesn't have a guild! but it supposedly can only run in a guild! INITIATE PANIC MODE!!!!!");
       if (this.autumnblaze.bot.voice?.connections.has(msg.guild.id)) {
          this.autumnblaze.bot.voice.connections.get(msg.guild.id)?.disconnect();
-         this.autumnblaze.voicebroadcastmanager?.closebroadcast();
+         this.autumnblaze.voicebroadcastmanager.closebroadcast();
          msg.channel.send("disconnected!").catch(this.logger.warn);
       } else msg.channel.send("i'm not in a voice channel, silly!").catch(this.logger.warn);
    }
