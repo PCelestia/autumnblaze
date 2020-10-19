@@ -11,6 +11,14 @@ export function normalise(str: string, shift: number): string {
    return str;
 }
 
+export function envisprod(): boolean {
+   return process.env.NODE_ENV === "prod" || process.env.NODE_ENV === "production";
+}
+
+export function envisdev(): boolean {
+   return !envisprod();
+}
+
 export function getlogger(name: string): Logger {
    return createLogger({
       level: envisprod() ? prodloglevel : devloglevel,
@@ -35,17 +43,7 @@ export function getlogger(name: string): Logger {
    });
 }
 
-
-
 // const logger: Logger = getlogger("_rando");
-
-export function envisprod(): boolean {
-   return process.env.NODE_ENV === "prod" || process.env.NODE_ENV === "production";
-}
-
-export function envisdev(): boolean {
-   return !envisprod();
-}
 
 // i hope i got this right lol
 // i must find an official one from like node or something, this is too fragile

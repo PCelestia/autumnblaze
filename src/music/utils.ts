@@ -97,11 +97,11 @@ export function parsealbumjson(json: string): Album | Array<Album> {
 export async function getplayableurlsfromalbum(url: string): Promise<Array<string> | false> {
    const json: string | false = await getsongsfromalbumurl(url);
    if (!json) return false;
-   let albums: Album | Array<Album> = parsealbumjson(json);
-   if (!(albums instanceof Array)) albums = [albums];
+   let parsedalbums: Album | Array<Album> = parsealbumjson(json);
+   if (!(parsedalbums instanceof Array)) parsedalbums = [parsedalbums];
 
    const res: Array<string> = [];
-   for (const album of albums) for (const track of album.tracklist.tracks) {
+   for (const album of parsedalbums) for (const track of album.tracklist.tracks) {
       const playable: string | false = await getplayableurl(track.details.link);
       if (playable) res.push(playable);
    }
