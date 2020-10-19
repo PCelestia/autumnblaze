@@ -1,5 +1,6 @@
 import { Client, ClientOptions, Collection } from "discord.js";
 import { Logger } from "winston";
+import { BroadcastManager } from "./music/utils";
 import { chopprefix, getlogger, getnextarg, ProcessEvents } from "./rando";
 import { Command } from "./text/commands/_command";
 
@@ -12,14 +13,19 @@ export class AutumnBlaze {
    private stopped: boolean = false;
    private readonly logger: Logger;
    private readonly commands: Collection<string, Command>;
+   public readonly voicebroadcastmanager?: BroadcastManager;
+   public readonly botoptions?: ClientOptions & { enablevoice?: boolean };
 
    public constructor(token: string, botoptions?: ClientOptions & { enablevoice?: boolean }) {
       this.token = token;
       this.bot = new Client(botoptions);
+      this.botoptions = botoptions;
 
       this.logger = getlogger("_mainbot");
       this.commands = new Collection<string, Command>();
       this.registermessagelistener();
+      if (botoptions?.enablevoice === false) this.logger.debug("voice not enabled");
+      this.voicebroadcastmanager = new BroadcastManager(this);
 
       this.logger.debug("okie constructed main bot");
    }

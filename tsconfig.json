@@ -4,6 +4,8 @@
       "removeComments": true,
       "lib": ["esnext"],
       "esModuleInterop": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
       "module": "commonjs",
       "moduleResolution": "node",
       "noImplicitAny": true,

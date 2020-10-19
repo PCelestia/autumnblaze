@@ -45,6 +45,7 @@
       "bufferutil": "^4.0.1",
       "discord.js": "^12.3.1",
       "erlpack": "^0.1.3",
+      "html-escaper": "^3.0.0",
       "json2typescript": "^1.4.1",
       "mongodb": "^3.6.2",
       "nedb": "^1.8.0",
@@ -55,7 +56,9 @@
       "zlib-sync": "^0.1.7"
    },
    "devDependencies": {
+      "@types/html-escaper": "^3.0.0",
       "@types/node": "^14.11.8",
+      "@types/superagent": "^4.1.10",
       "@types/ws": "^7.2.7",
       "@types/youtube-dl": "^1.12.2",
       "@typescript-eslint/eslint-plugin": "^4.4.0",

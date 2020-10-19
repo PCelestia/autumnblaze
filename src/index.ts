@@ -12,6 +12,7 @@ import { HelpCommandthing } from "./text/commands/help";
 import { Mlemmer } from "./text/commands/boopie/mlem";
 import { JoinCommand } from "./text/commands/voice/joincommand";
 import { LeaveCommand } from "./text/commands/voice/leavecommand";
+// import { VoiceThing } from "./music";
 
 
 if (envisdev()) (require("dotenv") as any).config();
@@ -19,7 +20,7 @@ if (process.env.TOKEN === undefined) {
    console.error("no token provided!");
    process.exit(1);
 }
-const autumnblazebotthing: AutumnBlaze = new AutumnBlaze(process.env.TOKEN);
+const autumnblazebotthing: AutumnBlaze = new AutumnBlaze(process.env.TOKEN, { enablevoice: true });
 
 autumnblazebotthing.registerstoplistener("exit");
 autumnblazebotthing.registerstoplistener("SIGINT");

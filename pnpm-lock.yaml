@@ -4,6 +4,7 @@ dependencies:
   bufferutil: 4.0.1
   discord.js: 12.3.1_0201a77e446a0c2f221784f8bf9d44df
   erlpack: 0.1.3
+  html-escaper: 3.0.0
   json2typescript: 1.4.1
   mongodb: 3.6.2
   nedb: 1.8.0
@@ -13,7 +14,9 @@ dependencies:
   youtube-dl: 3.0.2
   zlib-sync: 0.1.7
 devDependencies:
+  '@types/html-escaper': 3.0.0
   '@types/node': 14.11.8
+  '@types/superagent': 4.1.10
   '@types/ws': 7.2.7
   '@types/youtube-dl': 1.12.2
   '@typescript-eslint/eslint-plugin': 4.4.0_8b852abb84508d6384219cd1d141c6a3
@@ -140,6 +143,14 @@ packages:
       node: '>=12'
     resolution:
       integrity: sha512-10TEONSbsXSYKVcmKZQ9cq/kO6A43kYprF0EhBSzPJtvaG2wy+Tmf1PuWHoExPhA+MEGGHbO7Cnw1XD0k92HPw==
+  /@types/cookiejar/2.1.2:
+    dev: true
+    resolution:
+      integrity: sha512-t73xJJrvdTjXrn4jLS9VSGRbz0nUY3cl2DMGDU48lKl+HR9dbbjW2A9r3g40VA++mQpy6uuHg33gy7du2BKpog==
+  /@types/html-escaper/3.0.0:
+    dev: true
+    resolution:
+      integrity: sha512-OcJcvP3Yk8mjYwf/IdXZtTE1tb/u0WF0qa29ER07ZHCYUBZXSN29Z1mBS+/96+kNMGTFUAbSz9X+pHmHpZrTCw==
   /@types/json-schema/7.0.6:
     dev: true
     resolution:
@@ -152,6 +163,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-KPcKqKm5UKDkaYPTuXSx8wEP7vE9GnuaXIZKijwRYcePpZFDVuy2a57LarFKiORbHOuTOOwYzxVxcUzsh2P2Pw==
+  /@types/superagent/4.1.10:
+    dependencies:
+      '@types/cookiejar': 2.1.2
+      '@types/node': 14.11.10
+    dev: true
+    resolution:
+      integrity: sha512-xAgkb2CMWUMCyVc/3+7iQfOEBE75NvuZeezvmixbUw3nmENf2tCnQkW5yQLTYqvXUQ+R6EXxdqKKbal2zM5V/g==
   /@types/ws/7.2.7:
     dependencies:
       '@types/node': 14.11.8
@@ -1268,6 +1286,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==
+  /html-escaper/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-69CofXDozHqdHDl1BZ3YiFp5rYN1qTwSXIVcBhVcZNkzj1vzx6Sko1nT58mzKip19DbKo8lHR9hf6/XeZ9+s3w==
   /http-signature/1.2.0:
     dependencies:
       assert-plus: 1.0.0
@@ -2794,7 +2816,9 @@ packages:
 specifiers:
   '@discordjs/opus': ^0.3.2
   '@shelf/fast-chunk-string': ^1.1.1
+  '@types/html-escaper': ^3.0.0
   '@types/node': ^14.11.8
+  '@types/superagent': ^4.1.10
   '@types/ws': ^7.2.7
   '@types/youtube-dl': ^1.12.2
   '@typescript-eslint/eslint-plugin': ^4.4.0
@@ -2806,6 +2830,7 @@ specifiers:
   dotenv: ^8.2.0
   erlpack: ^0.1.3
   eslint: ^7.11.0
+  html-escaper: ^3.0.0
   json2typescript: ^1.4.1
   mongodb: ^3.6.2
   nedb: ^1.8.0
