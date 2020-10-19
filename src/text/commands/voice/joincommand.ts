@@ -12,7 +12,7 @@ export class JoinCommand extends Command {
       this.allowguild = this.autumnblaze.botoptions?.enablevoice ?? false;
    }
    public async exec(msg: Message): Promise<void> {
-      if (this.autumnblaze.voicebroadcastmanager === undefined) return void msg.channel.send("voice is not enabled!");
+      if (!this.autumnblaze.voicebroadcastmanager) return void msg.channel.send("voice is not enabled!");
       if (msg.member?.voice.channel) msg.member.voice.channel.join().then(con => {
          if (!this.autumnblaze.voicebroadcastmanager) {
             this.logger.emerg("hmmmmmmm this.autumnblaze.voicebroadcastmanager is undefined");

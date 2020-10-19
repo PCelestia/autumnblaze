@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -10,6 +11,7 @@ import { Collection, VoiceBroadcast } from "discord.js";
 import { AutumnBlaze } from "../bot";
 import { Logger } from "winston";
 import { getlogger } from "../rando";
+const logger: Logger = getlogger("_voiceutil");
 
 // for autojoin, for later when a db is connected
 // export class VoiceThing {
@@ -121,13 +123,15 @@ export async function getshuffledlinksfromalbum(urls: ReadonlyArray<string>): Pr
 let queue: Array<string> | undefined = undefined;
 // maps album number, to an object with string keys (for example "5"), and each key has its corresponding track
 // albums and keys generated whole album at a time
-const songurls: Collection<string, { [key: string]: string }> = new Collection<string, { [key: string]: string }>();
+const songurls: Collection<string, { [key: string]: string }> = new Collection();
+const albumobjects: Collection<string, Album> = new Collection();
 // cache of playable urls (links to the actual audio stream)
 // idk how i want to do the url invalidatin or whatever lol
 // maps
 // const playableurlcache: Collection<string, string> = new Collection<string, string>();
 
 export function getnewqueue(): Array<string> {
+   logger.debug("made new queue");
    const newqueue: Array<string> = [];
    for (let albumnum: number = 0; albumnum < albums.length; albumnum++) for (let songnum: number = 0; songnum < albums[albumnum].numberofsongs; songnum++) {
       newqueue.push(`${albumnum} ${songnum}`);
@@ -139,11 +143,19 @@ export function getnewqueue(): Array<string> {
    return newqueue;
 }
 
+interface NextSongLink {
+   url: string;
+   playable: string;
+   albumnum: string;
+   songnum: string;
+}
 /**
  * @returns 0 is the bandcamp link, 1 is the playable stream url
  */
-export async function getnextsonglink(): Promise<[string, string]> {
+export async function getnextsonglink(): Promise<NextSongLink> {
    // gotta satisfy typescript ultra strict typing yk?
+
+   logger.debug("getting next song link from queue");
 
    // try to get a song from the queue, make new if its empty or doesnt exist
    if (!queue || queue.length === 0) queue = getnewqueue();
@@ -161,23 +173,54 @@ export async function getnextsonglink(): Promise<[string, string]> {
    }
    if (!albumsongurls[songnum]) {
       const albumurl: string | false = await getsongsfromalbumurl(albums[Number(albumnum)].url);
-      if (!albumurl) return await getnextsonglink();
+      if (!albumurl) return await getnextsonglink(); // why is this here idk
       let album: Album | Array<Album> = parsealbumjson(albumurl);
       if (!(album instanceof Array)) album = [album];
+      albumobjects.set(albumnum, album[0]);
+
       let h: number = 0;
       for (const track of album[0].tracklist.tracks) albumsongurls[`${h++}`] = track.details.link;
       if (!albumsongurls[songnum]) throw new Error("lskdjlkjdlkjfsldkjfslkdjlsdkjf something went wrong hhhhhhhhhhhhhhhhhhh");
    }
 
    const playableurl: string | false = await getplayableurl(albumsongurls[songnum]);
-   if (playableurl) return [albumsongurls[songnum], playableurl];
+   if (playableurl) {
+      logger.debug(`bandcamp link: ${albumsongurls[songnum]}`);
+      logger.debug(`playable link: ${playableurl}`);
+      return {
+         url: albumsongurls[songnum],
+         playable: playableurl,
+         albumnum: albumnum,
+         songnum: songnum
+      };
+   };
    throw new Error(`wtf hhhh theres no playable url for ${albumsongurls[songnum]}`);
 }
 
+export function converttime(timestr: string): number {
+   // "duration": "P00H03M13S",
+   const hours: number = Number(timestr.substring(1, 3));
+   const minutes: number = Number(timestr.substring(4, 6));
+   const seconds: number = Number(timestr.substring(7, 9));
+   // eslint-disable-next-line @typescript-eslint/no-extra-parens
+   return (seconds * 1000) + (minutes * 1000 * 60) + (hours * 1000 * 60 * 60);
+}
+
+export const nosong: NextSongLink = {
+   albumnum: "-1",
+   songnum: "-1",
+   url: "",
+   playable: ""
+};
 export class BroadcastManager {
    private broadcast?: VoiceBroadcast;
    private readonly autumnblaze: AutumnBlaze;
    private readonly logger: Logger;
+   private nowplayingsonglol: NextSongLink = nosong;
+   public get nowplaying(): Track | undefined {
+      return albumobjects.get(this.nowplayingsonglol.albumnum)?.tracklist.tracks[Number(this.nowplayingsonglol.songnum)];
+   }
+   private timeout: NodeJS.Timeout | undefined = undefined;
 
    public constructor(autumnblaze: AutumnBlaze) {
       this.autumnblaze = autumnblaze;
@@ -190,19 +233,40 @@ export class BroadcastManager {
          this.broadcast = this.autumnblaze.bot.voice?.createBroadcast();
          if (!this.broadcast) throw new Error("there doesn't seem to be a voice manager available");
          this.logger.debug("created a new voice broadcast!");
-         void getnextsonglink().then(links => {
-            this.broadcast?.play(links[1]).on("finish", () => {
-               void getnextsonglink().then(newlinks => this.broadcast?.play(newlinks[1]));
+
+         const timeoutnext = (): void => {
+            void this.playnextsong().then(time => {
+               this.timeout = setTimeout(timeoutnext, time);
             });
-         });
+         };
+
+         timeoutnext();
       }
       return this.broadcast;
+   }
+
+   private async playnextsong(): Promise<number> {
+      this.logger.debug("playing next song!");
+      const links: NextSongLink = await getnextsonglink();
+      this.nowplayingsonglol = links;
+      this.broadcast?.play(links.playable, {
+         fec: true,
+         bitrate: 128,
+         highWaterMark: 20
+      });
+      if (!this.nowplaying?.details.duration) throw new Error("oiwrneoiwner");
+      return converttime(this.nowplaying.details.duration);
    }
 
    public closebroadcast(): void {
       if (this.broadcast?.subscribers.length !== 0) return;
       this.logger.debug("closed broadcast because (apparently?) noone is listening");
       this.broadcast.end();
+      this.nowplayingsonglol = nosong;
       delete this.broadcast;
+      if (this.timeout) {
+         clearTimeout(this.timeout);
+         delete this.timeout;
+      }
    }
 }

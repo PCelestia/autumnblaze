@@ -116,3 +116,7 @@ export function getnextarg(messagecontent: string): [string, string] {
 export function yeet(err: any): void {
    throw err;
 }
+
+export async function wait(ms: number): Promise<void> {
+   return new Promise(resolve => setTimeout(resolve, ms));
+}
