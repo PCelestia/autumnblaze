@@ -32,8 +32,8 @@ export class JoinCommand extends Command {
       }).catch(err => {
          void msg.channel.send("I couldn't join this voice channel, sorry!");
          yeet(err);
-      }).catch(this.logger.warn);
-      else msg.channel.send("you need to join a voice channel first!").catch(this.logger.warn);
+      }).catch(e => this.logger.warn(e));
+      else msg.channel.send("you need to join a voice channel first!").catch(e => this.logger.warn(e));
    }
 
    public readonly allowdm: boolean = false;

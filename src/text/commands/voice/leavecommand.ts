@@ -16,8 +16,8 @@ export class LeaveCommand extends Command {
       if (this.autumnblaze.bot.voice?.connections.has(msg.guild.id)) {
          this.autumnblaze.bot.voice.connections.get(msg.guild.id)?.disconnect();
          this.autumnblaze.voicebroadcastmanager.closebroadcast();
-         msg.channel.send("disconnected!").catch(this.logger.warn);
-      } else msg.channel.send("i'm not in a voice channel, silly!").catch(this.logger.warn);
+         msg.channel.send("disconnected!").catch(e => this.logger.warn(e));
+      } else msg.channel.send("i'm not in a voice channel, silly!").catch(e => this.logger.warn(e));
    }
 
    public readonly allowdm: boolean = false;

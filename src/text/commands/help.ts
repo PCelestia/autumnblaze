@@ -21,9 +21,9 @@ export class HelpCommandthing extends Command {
    */
    public async exec(msg: Message): Promise<void> {
       // if theres already one, send it, if not, create one and save it
-      if (this.helpembed !== undefined) return void msg.channel.send(this.helpembed).catch(this.logger.error);
+      if (this.helpembed !== undefined) return void msg.channel.send(this.helpembed).catch(e => this.logger.warn(e));
       this.makeembed();
-      msg.channel.send(this.helpembed).catch(this.logger.error);
+      msg.channel.send(this.helpembed).catch(e => this.logger.warn(e));
    }
 
    private makeembed(): void {

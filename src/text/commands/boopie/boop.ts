@@ -10,9 +10,9 @@ export class BoopersSchmoopers extends Command {
 
    public async exec(msg: Message): Promise<void> {
       const mentionedusers: Array<User> = msg.mentions.users.array();
-      if (mentionedusers.length === 0) return void msg.channel.send(`*${this.boopstr}S* <@${msg.author.id}>`).catch(this.logger.error);
-      if (mentionedusers.length >= maxboopspermessage) return void msg.channel.send(`I can't ${this.boopstr.toLowerCase()} that many people!`).catch(this.logger.error);
-      for (const user of mentionedusers) msg.channel.send(`*${this.boopstr}S* <@${user.id}>`).catch(this.logger.error);
+      if (mentionedusers.length === 0) return void msg.channel.send(`*${this.boopstr}S* <@${msg.author.id}>`).catch(e => this.logger.warn(e));
+      if (mentionedusers.length >= maxboopspermessage) return void msg.channel.send(`I can't ${this.boopstr.toLowerCase()} that many people!`).catch(e => this.logger.warn(e));
+      for (const user of mentionedusers) msg.channel.send(`*${this.boopstr}S* <@${user.id}>`).catch(e => this.logger.warn(e));
    }
 
    public readonly perms: Array<PermissionFlags | PermissionString> = [];
