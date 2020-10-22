@@ -21,7 +21,7 @@ if (process.env.TOKEN === undefined) {
    console.error("no token provided!");
    process.exit(1);
 }
-const autumnblazebotthing: AutumnBlaze = new AutumnBlaze(process.env.TOKEN, { enablevoice: true });
+const autumnblazebotthing: AutumnBlaze = new AutumnBlaze(process.env.TOKEN, { enablevoice: true, prefix: "autumn " });
 
 autumnblazebotthing.registerstoplistener("exit");
 autumnblazebotthing.registerstoplistener("SIGINT");

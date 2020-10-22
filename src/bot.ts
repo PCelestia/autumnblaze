@@ -16,7 +16,8 @@ export class AutumnBlaze {
    public readonly voicebroadcastmanager?: BroadcastManager;
    public readonly botoptions?: ClientOptions & { enablevoice?: boolean };
 
-   public constructor(token: string, botoptions?: ClientOptions & { enablevoice?: boolean }) {
+   // public constructor(token: string, botoptions?: ClientOptions & ({ enablevoice?: boolean } | { enablevoice: true, broadcasts?: number })) {
+   public constructor(token: string, botoptions?: ClientOptions & { enablevoice?: boolean, prefix: string }) {
       this.token = token;
       this.bot = new Client(botoptions);
       this.botoptions = botoptions;

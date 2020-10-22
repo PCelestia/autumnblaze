@@ -1,1 +1,1 @@
-bot: node js
+bot: node build
