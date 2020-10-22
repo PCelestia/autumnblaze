@@ -13,6 +13,8 @@ import { Mlemmer } from "./text/commands/boopie/mlem";
 import { JoinCommand } from "./text/commands/voice/joincommand";
 import { LeaveCommand } from "./text/commands/voice/leavecommand";
 import { NOWPlayInglol } from "./text/commands/voice/nowplaying";
+import { Bapper } from "./text/commands/boopie/bap";
+import { HaveAtTheeCurrr } from "./text/commands/boopie/bapeth";
 // import { VoiceThing } from "./music";
 
 
@@ -31,6 +33,8 @@ autumnblazebotthing.registercommand(new HelpCommandthing(autumnblazebotthing));
 autumnblazebotthing.registercommand(new BoopersSchmoopers());
 autumnblazebotthing.registercommand(new Boopethieht());
 autumnblazebotthing.registercommand(new Mlemmer());
+autumnblazebotthing.registercommand(new Bapper());
+autumnblazebotthing.registercommand(new HaveAtTheeCurrr());
 
 autumnblazebotthing.registercommand(new JoinCommand(autumnblazebotthing));
 autumnblazebotthing.registercommand(new LeaveCommand(autumnblazebotthing));
