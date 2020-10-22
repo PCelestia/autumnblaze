@@ -24,7 +24,7 @@ export class AutumnBlaze {
       this.logger = getlogger("_mainbot");
       this.commands = new Collection<string, Command>();
       this.registermessagelistener();
-      if (botoptions?.enablevoice === false) this.logger.debug("voice not enabled");
+      if (botoptions.enablevoice === false) this.logger.debug("voice not enabled");
       this.voicebroadcastmanager = new BroadcastManager(this);
 
       this.logger.debug("okie constructed main bot");

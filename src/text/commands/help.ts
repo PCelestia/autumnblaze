@@ -23,7 +23,8 @@ export class HelpCommandthing extends Command {
       // if theres already one, send it, if not, create one and save it
       if (this.helpembed !== undefined) return void msg.channel.send(this.helpembed).catch(e => this.logger.warn(e));
       this.makeembed();
-      if (!this.helpembed) return void msg.channel.send("Sorry! something went wrong...");
+      // if (!this.helpembed) return void msg.channel.send("Sorry! something went wrong...");
+      // @ts-expect-error
       msg.channel.send(this.helpembed).catch(e => this.logger.warn(e));
    }
 

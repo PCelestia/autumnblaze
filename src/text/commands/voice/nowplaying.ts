@@ -8,7 +8,7 @@ export class NOWPlayInglol extends Command {
    public constructor(autumnblaze: AutumnBlaze, name: string = "nowplaying") {
       super(name);
       this.autumnblaze = autumnblaze;
-      this.allowguild = this.autumnblaze.botoptions?.enablevoice ?? false;
+      this.allowguild = this.autumnblaze.botoptions.enablevoice ?? false;
    }
 
    public async exec(msg: Message): Promise<void> {

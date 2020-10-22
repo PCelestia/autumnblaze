@@ -9,7 +9,7 @@ export class JoinCommand extends Command {
    public constructor(autumnblaze: AutumnBlaze) {
       super("join");
       this.autumnblaze = autumnblaze;
-      this.allowguild = this.autumnblaze.botoptions?.enablevoice ?? false;
+      this.allowguild = this.autumnblaze.botoptions.enablevoice ?? false;
    }
    public async exec(msg: Message): Promise<void> {
       if (!this.autumnblaze.voicebroadcastmanager) return void msg.channel.send("voice is not enabled!");

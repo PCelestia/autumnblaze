@@ -66,9 +66,9 @@ const logger: Logger = getlogger("_voiceutil");
 }
 
 @JsonObject("BandcampAlbum") export class Album {
-   @JsonProperty("keywords", [String]) public keywords: Array<string> = [];
-   @JsonProperty("datePublished", String) public datepublished: Array<string> = [];
-   @JsonProperty("albumProductionType", String) public albumproductiontype: string = "";
+   @JsonProperty("keywords", String) public keywords: string = "";
+   // @JsonProperty("datePublished", String) public datepublished: Array<string> = [];
+   // @JsonProperty("albumProductionType", String) public albumproductiontype: string = "";
    @JsonProperty("name", String) public name: string = "";
    @JsonProperty("track", Tracklist) public tracklist: Tracklist = new Tracklist();
    @JsonProperty("@id", String) public link: string = "";
