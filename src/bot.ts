@@ -4,8 +4,7 @@ import { BroadcastManager } from "./music/utils";
 import { chopprefix, getlogger, getnextarg, ProcessEvents } from "./rando";
 import { Command } from "./text/commands/_command";
 
-// TODO REMOVE THIS AND CONNECT THE DB
-const prefix: string = "autumnt ";
+// TODO CONNECT THE DB
 export class AutumnBlaze {
    public readonly bot: Client;
    private token: string;
@@ -14,10 +13,10 @@ export class AutumnBlaze {
    private readonly logger: Logger;
    private readonly commands: Collection<string, Command>;
    public readonly voicebroadcastmanager?: BroadcastManager;
-   public readonly botoptions?: ClientOptions & { enablevoice?: boolean };
+   public readonly botoptions: ClientOptions & { enablevoice?: boolean, prefix: string };
 
    // public constructor(token: string, botoptions?: ClientOptions & ({ enablevoice?: boolean } | { enablevoice: true, broadcasts?: number })) {
-   public constructor(token: string, botoptions?: ClientOptions & { enablevoice?: boolean, prefix: string }) {
+   public constructor(token: string, botoptions: ClientOptions & { enablevoice?: boolean, prefix: string }) {
       this.token = token;
       this.bot = new Client(botoptions);
       this.botoptions = botoptions;
@@ -66,7 +65,7 @@ export class AutumnBlaze {
    private registermessagelistener(): void {
       this.bot.on("message", msg => {
          if (msg.author.bot) return;
-         const commandnoprefix: string | false = chopprefix(prefix, msg.content);
+         const commandnoprefix: string | false = chopprefix(this.botoptions.prefix, msg.content);
          if (commandnoprefix === false) return;
 
          const commandandargs: [string, string] = getnextarg(commandnoprefix);
