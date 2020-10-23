@@ -23,6 +23,16 @@ export class AutumnBlaze {
 
       this.logger = getlogger("_mainbot");
       this.commands = new Collection<string, Command>();
+
+      this.bot.on("ready", () => {
+         this.bot.user?.setPresence({
+            status: "online",
+            afk: false,
+            activity: {
+               name: "PING ME LOL"
+            }
+         }).catch(e => this.logger.warn(e));
+      });
       this.registermessagelistener();
       if (botoptions.enablevoice === false) this.logger.debug("voice not enabled");
       this.voicebroadcastmanager = new BroadcastManager(this);

@@ -1,5 +1,5 @@
 export const devloglevel: "debug" = "debug";
-export const prodloglevel: "notice" = "notice";
+export const prodloglevel: "info" = "info";
 
 export const levelshift: number = 9;
 export const labelshift: number = 12;
@@ -52,3 +52,5 @@ export const albumtest: RegExp = /^https:\/\/[a-z]+\.bandcamp\.com\/album\/[a-z\
 // i wish this could be compile time
 // there is likely a way but i just dont know it
 for (const album of albums) if (!albumtest.test(album.url)) throw new Error(`"${album.url}" doesn't appear to be a valid bandcamp album url`);
+
+export const colours: ReadonlyArray<string> = ["#FBFBDE", "#C7C497", "#C86120", "#E5C00D", "#FFEC6F", "#C7C497", "#4DFFFF"];

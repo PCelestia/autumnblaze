@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 /* eslint-disable @typescript-eslint/no-var-requires */
 // ok eslint now SHUSH
+
 import { AutumnBlaze } from "./bot";
 import { envisdev } from "./rando";
 import { BoopersSchmoopers } from "./text/commands/boopie/boop";
@@ -15,7 +16,7 @@ import { LeaveCommand } from "./text/commands/voice/leavecommand";
 import { NOWPlayInglol } from "./text/commands/voice/nowplaying";
 import { Bapper } from "./text/commands/boopie/bap";
 import { HaveAtTheeCurrr } from "./text/commands/boopie/bapeth";
-// import { VoiceThing } from "./music";
+import { PonyCmd } from "./text/commands/pony/pony";
 
 
 if (envisdev()) (require("dotenv") as any).config();
@@ -35,6 +36,8 @@ autumnblazebotthing.registercommand(new Boopethieht());
 autumnblazebotthing.registercommand(new Mlemmer());
 autumnblazebotthing.registercommand(new Bapper());
 autumnblazebotthing.registercommand(new HaveAtTheeCurrr());
+
+autumnblazebotthing.registercommand(new PonyCmd());
 
 autumnblazebotthing.registercommand(new JoinCommand(autumnblazebotthing));
 autumnblazebotthing.registercommand(new LeaveCommand(autumnblazebotthing));
