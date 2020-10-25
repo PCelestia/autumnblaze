@@ -17,6 +17,7 @@ import { NOWPlayInglol } from "./text/commands/voice/nowplaying";
 import { Bapper } from "./text/commands/boopie/bap";
 import { HaveAtTheeCurrr } from "./text/commands/boopie/bapeth";
 import { PonyCmd } from "./text/commands/pony/pony";
+import { Yeeter } from "./text/commands/boopie/yeet";
 
 
 if (envisdev()) (require("dotenv") as any).config();
@@ -36,6 +37,7 @@ autumnblazebotthing.registercommand(new Boopethieht());
 autumnblazebotthing.registercommand(new Mlemmer());
 autumnblazebotthing.registercommand(new Bapper());
 autumnblazebotthing.registercommand(new HaveAtTheeCurrr());
+autumnblazebotthing.registercommand(new Yeeter());
 
 autumnblazebotthing.registercommand(new PonyCmd());
 
