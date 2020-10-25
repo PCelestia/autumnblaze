@@ -18,7 +18,8 @@ import { Bapper } from "./text/commands/boopie/bap";
 import { HaveAtTheeCurrr } from "./text/commands/boopie/bapeth";
 import { PonyCmd } from "./text/commands/pony/pony";
 import { Yeeter } from "./text/commands/boopie/yeet";
-
+import { Hugger } from "./text/commands/boopie/hug";
+import { Yeetusser } from "./text/commands/boopie/yeetus";
 
 if (envisdev()) (require("dotenv") as any).config();
 if (process.env.TOKEN === undefined) {
@@ -38,6 +39,8 @@ autumnblazebotthing.registercommand(new Mlemmer());
 autumnblazebotthing.registercommand(new Bapper());
 autumnblazebotthing.registercommand(new HaveAtTheeCurrr());
 autumnblazebotthing.registercommand(new Yeeter());
+autumnblazebotthing.registercommand(new Hugger());
+autumnblazebotthing.registercommand(new Yeetusser());
 
 autumnblazebotthing.registercommand(new PonyCmd());
 
