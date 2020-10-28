@@ -87,7 +87,7 @@ export class AutumnBlaze {
 
    private registermessagelistener(): void {
       this.bot.on("message", msg => {
-         if (msg.author.bot) return;
+         if (msg.author === this.bot.user) return;
          const commandnoprefix: string | false = chopprefix(this.botoptions.prefix, msg.content);
          if (commandnoprefix === false) return;
 
@@ -114,8 +114,8 @@ export class AutumnBlaze {
 
    private registervoicestatelistener(): void {
       // h
-      this.bot.on("voiceStateUpdate", (_oldstate, newstate) => {
-
-      });
+      // this.bot.on("voiceStateUpdate", (_oldstate, newstate) => {
+      //
+      // });
    }
 }
