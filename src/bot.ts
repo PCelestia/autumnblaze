@@ -1,5 +1,6 @@
 import { Client, ClientOptions, Collection } from "discord.js";
 import { Logger } from "winston";
+import { Mango } from "./mango";
 import { BroadcastManager } from "./music/utils";
 import { chopprefix, getlogger, getnextarg, ProcessEvents } from "./rando";
 import { Command } from "./text/commands/_command";
@@ -13,13 +14,20 @@ export class AutumnBlaze {
    private readonly logger: Logger;
    private readonly commands: Collection<string, Command>;
    public readonly voicebroadcastmanager?: BroadcastManager;
-   public readonly botoptions: ClientOptions & { enablevoice?: boolean, prefix: string };
+   public readonly mango: Mango;
+   public readonly botoptions: ClientOptions & { enablevoice?: boolean, prefix: string, mangolink: string, ponymangolink?: string };
 
    // public constructor(token: string, botoptions?: ClientOptions & ({ enablevoice?: boolean } | { enablevoice: true, broadcasts?: number })) {
-   public constructor(token: string, botoptions: ClientOptions & { enablevoice?: boolean, prefix: string }) {
+   public constructor(token: string, botoptions: ClientOptions & { enablevoice?: boolean, prefix: string, mangolink: string, ponymangolink?: string }) {
       this.token = token;
-      this.bot = new Client(botoptions);
       this.botoptions = botoptions;
+
+      this.bot = new Client(this.botoptions);
+      this.mango = new Mango(this, {
+         mainlink: this.botoptions.mangolink,
+         ponylink: this.botoptions.ponymangolink,
+         maindbname: "botbot"
+      });
 
       this.logger = getlogger("_mainbot");
       this.commands = new Collection<string, Command>();
@@ -34,9 +42,9 @@ export class AutumnBlaze {
          }).catch(e => this.logger.warn(e));
       });
       this.registermessagelistener();
+      this.registervoicestatelistener();
       if (botoptions.enablevoice === false) this.logger.debug("voice not enabled");
       this.voicebroadcastmanager = new BroadcastManager(this);
-
       this.logger.debug("okie constructed main bot");
    }
 
@@ -47,9 +55,12 @@ export class AutumnBlaze {
    public async start(): Promise<void> {
       if (this.started) return;
 
+      await this.mango.start();
       await this.bot.login(this.token);
-      this.bot.on("warn", warning => this.logger.warn(warning));
       this.logger.info("connected to discord!!");
+      this.bot.on("warn", warn => this.logger.warn(warn));
+      this.bot.on("error", error => this.logger.error(error));
+
       this.started = true;
    }
 
@@ -57,6 +68,7 @@ export class AutumnBlaze {
       if (this.stopped) return;
 
       this.bot.destroy();
+      this.mango.stop();
       this.logger.info("disconnected");
       this.stopped = true;
    }
@@ -68,6 +80,7 @@ export class AutumnBlaze {
    }
 
    public registercommand(cmd: Command): void {
+      if (this.commands.get(cmd.name)) throw new Error(`duplicate command "${cmd.name}"!`);
       this.commands.set(cmd.name, cmd);
       this.logger.debug(`added command ${cmd.name}`);
    }
@@ -97,5 +110,12 @@ export class AutumnBlaze {
    public getcommands(): Collection<string, Command> {
       // clone to prevent modification
       return this.commands.clone();
+   }
+
+   private registervoicestatelistener(): void {
+      // h
+      this.bot.on("voiceStateUpdate", (_oldstate, newstate) => {
+
+      });
    }
 }

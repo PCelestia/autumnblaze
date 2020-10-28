@@ -21,31 +21,38 @@ import { Yeeter } from "./text/commands/boopie/yeet";
 import { Hugger } from "./text/commands/boopie/hug";
 import { Yeetusser } from "./text/commands/boopie/yeetus";
 
-if (envisdev()) (require("dotenv") as any).config();
-if (process.env.TOKEN === undefined) {
-   console.error("no token provided!");
-   process.exit(1);
-}
-const autumnblazebotthing: AutumnBlaze = new AutumnBlaze(process.env.TOKEN, { enablevoice: true, prefix: "autumn " });
+void (async function(): Promise<void> {
+   if (envisdev()) (require("dotenv") as any).config();
+   if (process.env.TOKEN === undefined) {
+      console.error("no token provided!");
+      process.exit(1);
+   }
+   if (process.env.MONGODBCONNECTIONSTRING === undefined) {
+      console.error("no mongodb connection string provided!");
+      process.exit(1);
+   }
+   const autumnblazebotthing: AutumnBlaze = new AutumnBlaze(process.env.TOKEN, { enablevoice: true, prefix: "autumnt ", mangolink: process.env.MONGODBCONNECTIONSTRING, ponymangolink: process.env.PONYDBCONNECTIONSTRING });
 
-autumnblazebotthing.registerstoplistener("exit");
-autumnblazebotthing.registerstoplistener("SIGINT");
-autumnblazebotthing.registerstoplistener("SIGTERM");
+   autumnblazebotthing.registerstoplistener("exit");
+   autumnblazebotthing.registerstoplistener("SIGINT");
+   autumnblazebotthing.registerstoplistener("SIGTERM");
 
-autumnblazebotthing.registercommand(new HelpCommandthing(autumnblazebotthing));
-autumnblazebotthing.registercommand(new BoopersSchmoopers());
-autumnblazebotthing.registercommand(new Boopethieht());
-autumnblazebotthing.registercommand(new Mlemmer());
-autumnblazebotthing.registercommand(new Bapper());
-autumnblazebotthing.registercommand(new HaveAtTheeCurrr());
-autumnblazebotthing.registercommand(new Yeeter());
-autumnblazebotthing.registercommand(new Hugger());
-autumnblazebotthing.registercommand(new Yeetusser());
+   if (envisdev()) autumnblazebotthing.registercommand(new (await import("./text/commands/tester")).Testester(autumnblazebotthing));
+   autumnblazebotthing.registercommand(new HelpCommandthing(autumnblazebotthing));
+   autumnblazebotthing.registercommand(new BoopersSchmoopers());
+   autumnblazebotthing.registercommand(new Boopethieht());
+   autumnblazebotthing.registercommand(new Mlemmer());
+   autumnblazebotthing.registercommand(new Bapper());
+   autumnblazebotthing.registercommand(new HaveAtTheeCurrr());
+   autumnblazebotthing.registercommand(new Yeeter());
+   autumnblazebotthing.registercommand(new Hugger());
+   autumnblazebotthing.registercommand(new Yeetusser());
 
-autumnblazebotthing.registercommand(new PonyCmd());
+   autumnblazebotthing.registercommand(new PonyCmd());
 
-autumnblazebotthing.registercommand(new JoinCommand(autumnblazebotthing));
-autumnblazebotthing.registercommand(new LeaveCommand(autumnblazebotthing));
-autumnblazebotthing.registercommand(new NOWPlayInglol(autumnblazebotthing));
+   autumnblazebotthing.registercommand(new JoinCommand(autumnblazebotthing));
+   autumnblazebotthing.registercommand(new LeaveCommand(autumnblazebotthing));
+   autumnblazebotthing.registercommand(new NOWPlayInglol(autumnblazebotthing));
 
-void autumnblazebotthing.start();
+   void autumnblazebotthing.start();
+})();
