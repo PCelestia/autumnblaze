@@ -8,6 +8,7 @@
       "emitDecoratorMetadata": true,
       "module": "commonjs",
       "moduleResolution": "node",
+      "noEmitOnError": true,
       "noImplicitAny": true,
       "noImplicitThis": true,
       "rootDir": "src",

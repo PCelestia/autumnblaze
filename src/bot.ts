@@ -1,6 +1,7 @@
 import { Client, ClientOptions, Collection } from "discord.js";
 import { Logger } from "winston";
 import { Mango } from "./mango";
+import { GuildConfig } from "./mango/struct";
 import { BroadcastManager } from "./music/utils";
 import { chopprefix, getlogger, getnextarg, ProcessEvents } from "./rando";
 import { Command } from "./text/commands/_command";
@@ -86,24 +87,34 @@ export class AutumnBlaze {
    }
 
    private registermessagelistener(): void {
-      this.bot.on("message", msg => {
+      this.bot.on("message", async msg => {
          if (msg.author === this.bot.user) return;
-         const commandnoprefix: string | false = chopprefix(this.botoptions.prefix, msg.content);
-         if (commandnoprefix === false) return;
+         // the second conditional is not needed but satisfy tsc yk?
+         if (msg.guild && msg.channel.type === "text") {
+            const guildconfig: GuildConfig = await this.mango.getservconfig(msg.guild);
 
-         const commandandargs: [string, string] = getnextarg(commandnoprefix);
+            let commandnoprefix: string | false = "";
+            if (guildconfig.prefix === "") commandnoprefix = chopprefix(this.botoptions.prefix, msg.content);
+            else commandnoprefix = chopprefix(guildconfig.prefix, msg.content);
+            if (commandnoprefix === false) return;
 
-         const command: Command | undefined = this.commands.get(commandandargs[0]);
-         if (command === undefined) return;
+            const commandandargs: [string, string] = getnextarg(commandnoprefix);
 
+            const command: Command | undefined = this.commands.get(commandandargs[0]);
+            if (command === undefined) return;
+            if (command.allowguild) void command.exec(msg);
+         } else if (msg.channel.type === "dm") {
+            const command: Command | undefined = this.commands.get(getnextarg(msg.content)[0]);
+            if (command === undefined) return;
+            if (command.allowdm) void command.exec(msg);
+         }
          // dont execute in news channels
          if (msg.channel.type === "news") return;
+
          // if its a dm and you allow dms
          // OR its a guild text channel and you allow guild text channels
          // execute!!
          // command should figure out which type of channel its handling if it cares
-
-         if (msg.channel.type === "dm" && command.allowdm || msg.channel.type === "text" && command.allowguild) void command.exec(msg);
       });
    }
 

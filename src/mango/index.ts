@@ -29,11 +29,13 @@ export class Mango {
 
    public async start(): Promise<void> {
       if (this.started) return;
-      this.mongoclient = await MongoClient.connect(this.opts.mainlink, Mango.mongoopts);
-      this.logger.info("connected to mongo main db!!");
-      if (this.opts.ponylink) {
-         this.ponyclient = await MongoClient.connect(this.opts.ponylink, Mango.mongoopts);
-         this.logger.info("connected to pony db!!");
+      const connectp1: Promise<MongoClient> = MongoClient.connect(this.opts.mainlink, Mango.mongoopts);
+      if (!this.opts.ponylink) {
+         this.mongoclient = await connectp1;
+         this.logger.info("connected to the db!!");
+      } else {
+         [this.mongoclient, this.ponyclient] = await Promise.all([connectp1, MongoClient.connect(this.opts.ponylink, Mango.mongoopts)]);
+         this.logger.info("connected to main db and pony db!!");
       }
       this.started = true;
    }
