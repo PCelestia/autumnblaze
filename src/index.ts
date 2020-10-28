@@ -31,7 +31,13 @@ void (async function(): Promise<void> {
       console.error("no mongodb connection string provided!");
       process.exit(1);
    }
-   const autumnblazebotthing: AutumnBlaze = new AutumnBlaze(process.env.TOKEN, { enablevoice: true, prefix: "autumnt ", mangolink: process.env.MONGODBCONNECTIONSTRING, ponymangolink: process.env.PONYDBCONNECTIONSTRING });
+   const autumnblazebotthing: AutumnBlaze = new AutumnBlaze(process.env.TOKEN, {
+      enablevoice: true,
+      prefix: "autumn ",
+      mangolink: process.env.MONGODBCONNECTIONSTRING,
+      ponymangolink: process.env.PONYDBCONNECTIONSTRING,
+      usemangocache: true
+   });
 
    autumnblazebotthing.registerstoplistener("exit");
    autumnblazebotthing.registerstoplistener("SIGINT");

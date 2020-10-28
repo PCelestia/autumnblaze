@@ -1,7 +1,7 @@
+import { Collection } from "discord.js";
 import { JsonConvert } from "json2typescript";
 import { MongoClient, MongoClientOptions } from "mongodb";
 import { Logger } from "winston";
-import { AutumnBlaze } from "../bot";
 import { getlogger } from "../rando";
 import { GuildConfig, GuildLike } from "./struct";
 
@@ -9,6 +9,8 @@ export interface MangoOpts {
    mainlink: string;
    ponylink?: string;
    maindbname: string;
+
+   usecache?: boolean;
 }
 export class Mango {
    private readonly opts: MangoOpts;
@@ -18,13 +20,15 @@ export class Mango {
    private mongoclient: MongoClient | undefined;
    private ponyclient: MongoClient | undefined;
    private readonly logger: Logger;
+   private readonly cache?: Collection<string, GuildConfig>;
    // eslint-disable-next-line @typescript-eslint/naming-convention
    private static readonly mongoopts: MongoClientOptions = { ignoreUndefined: true, useUnifiedTopology: true };
 
-   public constructor(autumnblaze: AutumnBlaze, opts: MangoOpts) {
+   public constructor(opts: MangoOpts) {
       this.opts = opts;
       this.jsonconverter = new JsonConvert();
       this.logger = getlogger("_mango");
+      if (opts.usecache) this.cache = new Collection<string, GuildConfig>();
    }
 
    public async start(): Promise<void> {
@@ -50,11 +54,15 @@ export class Mango {
    public async createservconfig(guild: GuildLike): Promise<GuildConfig> {
       return new Promise((resolve, reject) => {
          if (!this.mongoclient) return reject("connect first!");
+
+         this.logger.debug("about to add a new config! createservconfig()");
          this.mongoclient.db(this.opts.maindbname).collection(guild.id).insertOne({ name: "guildsettings" }, (err, res) => {
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (err) return reject(err);
             if (res.result.ok !== 1) return reject(new Error("no error but res.result.ok isnt 1 which means something went wrong, somehow"));
-            resolve(this.jsonconverter.deserializeObject({ name: "guildsettings" }, GuildConfig));
+            const createdconfig: GuildConfig = this.jsonconverter.deserializeObject({ name: "guildsettings" }, GuildConfig);
+            if (this.cache) this.cache.set(guild.id, createdconfig);
+            resolve(createdconfig);
          });
       });
    }
@@ -62,18 +70,22 @@ export class Mango {
    public async getservconfig(guild: GuildLike): Promise<GuildConfig> {
       return new Promise((resolve, reject) => {
          if (!this.mongoclient) return reject("Connect first!");
+
+         const config: GuildConfig | undefined = this.cache?.get(guild.id);
+         if (config) return resolve(config);
+
+         this.logger.debug("about to query main db in getservconfig()");
          this.mongoclient.db(this.opts.maindbname).collection(guild.id).findOne({ name: "guildsettings" }, (err, res) => {
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (err) return reject(err);
-            if (res) return resolve(this.jsonconverter.deserializeObject(res, GuildConfig));
+            if (res) {
+               const gottenconfig: GuildConfig = this.jsonconverter.deserializeObject(res, GuildConfig);
+               if (this.cache) this.cache.set(guild.id, gottenconfig);
+               return resolve(gottenconfig);
+            }
             this.logger.debug("create new configg!");
             this.createservconfig(guild).then(resolve).catch(reject);
          });
       });
    }
 }
-/*
-stuff to do
-get serv config (make if doesnt exist)
-get user config (make if doesnt exist)
-*/

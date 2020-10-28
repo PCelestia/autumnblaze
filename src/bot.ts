@@ -6,7 +6,14 @@ import { BroadcastManager } from "./music/utils";
 import { chopprefix, getlogger, getnextarg, ProcessEvents } from "./rando";
 import { Command } from "./text/commands/_command";
 
-// TODO CONNECT THE DB
+// eslint-disable-next-line @typescript-eslint/no-type-alias
+export type AutumnBlazeOptions = ClientOptions & {
+   prefix: string;
+   enablevoice?: boolean;
+   mangolink: string;
+   ponymangolink?: string;
+   usemangocache?: boolean;
+};
 export class AutumnBlaze {
    public readonly bot: Client;
    private token: string;
@@ -16,18 +23,19 @@ export class AutumnBlaze {
    private readonly commands: Collection<string, Command>;
    public readonly voicebroadcastmanager?: BroadcastManager;
    public readonly mango: Mango;
-   public readonly botoptions: ClientOptions & { enablevoice?: boolean, prefix: string, mangolink: string, ponymangolink?: string };
+   public readonly botoptions: AutumnBlazeOptions;
 
    // public constructor(token: string, botoptions?: ClientOptions & ({ enablevoice?: boolean } | { enablevoice: true, broadcasts?: number })) {
-   public constructor(token: string, botoptions: ClientOptions & { enablevoice?: boolean, prefix: string, mangolink: string, ponymangolink?: string }) {
+   public constructor(token: string, botoptions: AutumnBlazeOptions) {
       this.token = token;
       this.botoptions = botoptions;
 
       this.bot = new Client(this.botoptions);
-      this.mango = new Mango(this, {
+      this.mango = new Mango({
          mainlink: this.botoptions.mangolink,
          ponylink: this.botoptions.ponymangolink,
-         maindbname: "botbot"
+         maindbname: "botbot",
+         usecache: botoptions.usemangocache
       });
 
       this.logger = getlogger("_mainbot");
