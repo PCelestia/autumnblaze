@@ -7,19 +7,12 @@
 
 import { AutumnBlaze } from "./bot";
 import { envisdev } from "./rando";
-import { BoopersSchmoopers } from "./text/commands/boopie/boop";
-import { Boopethieht } from "./text/commands/boopie/boopeth";
 import { HelpCommandthing } from "./text/commands/help";
-import { Mlemmer } from "./text/commands/boopie/mlem";
 import { JoinCommand } from "./text/commands/voice/joincommand";
 import { LeaveCommand } from "./text/commands/voice/leavecommand";
 import { NOWPlayInglol } from "./text/commands/voice/nowplaying";
-import { Bapper } from "./text/commands/boopie/bap";
-import { HaveAtTheeCurrr } from "./text/commands/boopie/bapeth";
 import { PonyCmd } from "./text/commands/pony/pony";
-import { Yeeter } from "./text/commands/boopie/yeet";
-import { Hugger } from "./text/commands/boopie/hug";
-import { Yeetusser } from "./text/commands/boopie/yeetus";
+import { Boop, Boopeth, Bap, Bapeth, Hug, Hugeth, Mlem, Mlemeth, Yeeeet, Yeeeetus } from "./text/commands/violations";
 
 void (async function(): Promise<void> {
    if (envisdev()) (require("dotenv") as any).config();
@@ -45,14 +38,17 @@ void (async function(): Promise<void> {
 
    if (envisdev()) autumnblazebotthing.registercommand(new (await import("./text/commands/tester")).Testester(autumnblazebotthing));
    autumnblazebotthing.registercommand(new HelpCommandthing(autumnblazebotthing));
-   autumnblazebotthing.registercommand(new BoopersSchmoopers());
-   autumnblazebotthing.registercommand(new Boopethieht());
-   autumnblazebotthing.registercommand(new Mlemmer());
-   autumnblazebotthing.registercommand(new Bapper());
-   autumnblazebotthing.registercommand(new HaveAtTheeCurrr());
-   autumnblazebotthing.registercommand(new Yeeter());
-   autumnblazebotthing.registercommand(new Hugger());
-   autumnblazebotthing.registercommand(new Yeetusser());
+
+   autumnblazebotthing.registercommand(new Boop());
+   autumnblazebotthing.registercommand(new Boopeth());
+   autumnblazebotthing.registercommand(new Bap());
+   autumnblazebotthing.registercommand(new Bapeth());
+   autumnblazebotthing.registercommand(new Hug());
+   autumnblazebotthing.registercommand(new Hugeth());
+   autumnblazebotthing.registercommand(new Mlem());
+   autumnblazebotthing.registercommand(new Mlemeth());
+   autumnblazebotthing.registercommand(new Yeeeet());
+   autumnblazebotthing.registercommand(new Yeeeetus());
 
    autumnblazebotthing.registercommand(new PonyCmd());
 
