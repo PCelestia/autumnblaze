@@ -2,10 +2,20 @@ import { Message, PermissionFlags, PermissionString } from "discord.js";
 import { Logger } from "winston";
 import { getlogger } from "../../rando";
 
+/**
+ * abstract interface providing things common across all commands.
+ * a command should extend this for some common functionality
+ */
 export abstract class Command {
+   /** name of the command, also what is used to invoke this command */
    public readonly name: string;
+   /** logger of the command (subclasses inherit and can use this) */
    protected readonly logger: Logger;
 
+   /** constructor, subclasses should declare a different
+    * (noarg or maybe one that takes an {@link AutumnBlaze})
+    * constructor then call super(name)
+    */
    public constructor(name: string) {
       this.name = name;
       this.logger = getlogger(this.name);
@@ -13,14 +23,21 @@ export abstract class Command {
       this.logger.debug(`${this.name} constructed!`);
    }
 
+   /** called when someone runs this command */
    public async abstract exec(message: Message): Promise<void>;
+   /** permissions required to run this command, empty array if anyone can run it */
    public readonly abstract perms: ReadonlyArray<PermissionFlags | PermissionString>;
 
+   /** allow this command to be run in a guild (server) */
    public readonly abstract allowguild: boolean;
+   /** allow this command to be run in DMs */
    public readonly abstract allowdm: boolean;
 
+   /** whether or not to show this command and information in the help embed */
    public readonly abstract showinhelp: boolean;
+   /** category of this command (yes i overcomplicated this category thing lol) */
    public readonly abstract category: CategoryAndDataStuff<CategoryNames>;
+   /** description of this command */
    public readonly abstract description: string | undefined;
 }
 
@@ -28,13 +45,16 @@ export abstract class Command {
 // the
 // hecc
 // i big brained lol
+/** allowed categories */
 export type CategoryNames = "other" | "test" | "utility" | "pony" | "fun" | "voice";
 
+/** interface for categorywide stuff like description */
 export interface CategoryAndDataStuff<N extends CategoryNames> {
    name: N;
    description: string;
 }
 
+/** category info (like descriptions and etc) */
 export const categories: Readonly<{ [N in CategoryNames]: CategoryAndDataStuff<N> }> = {
    // i want to remove the duplicated name and key and stuff
    // ehh it doesnt matter too much rn, name is checked to be the same as the key so whatever

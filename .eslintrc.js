@@ -384,7 +384,9 @@ module.exports = {
          allowAliases: "in-unions-and-intersections"
       }],
       "@typescript-eslint/no-unnecessary-boolean-literal-compare": error,
-      "@typescript-eslint/no-unnecessary-condition": error,
+      "@typescript-eslint/no-unnecessary-condition": [error, {
+         allowConstantLoopConditions: true
+      }],
       "@typescript-eslint/no-unnecessary-qualifier": error,
       "@typescript-eslint/no-unnecessary-type-arguments": off,
       "@typescript-eslint/no-unnecessary-type-assertion": error,

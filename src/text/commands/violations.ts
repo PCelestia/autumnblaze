@@ -1,7 +1,10 @@
 import { Message, PermissionFlags, PermissionString, User } from "discord.js";
-import { categories, CategoryAndDataStuff, Command } from "./_command";
+import { categories, CategoryAndDataStuff, Command } from "./command";
 
+/** maximum mentions per message */
+export const maxboopspermessage: number = 3;
 
+/** options for violation */
 export interface ViolationOptions {
    /**
     * the name of the command (what word is used in the command, what its called)
@@ -26,9 +29,17 @@ export interface ViolationOptions {
    maxmentions: number;
 }
 
+/**
+ * theres no really good reason why this is called a violation lol,
+ * i asked a friend on discord what a category for boop, bap, hug etc
+ * commands should be called and they said "violation" so i was like i have
+ * no better name so why not lol
+ */
 export class Violation extends Command {
+   /** opts for this one */
    public readonly opts: ViolationOptions;
 
+   /** construct zee */
    public constructor(opts: ViolationOptions) {
       super(opts.name);
       this.opts = opts;
@@ -55,7 +66,7 @@ export class Boop extends Violation {
       super({
          name: "boop",
          pluralaction: "BOOPS",
-         maxmentions: 3,
+         maxmentions: maxboopspermessage,
          description: "tell me to boop people!"
       });
    }
@@ -66,7 +77,7 @@ export class Boopeth extends Violation {
       super({
          name: "boopeth",
          pluralaction: "BOOPETHS",
-         maxmentions: 3,
+         maxmentions: maxboopspermessage,
          description: "i BOOPETH you"
       });
    }
@@ -77,7 +88,7 @@ export class Bap extends Violation {
       super({
          name: "bap",
          pluralaction: "BAPS",
-         maxmentions: 3,
+         maxmentions: maxboopspermessage,
          description: ":newspaper2: bap!"
       });
    }
@@ -88,7 +99,7 @@ export class Bapeth extends Violation {
       super({
          name: "bapeth",
          pluralaction: "BAPETHS",
-         maxmentions: 3,
+         maxmentions: maxboopspermessage,
          // im not good at describing things
          description: "i bapeth you"
       });
@@ -100,7 +111,7 @@ export class Hug extends Violation {
       super({
          name: "hug",
          pluralaction: "HUGS",
-         maxmentions: 3,
+         maxmentions: maxboopspermessage,
          description: "huggies!"
       });
    }
@@ -111,7 +122,7 @@ export class Hugeth extends Violation {
       super({
          name: "hugeth",
          pluralaction: "HUGETHS",
-         maxmentions: 3,
+         maxmentions: maxboopspermessage,
          // yes im really not good at describing things
          description: "i giv u hugeth"
       });
@@ -123,7 +134,7 @@ export class Mlem extends Violation {
       super({
          name: "mlem",
          pluralaction: "MLEMS",
-         maxmentions: 3,
+         maxmentions: maxboopspermessage,
          description: "mlem"
       });
    }
@@ -134,7 +145,7 @@ export class Mlemeth extends Violation {
       super({
          name: "mlemeth",
          pluralaction: "MLEMETHS",
-         maxmentions: 3,
+         maxmentions: maxboopspermessage,
          description: "mlemeth (idk how to describe)"
       });
    }
@@ -145,7 +156,7 @@ export class Yeeeet extends Violation {
       super({
          name: "yeet",
          pluralaction: "YEETS",
-         maxmentions: 3,
+         maxmentions: maxboopspermessage,
          description: "you can Yeet someone cause why not"
       });
    }
@@ -156,7 +167,7 @@ export class Yeeeetus extends Violation {
       super({
          name: "yeetus",
          pluralaction: "YEETUSES",
-         maxmentions: 3,
+         maxmentions: maxboopspermessage,
          description: "Yeetus someone off of a cliff (or smth idk)"
       });
    }

@@ -1,10 +1,12 @@
-export const devloglevel: "debug" = "debug";
-export const prodloglevel: "info" = "info";
+/** logging level in development */
+export const devloglevel: string = "debug";
+/** logging level in production */
+export const prodloglevel: string = "info";
 
+/** number to shift a loglevel label in logging by (to keep aligned) */
 export const levelshift: number = 9;
+/** number to shift a label in logging by (to keep aligned) */
 export const labelshift: number = 12;
-
-export const maxboopspermessage: number = 3;
 
 export const getplayableurltest: RegExp = /\bhttps:\/\/t4\.bcbits\.com.+?&quot;/;
 export const getsongsfromalbumurltest: RegExp = /<script type="application\/ld\+json">[\s\S]+?<\/script>/;

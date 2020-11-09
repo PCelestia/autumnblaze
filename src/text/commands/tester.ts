@@ -1,13 +1,17 @@
 import { Message, PermissionFlags, PermissionString } from "discord.js";
 import { AutumnBlaze } from "../../bot";
-import { categories, CategoryAndDataStuff, Command } from "./_command";
+import { categories, CategoryAndDataStuff, Command } from "./command";
 
+/** a tester command, dynamically loaded in only when running in dev mode */
 export class Testester extends Command {
    private readonly autumnblaze: AutumnBlaze;
+
+   /** construct zee tester cmd */
    public constructor(autumnblaze: AutumnBlaze) {
       super("test");
       this.autumnblaze = autumnblaze;
    }
+
    public async exec(msg: Message): Promise<void> {
       // h
       await msg.channel.send("h");

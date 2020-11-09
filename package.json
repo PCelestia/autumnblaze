@@ -5,10 +5,12 @@
    "main": "build/bot.js",
    "private": true,
    "scripts": {
-      "build": "tsc",
-      "build:dev": "tsc --project tsconfig.dev.json",
+      "build": "ncc build src/index.ts -o build -m",
       "buildandrun": "npm run build && npm run start",
-      "buildandrun:dev": "npm run build:dev && npm run start",
+      "build:tsc": "tsc",
+      "build:dev:tsc": "tsc --project tsconfig.dev.json",
+      "buildandrun:tsc": "npm run build:tsc && npm run start",
+      "buildandrun:dev:tsc": "npm run build:dev:tsc && npm run start",
       "lint": "eslint --ext .ts src/",
       "test": "echo im lazy lol",
       "docs": "typedoc --out docs src",
@@ -66,10 +68,12 @@
       "@types/youtube-dl": "^1.12.2",
       "@typescript-eslint/eslint-plugin": "^4.5.0",
       "@typescript-eslint/parser": "^4.5.0",
+      "@vercel/ncc": "^0.24.1",
       "console-stamp": "^0.2.9",
       "cross-env": "^7.0.2",
       "dotenv": "^8.2.0",
       "eslint": "^7.11.0",
+      "ts-prune": "^0.8.4",
       "typedoc": "^0.19.2",
       "typescript": "^4.0.3"
    }

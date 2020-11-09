@@ -9,26 +9,48 @@ import { format } from "winston";
 import { createLogger } from "winston";
 import { devloglevel, prodloglevel, labelshift, levelshift } from "./consts";
 
+/**
+ * right pad until specified length, if longer then specified length then not modified
+ *
+ * @param str string to right pad
+ * @param shift target length
+ * @returns padded string
+ */
 export function normalise(str: string, shift: number): string {
    for (let i: number = str.length; i <= shift; i++) str = str + " ";
    return str;
 }
 
+/**
+ * check if process.env.NODE_ENV is "prod" or "production"
+ * @returns if env considered production
+ */
 export function envisprod(): boolean {
    return process.env.NODE_ENV === "prod" || process.env.NODE_ENV === "production";
 }
 
+/**
+ * check if process.env.NODE_ENV is NOT "prod" or "production", since if it
+ * isn't production its development lol
+ * @returns if env considered development
+ */
 export function envisdev(): boolean {
    return !envisprod();
 }
 
-export function getlogger(name: string): Logger {
+/**
+ * gets a configured winston.Logger
+ *
+ * @param label label to use in logger
+ * @returns the logger
+ */
+export function getlogger(label: string): Logger {
    return createLogger({
       level: envisprod() ? prodloglevel : devloglevel,
       transports: [new transports.Console],
       format: format.combine(
          format.timestamp(),
-         format.label({ label: `[${name}]`, message: false }),
+         format.label({ label: `[${label}]`, message: false }),
          format.printf(info => {
             return `${info.timestamp} ${normalise(info.label, labelshift)} ${normalise(`[${info.level}]`, levelshift)} ${info.message}`;
          })
@@ -50,6 +72,7 @@ export function getlogger(name: string): Logger {
 
 // i hope i got this right lol
 // i must find an official one from like node or something, this is too fragile
+/** weird type used for AutumnBlaze.registerstoplistener (yea ik this is bad lol) */
 export type ProcessEvents = "SIGABRT"
 | "SIGALRM"
 | "SIGBREAK"
@@ -100,11 +123,13 @@ export type ProcessEvents = "SIGABRT"
 | "unhandledRejection"
 | "warning";
 
+/** chops prefix off the front of a command string */
 export function chopprefix(prefix: string, messagecontent: string): string | false {
    if (messagecontent.startsWith(prefix)) return messagecontent.substring(prefix.length);
    return false;
 }
 
+/** chops next "arg" from a command stringstring */
 export function getnextarg(messagecontent: string): [string, string] {
    const spacelocation: number = messagecontent.indexOf(" ");
    if (spacelocation === -1) return [messagecontent, ""];
@@ -119,15 +144,23 @@ export function yeet(err: any): void {
    throw err;
 }
 
+/**
+ * await this, itll resolve in this much millis
+ *
+ * @param ms milliseconds to wait
+ * @returns promise that will resolve in specified time
+ */
 export async function wait(ms: number): Promise<void> {
    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+/** json2typescript class to get package.json information */
 @JsonObject("packagejson") export class PackageJson {
    // put as optional because i dont want it to crash just because it doesn't know its version
    @JsonProperty("version", String, true) public version: string = "unknwon";
 }
 
+/** package.json important information */
 export const packagejson: PackageJson = new JsonConvert().deserializeObject(require("../package.json"), PackageJson);
 
 /**

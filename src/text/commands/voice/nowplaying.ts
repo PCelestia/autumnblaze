@@ -1,12 +1,13 @@
 import { Message, PermissionFlags, PermissionString } from "discord.js";
 import { AutumnBlaze } from "../../../bot";
-import { categories, CategoryAndDataStuff, Command } from "../_command";
+import { categories, CategoryAndDataStuff, Command } from "../command";
 
+/** gets the song that is currently playing in the radio thing */
 export class NOWPlayInglol extends Command {
    private readonly autumnblaze: AutumnBlaze;
 
-   public constructor(autumnblaze: AutumnBlaze, name: string = "nowplaying") {
-      super(name);
+   public constructor(autumnblaze: AutumnBlaze) {
+      super("nowplaying");
       this.autumnblaze = autumnblaze;
       this.allowguild = this.autumnblaze.botoptions.enablevoice ?? false;
    }

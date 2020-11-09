@@ -1,34 +1,33 @@
 import { Collection, Message, MessageEmbed, PermissionFlags, PermissionString } from "discord.js";
 import { AutumnBlaze } from "../../bot";
-import { categories, CategoryAndDataStuff, CategoryNames, Command } from "./_command";
+import { categories, CategoryAndDataStuff, CategoryNames, Command } from "./command";
 
+/** help command */
 export class HelpCommandthing extends Command {
+   /** autumnblaze that instantiated this */
    private readonly autumnblaze: AutumnBlaze;
+   /**
+    * premade top embed because that doesn't change and can be cached
+    * (might not be cached anymore later since it can change based on dm/guild
+    * i think)
+    */
    private helpembed: MessageEmbed | undefined = undefined;
 
+   /** construct zee help command */
    public constructor(autumnblaze: AutumnBlaze) {
       super("help");
       this.autumnblaze = autumnblaze;
    }
 
-
-   /*
-   (a, b) => {
-      if (a.name > b.name) return 1;
-      if (a.name === b.name) return 0;
-      return -1;
-   }
-   */
    public async exec(msg: Message): Promise<void> {
       // if theres already one, send it, if not, create one and save it
       if (this.helpembed !== undefined) return void msg.channel.send(this.helpembed).catch(e => this.logger.warn(e));
-      this.makeembed();
-      // if (!this.helpembed) return void msg.channel.send("Sorry! something went wrong...");
-      // @ts-expect-error
+      this.helpembed = this.makeembed();
       msg.channel.send(this.helpembed).catch(e => this.logger.warn(e));
    }
 
-   private makeembed(): void {
+   /** make a top level help embed */
+   private makeembed(): MessageEmbed {
       //                                                                                                                                                                    long noodle
       const commandcollection: Collection<CategoryNames, Array<Command>> = new Collection<CategoryNames, Array<Command>>();
       const embed: MessageEmbed = new MessageEmbed();
@@ -70,7 +69,7 @@ export class HelpCommandthing extends Command {
          });
       });
 
-      this.helpembed = embed;
+      return embed;
    }
 
    public perms: Array<PermissionFlags | PermissionString> = [];

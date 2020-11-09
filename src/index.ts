@@ -24,7 +24,8 @@ void (async function(): Promise<void> {
       console.error("no mongodb connection string provided!");
       process.exit(1);
    }
-   const autumnblazebotthing: AutumnBlaze = new AutumnBlaze(process.env.TOKEN, {
+   const autumnblazebotthing: AutumnBlaze = new AutumnBlaze({
+      token: process.env.TOKEN,
       enablevoice: true,
       prefix: "autumn ",
       mangolink: process.env.MONGODBCONNECTIONSTRING,
