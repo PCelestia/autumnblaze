@@ -19,7 +19,11 @@ export class HelpCommandthing extends Command {
       this.autumnblaze = autumnblaze;
    }
 
-   public async exec(msg: Message): Promise<void> {
+   public async exec(msg: Message, arg: string): Promise<void> {
+      if (arg !== "") {
+         await msg.channel.send(`got "${arg}" as arg`);
+         return;
+      }
       // if theres already one, send it, if not, create one and save it
       if (this.helpembed !== undefined) return void msg.channel.send(this.helpembed).catch(e => this.logger.warn(e));
       this.helpembed = this.makeembed();

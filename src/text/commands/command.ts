@@ -23,8 +23,12 @@ export abstract class Command {
       this.logger.debug(`${this.name} constructed!`);
    }
 
-   /** called when someone runs this command */
-   public async abstract exec(message: Message): Promise<void>;
+   /**
+    * called when someone runs this command
+    * @param msg message to act on
+    * @param args the "args" of this command
+    */
+   public async abstract exec(msg: Message, args: string): Promise<void>;
    /** permissions required to run this command, empty array if anyone can run it */
    public readonly perms: ReadonlyArray<PermissionFlags | PermissionString> = [];
 

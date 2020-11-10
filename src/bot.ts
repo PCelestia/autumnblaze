@@ -159,6 +159,8 @@ export class AutumnBlaze {
       this.bot.on("message", async msg => {
          if (msg.author === this.bot.user) return;
 
+         // check for replier of this channel, if exists then send msg to it to process
+         // dont run command in this case
          const replier = this.repliers.get(msg.channel.id);
          if (replier) {
             const res = replier.next(msg);
@@ -166,32 +168,26 @@ export class AutumnBlaze {
             return;
          }
 
+         let guildconfig: GuildConfig | undefined = undefined;
+         let msgcontent: string = msg.content;
          // the second conditional is not needed but satisfy tsc yk?
          if (msg.guild && msg.channel.type === "text") {
-            const guildconfig: GuildConfig = await this.mango.getservconfig(msg.guild);
+            guildconfig = await this.mango.getservconfig(msg.guild);
 
+            // try to check prefix, return if it doesnt exist
             let commandnoprefix: string | false = "";
-            if (guildconfig.prefix === "") commandnoprefix = chopprefix(this.botoptions.prefix, msg.content);
-            else commandnoprefix = chopprefix(guildconfig.prefix, msg.content);
+            if (guildconfig.prefix === "") commandnoprefix = chopprefix(this.botoptions.prefix, msgcontent);
+            else commandnoprefix = chopprefix(guildconfig.prefix, msgcontent);
             if (commandnoprefix === false) return;
-
-            const commandandargs: [string, string] = getnextarg(commandnoprefix);
-
-            const command: Command | undefined = this.commands.get(commandandargs[0]);
-            if (command === undefined) return;
-            if (command.allowguild) void command.exec(msg);
-         } else if (msg.channel.type === "dm") {
-            const command: Command | undefined = this.commands.get(getnextarg(msg.content)[0]);
-            if (command === undefined) return;
-            if (command.allowdm) void command.exec(msg);
+            else msgcontent = commandnoprefix;
          }
-         // dont execute in news channels
-         if (msg.channel.type === "news") return;
+         // command name and arg lol
+         const commandandargs: [string, string] = getnextarg(msgcontent);
 
-         // if its a dm and you allow dms
-         // OR its a guild text channel and you allow guild text channels
-         // execute!!
-         // command should figure out which type of channel its handling if it cares
+         // try to get the command, execute if available
+         const command: Command | undefined = this.commands.get(commandandargs[0]);
+         if (command === undefined) return;
+         if ((command.allowguild && (msg.channel.type === "text" || msg.channel.type === "news")) || (command.allowdm && msg.channel.type === "dm")) return void command.exec(msg, commandandargs[1]);
       });
    }
 
@@ -205,6 +201,11 @@ export class AutumnBlaze {
       return this.commands.clone();
    }
 
+   /**
+    * register a replier generator function
+    * @param channelid the channel to execute this in
+    * @param generatorfn the generator function to use
+    */
    public registerreplier(channelid: string, generatorfn: () => Generator<void, void, Message>): void {
       const instance = generatorfn();
       instance.next(); // just to set it off once, it doesnt do anything here yet
