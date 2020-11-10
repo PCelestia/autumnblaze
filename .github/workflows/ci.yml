@@ -15,18 +15,13 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v1
         with:
-          node-version: "14"
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v1.2.1
-        with:
-          version: 5.9.0
+          node-version: "15"
 
       - name: install dependencies
-        run: pnpm i
+        run: npm i
 
       - name: build typescript
-        run: pnpm run build
+        run: npm run build
 
 
   lint:
@@ -39,15 +34,10 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v1
         with:
-          node-version: "14"
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v1.2.1
-        with:
-          version: 5.9.0
+          node-version: "15"
 
       - name: install dependencies
-        run: pnpm i
+        run: npm i
 
       - name: lint typescript
-        run: pnpm run lint
+        run: npm run lint
