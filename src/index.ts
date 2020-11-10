@@ -12,7 +12,7 @@ import { JoinCommand } from "./text/commands/voice/joincommand";
 import { LeaveCommand } from "./text/commands/voice/leavecommand";
 import { NOWPlayInglol } from "./text/commands/voice/nowplaying";
 import { PonyCmd } from "./text/commands/pony/pony";
-import { Boop, Boopeth, Bap, Bapeth, Hug, Hugeth, Mlem, Mlemeth, Yeeeet, Yeeeetus } from "./text/commands/violations";
+import { getviolations } from "./text/commands/violations";
 
 void (async function(): Promise<void> {
    if (envisdev()) (require("dotenv") as any).config();
@@ -40,16 +40,7 @@ void (async function(): Promise<void> {
    if (envisdev()) autumnblazebotthing.registercommand(new (await import("./text/commands/tester")).Testester(autumnblazebotthing));
    autumnblazebotthing.registercommand(new HelpCommandthing(autumnblazebotthing));
 
-   autumnblazebotthing.registercommand(new Boop());
-   autumnblazebotthing.registercommand(new Boopeth());
-   autumnblazebotthing.registercommand(new Bap());
-   autumnblazebotthing.registercommand(new Bapeth());
-   autumnblazebotthing.registercommand(new Hug());
-   autumnblazebotthing.registercommand(new Hugeth());
-   autumnblazebotthing.registercommand(new Mlem());
-   autumnblazebotthing.registercommand(new Mlemeth());
-   autumnblazebotthing.registercommand(new Yeeeet());
-   autumnblazebotthing.registercommand(new Yeeeetus());
+   getviolations().forEach(v => autumnblazebotthing.registercommand(v));
 
    autumnblazebotthing.registercommand(new PonyCmd());
 

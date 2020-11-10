@@ -61,114 +61,69 @@ export class Violation extends Command {
    public readonly showinhelp = true;
 }
 
-export class Boop extends Violation {
-   public constructor() {
-      super({
+export function getviolations(): [Violation, Violation, Violation, Violation, Violation, Violation, Violation, Violation, Violation, Violation] {
+   return [
+      new Violation({
          name: "boop",
          pluralaction: "BOOPS",
          maxmentions: maxboopspermessage,
          description: "tell me to boop people!"
-      });
-   }
-}
-
-export class Boopeth extends Violation {
-   public constructor() {
-      super({
+      }),
+      new Violation({
          name: "boopeth",
          pluralaction: "BOOPETHS",
          maxmentions: maxboopspermessage,
          description: "i BOOPETH you"
-      });
-   }
-}
-
-export class Bap extends Violation {
-   public constructor() {
-      super({
+      }),
+      new Violation({
          name: "bap",
          pluralaction: "BAPS",
          maxmentions: maxboopspermessage,
          description: ":newspaper2: bap!"
-      });
-   }
-}
-
-export class Bapeth extends Violation {
-   public constructor() {
-      super({
+      }),
+      new Violation({
          name: "bapeth",
          pluralaction: "BAPETHS",
          maxmentions: maxboopspermessage,
          // im not good at describing things
          description: "i bapeth you"
-      });
-   }
-}
-
-export class Hug extends Violation {
-   public constructor() {
-      super({
+      }),
+      new Violation({
          name: "hug",
          pluralaction: "HUGS",
          maxmentions: maxboopspermessage,
          description: "huggies!"
-      });
-   }
-}
-
-export class Hugeth extends Violation {
-   public constructor() {
-      super({
+      }),
+      new Violation({
          name: "hugeth",
          pluralaction: "HUGETHS",
          maxmentions: maxboopspermessage,
          // yes im really not good at describing things
          description: "i giv u hugeth"
-      });
-   }
-}
-
-export class Mlem extends Violation {
-   public constructor() {
-      super({
+      }),
+      new Violation({
          name: "mlem",
          pluralaction: "MLEMS",
          maxmentions: maxboopspermessage,
          description: "mlem"
-      });
-   }
-}
-
-export class Mlemeth extends Violation {
-   public constructor() {
-      super({
+      }),
+      new Violation({
          name: "mlemeth",
          pluralaction: "MLEMETHS",
          maxmentions: maxboopspermessage,
          description: "mlemeth (idk how to describe)"
-      });
-   }
-}
-
-export class Yeeeet extends Violation {
-   public constructor() {
-      super({
+      }),
+      new Violation({
          name: "yeet",
          pluralaction: "YEETS",
          maxmentions: maxboopspermessage,
          description: "you can Yeet someone cause why not"
-      });
-   }
-}
-
-export class Yeeeetus extends Violation {
-   public constructor() {
-      super({
+      }),
+      new Violation({
          name: "yeetus",
          pluralaction: "YEETUSES",
          maxmentions: maxboopspermessage,
          description: "Yeetus someone off of a cliff (or smth idk)"
-      });
-   }
+      })
+   ];
 }
