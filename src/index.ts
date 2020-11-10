@@ -6,7 +6,7 @@
 // ok eslint now SHUSH
 
 import { AutumnBlaze } from "./bot";
-import { envisdev } from "./rando";
+import { envisdev, getlogger } from "./rando";
 import { HelpCommandthing } from "./text/commands/help";
 import { JoinCommand } from "./text/commands/voice/joincommand";
 import { LeaveCommand } from "./text/commands/voice/leavecommand";
@@ -14,6 +14,13 @@ import { NOWPlayInglol } from "./text/commands/voice/nowplaying";
 import { PonyCmd } from "./text/commands/pony/pony";
 import { getviolations } from "./text/commands/violations";
 
+const logger = getlogger("_main_");
+process.on("unhandledRejection",  (reason, promise) => {
+   logger.emerg("UNCAUGHT PROMISE REJECTION");
+   logger.emerg(`REASON: ${reason}`);
+   logger.emerg("PROMISE: WELL FUF I CANT STRINGIFY THIS");
+
+});
 void (async function(): Promise<void> {
    if (envisdev()) (require("dotenv") as any).config();
    if (process.env.TOKEN === undefined) {
