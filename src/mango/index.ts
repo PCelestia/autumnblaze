@@ -3,6 +3,7 @@ import { JsonConvert } from "json2typescript";
 import { MongoClient, MongoClientOptions } from "mongodb";
 import { Logger } from "winston";
 import { getlogger } from "../rando";
+import { SmolPone } from "../text/commands/pony/pony";
 import { GuildConfig, GuildLike } from "./struct";
 
 /** options for creating a new Mango instance */
@@ -13,6 +14,8 @@ export interface MangoOpts {
    ponylink?: string;
    /** name of the database to store stuff in the main database server */
    maindbname: string;
+   /** name of the database to store pony images in */
+   ponydbname?: string;
 
    /** whether or not to use caching instead of querying the database everytime */
    usecache?: boolean;
@@ -137,6 +140,17 @@ export class Mango {
             }
             this.logger.debug("create new configg!");
             this.createservconfig(guild).then(resolve).catch(reject);
+         });
+      });
+   }
+
+   public async putpony(pony: SmolPone): Promise<void> {
+      return new Promise((resolve, reject) => {
+         this.ponyclient?.db(this.opts.ponydbname ?? "pones").collection(pony.id.toString().substring(0, 1)).insertOne(this.jsonconverter.serializeObject(pony), (err, res) => {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (err) reject(err);
+            if (res.result.ok !== 1) return reject(new Error("no error but res.result.ok isnt 1 which means something went wrong, somehow"));
+            resolve();
          });
       });
    }

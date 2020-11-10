@@ -43,7 +43,7 @@ void (async function(): Promise<void> {
    autumnblazebotthing.registercommand(new HelpCommandthing(autumnblazebotthing));
 
    getviolations().forEach(v => autumnblazebotthing.registercommand(v));
-   autumnblazebotthing.registercommand(new PonyCmd());
+   autumnblazebotthing.registercommand(new PonyCmd(autumnblazebotthing));
 
    autumnblazebotthing.registercommand(new JoinCommand(autumnblazebotthing));
    autumnblazebotthing.registercommand(new LeaveCommand(autumnblazebotthing));
