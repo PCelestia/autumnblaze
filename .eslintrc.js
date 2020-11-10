@@ -456,7 +456,7 @@ module.exports = {
             }
          }
       }],
-      "@typescript-eslint/typedef": [error, {
+      "@typescript-eslint/typedef": [off, {
          arrayDestructing: true,
          arrowParameter: false,
          memberVariableDeclaration: true,

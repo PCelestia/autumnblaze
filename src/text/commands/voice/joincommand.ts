@@ -43,10 +43,10 @@ export class JoinCommand extends Command {
       else msg.channel.send("you need to join a voice channel first!").catch(e => this.logger.warn(e));
    }
 
-   public readonly allowdm: boolean = false;
-   public readonly allowguild: boolean;
-   public readonly category: CategoryAndDataStuff<"voice"> = categories.voice;
-   public readonly description: string = "tell me to join your channel and play some tunes!";
-   public readonly perms: ReadonlyArray<PermissionFlags | PermissionString> = [];
-   public readonly showinhelp: boolean = true;
+   public readonly allowdm = false;
+   public readonly allowguild;
+   public readonly category = categories.voice;
+   public readonly description = "tell me to join your channel and play some tunes!";
+   public readonly perms = [];
+   public readonly showinhelp = true;
 }

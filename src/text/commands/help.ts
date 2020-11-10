@@ -72,10 +72,10 @@ export class HelpCommandthing extends Command {
       return embed;
    }
 
-   public perms: Array<PermissionFlags | PermissionString> = [];
-   public allowdm: boolean = true;
-   public allowguild: boolean = true;
-   public category: CategoryAndDataStuff<"other"> = categories.other;
-   public description: string = "this command shows help obviously lol";
-   public showinhelp: boolean = true;
+   public perms = [];
+   public allowdm = true;
+   public allowguild = true;
+   public category = categories.other;
+   public description = "this command shows help obviously lol";
+   public showinhelp = true;
 }

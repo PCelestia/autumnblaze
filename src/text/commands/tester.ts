@@ -22,10 +22,10 @@ export class Testester extends Command {
       await msg.channel.send((await this.autumnblaze.mango.getservconfig(msg.guild)).tojson());
    }
 
-   public readonly perms: ReadonlyArray<PermissionFlags | PermissionString> = [];
-   public readonly allowdm: boolean = false;
-   public readonly allowguild: boolean = true;
-   public readonly category: CategoryAndDataStuff<"test"> = categories.test;
-   public readonly description: string = "test command lol";
-   public readonly showinhelp: boolean = false;
+   public readonly perms = [];
+   public readonly allowdm = false;
+   public readonly allowguild = true;
+   public readonly category = categories.test;
+   public readonly description = "test command lol";
+   public readonly showinhelp = false;
 }

@@ -53,12 +53,12 @@ export class Violation extends Command {
       for (const user of mentionedusers) msg.channel.send(`${this.opts.pluralaction} <@${user.id}>`).catch(e => this.logger.warn(e));
    }
 
-   public readonly perms: ReadonlyArray<PermissionFlags | PermissionString> = [];
-   public readonly allowdm: boolean = false;
-   public readonly allowguild: boolean = true;
-   public readonly category: CategoryAndDataStuff<"fun"> = categories.fun;
-   public readonly description: string;
-   public readonly showinhelp: boolean = true;
+   public readonly perms = [];
+   public readonly allowdm = false;
+   public readonly allowguild = true;
+   public readonly category = categories.fun;
+   public readonly description;
+   public readonly showinhelp = true;
 }
 
 export class Boop extends Violation {

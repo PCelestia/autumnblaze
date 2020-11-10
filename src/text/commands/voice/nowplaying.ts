@@ -18,10 +18,10 @@ export class NOWPlayInglol extends Command {
       await msg.channel.send(`Now playing: ${this.autumnblaze.voicebroadcastmanager.nowplaying.details.name}\n<${this.autumnblaze.voicebroadcastmanager.nowplaying.details.link}>`);
    }
 
-   public allowdm: boolean = false;
-   public allowguild: boolean;
-   public category: CategoryAndDataStuff<"voice"> = categories.voice;
-   public description: string = "Ask me what the now playing song in the radio is";
-   public perms: ReadonlyArray<PermissionFlags | PermissionString> = [];
-   public showinhelp: boolean = true;
+   public allowdm = false;
+   public allowguild;
+   public category = categories.voice;
+   public description = "Ask me what the now playing song in the radio is";
+   public perms = [];
+   public showinhelp = true;
 }

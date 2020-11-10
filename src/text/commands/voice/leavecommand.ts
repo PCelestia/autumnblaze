@@ -1,6 +1,6 @@
-import { Message, PermissionFlags, PermissionString } from "discord.js";
+import { Message } from "discord.js";
 import { AutumnBlaze } from "../../../bot";
-import { categories, CategoryAndDataStuff, Command } from "../command";
+import { categories, Command } from "../command";
 
 /**
  * tells the bot to leave a voice channel that it is in, it leaves the channel
@@ -29,10 +29,10 @@ export class LeaveCommand extends Command {
       } else msg.channel.send("i'm not in a voice channel, silly!").catch(e => this.logger.warn(e));
    }
 
-   public readonly allowdm: boolean = false;
-   public readonly allowguild: boolean;
-   public readonly category: CategoryAndDataStuff<"voice"> = categories.voice;
-   public readonly description: string = "tell me to leave after you're done";
-   public readonly perms: ReadonlyArray<PermissionFlags | PermissionString> = [];
-   public readonly showinhelp: boolean = true;
+   public readonly allowdm = false;
+   public readonly allowguild;
+   public readonly category = categories.voice;
+   public readonly description = "tell me to leave after you're done";
+   public readonly perms = [];
+   public readonly showinhelp = true;
 }

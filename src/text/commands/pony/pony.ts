@@ -1,9 +1,9 @@
-import { Message, MessageEmbed, PermissionFlags, PermissionString } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import { JsonConvert, JsonObject, JsonProperty } from "json2typescript";
 import { get } from "superagent";
 import { colours } from "../../../consts";
 import { packagejson, randfromarray } from "../../../rando";
-import { categories, CategoryAndDataStuff, Command } from "../command";
+import { categories, Command } from "../command";
 
 /** representations of a pony image (different links to different urls) */
 @JsonObject("ponyrepresentations") export class PonyRepresentation {
@@ -90,10 +90,10 @@ export class PonyCmd extends Command {
       void msg.channel.send(embed);
    }
 
-   public readonly allowdm: boolean = true;
-   public readonly allowguild: boolean = true;
-   public readonly category: CategoryAndDataStuff<"pony"> = categories.pony;
-   public readonly description: string = "get a random pony image!";
-   public readonly perms: ReadonlyArray<PermissionFlags | PermissionString> = [];
-   public readonly showinhelp: boolean = true;
+   public readonly allowdm = true;
+   public readonly allowguild = true;
+   public readonly category= categories.pony;
+   public readonly description = "get a random pony image!";
+   public readonly perms = [];
+   public readonly showinhelp = true;
 }
