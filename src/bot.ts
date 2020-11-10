@@ -168,16 +168,16 @@ export class AutumnBlaze {
             return;
          }
 
-         let guildconfig: GuildConfig | undefined = undefined;
+         let config: GuildConfig | undefined = undefined;
          let msgcontent: string = msg.content;
          // the second conditional is not needed but satisfy tsc yk?
          if (msg.guild && msg.channel.type === "text") {
-            guildconfig = await this.mango.getservconfig(msg.guild);
+            config = await this.mango.getservconfig(msg.guild);
 
             // try to check prefix, return if it doesnt exist
             let commandnoprefix: string | false = "";
-            if (guildconfig.prefix === "") commandnoprefix = chopprefix(this.botoptions.prefix, msgcontent);
-            else commandnoprefix = chopprefix(guildconfig.prefix, msgcontent);
+            if (config.prefix === "") commandnoprefix = chopprefix(this.botoptions.prefix, msgcontent);
+            else commandnoprefix = chopprefix(config.prefix, msgcontent);
             if (commandnoprefix === false) return;
             else msgcontent = commandnoprefix;
          }
@@ -187,7 +187,7 @@ export class AutumnBlaze {
          // try to get the command, execute if available
          const command: Command | undefined = this.commands.get(commandandargs[0]);
          if (command === undefined) return;
-         if ((command.allowguild && (msg.channel.type === "text" || msg.channel.type === "news")) || (command.allowdm && msg.channel.type === "dm")) return void command.exec(msg, commandandargs[1]);
+         if ((command.allowguild && (msg.channel.type === "text" || msg.channel.type === "news")) || (command.allowdm && msg.channel.type === "dm")) return void command.exec(msg, commandandargs[1], config);
       });
    }
 

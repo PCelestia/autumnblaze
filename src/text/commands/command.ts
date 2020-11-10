@@ -1,5 +1,6 @@
 import { Message, PermissionFlags, PermissionString } from "discord.js";
 import { Logger } from "winston";
+import { GuildConfig } from "../../mango/struct";
 import { getlogger } from "../../rando";
 
 /**
@@ -28,7 +29,7 @@ export abstract class Command {
     * @param msg message to act on
     * @param args the "args" of this command
     */
-   public async abstract exec(msg: Message, args: string): Promise<void>;
+   public async abstract exec(msg: Message, args: string, config?: GuildConfig): Promise<void>;
    /** permissions required to run this command, empty array if anyone can run it */
    public readonly perms: ReadonlyArray<PermissionFlags | PermissionString> = [];
 

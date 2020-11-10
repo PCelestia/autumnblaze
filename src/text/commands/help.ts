@@ -1,5 +1,6 @@
 import { Collection, Message, MessageEmbed } from "discord.js";
 import { AutumnBlaze } from "../../bot";
+import { GuildConfig } from "../../mango/struct";
 import { getembed } from "../../rando";
 import { categories, CategoryNames, Command } from "./command";
 
@@ -25,14 +26,14 @@ export class HelpCommandthing extends Command {
       this.autumnblaze = autumnblaze;
    }
 
-   public async exec(msg: Message, arg: string): Promise<void> {
+   public async exec(msg: Message, arg: string, config: GuildConfig): Promise<void> {
       if (arg !== "") {
          await msg.channel.send(this.makespecificembed(arg, msg));
          return;
       }
       // if theres already one, send it, if not, create one and save it
       if (this.helpembed !== undefined) return void msg.channel.send(this.helpembed).catch(e => this.logger.warn(e));
-      this.helpembed = this.makeembed();
+      this.helpembed = this.makeembed(config.prefix !== "" ? config.prefix : this.autumnblaze.botoptions.prefix);
       msg.channel.send(this.helpembed).catch(e => this.logger.warn(e));
    }
 
@@ -55,11 +56,13 @@ export class HelpCommandthing extends Command {
       return commandcollection;
    }
    /** make a top level help embed */
-   private makeembed(): MessageEmbed {
+   private makeembed(prefix: string = ""): MessageEmbed {
       // maps a category name to an array of commands that fall under that category
       this.commandcollection = this.getcategories();
-      const embed: MessageEmbed = new MessageEmbed();
+      const embed: MessageEmbed = getembed();
 
+      embed.setTitle("Command Help");
+      embed.setDescription(`run \`${prefix}help <category>\` for help on commands in a category`);
       this.commandcollection.array().sort((a, b) => {
          // idk why this lol
          if (a[0].category.name > b[0].category.name) return 1;
@@ -101,7 +104,7 @@ export class HelpCommandthing extends Command {
          return embed.setTitle("No commands available in that category");
       }
 
-      embed.setTitle(`Category ${category}`);
+      embed.setTitle(`Command help for category ${category}`);
       embed.setDescription(categories[category].description);
       thearr.forEach(cmd => {
          if ((msg.channel.type === "dm" && cmd.allowdm) || ((msg.channel.type === "news" || msg.channel.type === "text") && cmd.allowguild)) embed.addField(cmd.name, cmd.description, true);
