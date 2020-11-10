@@ -2,12 +2,13 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 // random stuff for stuff idk
 
+import { MessageEmbed } from "discord.js";
 import { JsonConvert, JsonObject, JsonProperty } from "json2typescript";
 import { transports } from "winston";
 import { Logger } from "winston";
 import { format } from "winston";
 import { createLogger } from "winston";
-import { devloglevel, prodloglevel, labelshift, levelshift } from "./consts";
+import { devloglevel, prodloglevel, labelshift, levelshift, colours } from "./consts";
 
 /**
  * right pad until specified length, if longer then specified length then not modified
@@ -195,4 +196,11 @@ export function randfromarray<T>(...arrs: ReadonlyArray<ReadonlyArray<T>>): Arra
    for (const arr of arrs) if (arr.length > randnum) randarr.push(arr[randnum]);
 
    return randarr;
+}
+
+/** get a standard embed with standard fields already filled in */
+export function getembed(): MessageEmbed {
+   return new MessageEmbed()
+      .setColor(randfromarray(colours)[0])
+      .setFooter("autumnblaze v" + packagejson.version);
 }

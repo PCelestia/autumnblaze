@@ -2,7 +2,7 @@ import { Message, MessageEmbed } from "discord.js";
 import { JsonConvert, JsonObject, JsonProperty } from "json2typescript";
 import { get } from "superagent";
 import { colours } from "../../../consts";
-import { packagejson, randfromarray } from "../../../rando";
+import { getembed, packagejson, randfromarray } from "../../../rando";
 import { categories, Command } from "../command";
 
 /** representations of a pony image (different links to different urls) */
@@ -70,10 +70,8 @@ export class PonyCmd extends Command {
       this.logger.debug(pony.representations.full);
       this.logger.debug(pony.derpiid);
 
-      const embed: MessageEmbed = new MessageEmbed();
+      const embed: MessageEmbed = getembed();
       embed.setTitle("Random Pony Image");
-      embed.setFooter("autumnblaze v" + packagejson.version);
-      embed.setColor(randfromarray(colours)[0]);
 
       const artisttags: Array<string> = [];
       pony.tags.forEach(tag => {

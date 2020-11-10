@@ -1,7 +1,12 @@
 import { Collection, Message, MessageEmbed } from "discord.js";
 import { AutumnBlaze } from "../../bot";
+import { getembed } from "../../rando";
 import { categories, CategoryNames, Command } from "./command";
 
+const sep = "__";
+function getid(channelid: string, authorid?: string): string {
+   return channelid + sep + (authorid ?? "");
+}
 /** help command */
 export class HelpCommandthing extends Command {
    /** autumnblaze that instantiated this */
@@ -11,7 +16,8 @@ export class HelpCommandthing extends Command {
     * (might not be cached anymore later since it can change based on dm/guild
     * i think)
     */
-   private helpembed: MessageEmbed | undefined = undefined;
+   private helpembed?: MessageEmbed = undefined;
+   private commandcollection?: Collection<CategoryNames, Array<Command>> = undefined;
 
    /** construct zee help command */
    public constructor(autumnblaze: AutumnBlaze) {
@@ -21,7 +27,7 @@ export class HelpCommandthing extends Command {
 
    public async exec(msg: Message, arg: string): Promise<void> {
       if (arg !== "") {
-         await msg.channel.send(`got "${arg}" as arg`);
+         await msg.channel.send(this.makespecificembed(arg, msg));
          return;
       }
       // if theres already one, send it, if not, create one and save it
@@ -30,11 +36,8 @@ export class HelpCommandthing extends Command {
       msg.channel.send(this.helpembed).catch(e => this.logger.warn(e));
    }
 
-   /** make a top level help embed */
-   private makeembed(): MessageEmbed {
-      //                                                                                                                                                                    long noodle
-      const commandcollection: Collection<CategoryNames, Array<Command>> = new Collection<CategoryNames, Array<Command>>();
-      const embed: MessageEmbed = new MessageEmbed();
+   private getcategories(): Collection<CategoryNames, Array<Command>> {
+      const commandcollection: Collection<CategoryNames, Array<Command>> = new Collection();
 
       // sorteth through everything and yea
       this.autumnblaze.getcommands().forEach(cmd => {
@@ -45,25 +48,28 @@ export class HelpCommandthing extends Command {
             commandcollection.set(cmd.category.name, []);
             thearr = commandcollection.get(cmd.category.name);
          }
-         if (thearr === undefined) {
-            return this.logger.emerg("something went wrong in the making of the embed");
-         }
+         if (thearr === undefined) return this.logger.emerg("something went wrong in getting categories");
 
          thearr.push(cmd);
       });
+      return commandcollection;
+   }
+   /** make a top level help embed */
+   private makeembed(): MessageEmbed {
+      // maps a category name to an array of commands that fall under that category
+      this.commandcollection = this.getcategories();
+      const embed: MessageEmbed = new MessageEmbed();
 
-      commandcollection.array().sort((a, b) => {
+      this.commandcollection.array().sort((a, b) => {
+         // idk why this lol
          if (a[0].category.name > b[0].category.name) return 1;
          if (a[0].category.name === b[0].category.name) return 0;
          return -1;
-      }).forEach(arr => {
-         // arr[0].category.name
-         embed.addField(arr[0].category.name, arr[0].category.description);
-      });
+      }).forEach(arr => embed.addField(arr[0].category.name, arr[0].category.description));
 
       // debug reasons, should probably remove before committing
       // but if you see this, hi! i obviously forgot
-      commandcollection.array().sort((a, b) => {
+      this.commandcollection.array().sort((a, b) => {
          if (a[0].category.name > b[0].category.name) return 1;
          if (a[0].category.name === b[0].category.name) return 0;
          return -1;
@@ -73,6 +79,33 @@ export class HelpCommandthing extends Command {
          });
       });
 
+      return embed;
+   }
+
+   private makespecificembed(category: string, msg: Message): MessageEmbed {
+      if (!this.commandcollection) this.commandcollection = this.getcategories();
+      const embed = getembed();
+
+      // eeehehehehe theres a better way to do this im sure
+      // what if i add a category and this doesnt recognise it
+      // so this is bad
+      if (!(category === "other" ||
+            category === "test" ||
+            category === "utility" ||
+            category === "pony" ||
+            category === "fun" ||
+            category === "voice")) return embed.setTitle("Category not found");
+      const thearr: Array<Command> | undefined = this.commandcollection.get(category);
+      if (thearr === undefined){
+         // no commands available in that category
+         return embed.setTitle("No commands available in that category");
+      }
+
+      embed.setTitle(`Category ${category}`);
+      embed.setDescription(categories[category].description);
+      thearr.forEach(cmd => {
+         if ((msg.channel.type === "dm" && cmd.allowdm) || ((msg.channel.type === "news" || msg.channel.type === "text") && cmd.allowguild)) embed.addField(cmd.name, cmd.description, true);
+      });
       return embed;
    }
 
