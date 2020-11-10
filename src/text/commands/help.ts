@@ -1,6 +1,6 @@
-import { Collection, Message, MessageEmbed, PermissionFlags, PermissionString } from "discord.js";
+import { Collection, Message, MessageEmbed } from "discord.js";
 import { AutumnBlaze } from "../../bot";
-import { categories, CategoryAndDataStuff, CategoryNames, Command } from "./command";
+import { categories, CategoryNames, Command } from "./command";
 
 /** help command */
 export class HelpCommandthing extends Command {
@@ -72,10 +72,9 @@ export class HelpCommandthing extends Command {
       return embed;
    }
 
-   public perms = [];
-   public allowdm = true;
-   public allowguild = true;
-   public category = categories.other;
-   public description = "this command shows help obviously lol";
-   public showinhelp = true;
+   public readonly allowdm = true;
+   public readonly allowguild = true;
+   public readonly category = categories.other;
+   public readonly description = "this command shows help obviously lol";
+   public readonly showinhelp = true;
 }

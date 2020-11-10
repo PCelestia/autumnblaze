@@ -1,7 +1,7 @@
-import { Message, PermissionFlags, PermissionString } from "discord.js";
+import { Message } from "discord.js";
 import { AutumnBlaze } from "../../../bot";
 import { yeet } from "../../../rando";
-import { categories, CategoryAndDataStuff, Command } from "../command";
+import { categories, Command } from "../command";
 
 /** tells the bot to join a voice channel, the bot joins the voice channel that
  * the message author is in
@@ -43,10 +43,8 @@ export class JoinCommand extends Command {
       else msg.channel.send("you need to join a voice channel first!").catch(e => this.logger.warn(e));
    }
 
-   public readonly allowdm = false;
    public readonly allowguild;
    public readonly category = categories.voice;
    public readonly description = "tell me to join your channel and play some tunes!";
-   public readonly perms = [];
    public readonly showinhelp = true;
 }

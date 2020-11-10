@@ -1,6 +1,16 @@
-import { Message, PermissionFlags, PermissionString } from "discord.js";
+import { Message } from "discord.js";
 import { AutumnBlaze } from "../../bot";
-import { categories, CategoryAndDataStuff, Command } from "./command";
+import { categories, Command } from "./command";
+
+
+function* her(): Generator<void, void, Message> {
+   let msg = yield;
+   while (msg.content === "h") {
+      void msg.channel.send("h");
+      msg = yield;
+   }
+   return;
+}
 
 /** a tester command, dynamically loaded in only when running in dev mode */
 export class Testester extends Command {
@@ -17,19 +27,7 @@ export class Testester extends Command {
       this.autumnblaze.registerreplier(msg.channel.id, her);
    }
 
-   public readonly perms = [];
-   public readonly allowdm = false;
    public readonly allowguild = true;
    public readonly category = categories.test;
    public readonly description = "test command lol";
-   public readonly showinhelp = false;
-}
-
-function* her(): Generator<void, void, Message> {
-   let msg = yield;
-   while (msg.content === "h") {
-      void msg.channel.send("h");
-      msg = yield;
-   }
-   return;
 }

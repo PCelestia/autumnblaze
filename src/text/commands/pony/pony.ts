@@ -94,6 +94,5 @@ export class PonyCmd extends Command {
    public readonly allowguild = true;
    public readonly category= categories.pony;
    public readonly description = "get a random pony image!";
-   public readonly perms = [];
    public readonly showinhelp = true;
 }

@@ -37,11 +37,12 @@ void (async function(): Promise<void> {
    autumnblazebotthing.registerstoplistener("SIGINT");
    autumnblazebotthing.registerstoplistener("SIGTERM");
 
+   // test command
    if (envisdev()) autumnblazebotthing.registercommand(new (await import("./text/commands/tester")).Testester(autumnblazebotthing));
+
    autumnblazebotthing.registercommand(new HelpCommandthing(autumnblazebotthing));
 
    getviolations().forEach(v => autumnblazebotthing.registercommand(v));
-
    autumnblazebotthing.registercommand(new PonyCmd());
 
    autumnblazebotthing.registercommand(new JoinCommand(autumnblazebotthing));

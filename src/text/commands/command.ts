@@ -26,19 +26,19 @@ export abstract class Command {
    /** called when someone runs this command */
    public async abstract exec(message: Message): Promise<void>;
    /** permissions required to run this command, empty array if anyone can run it */
-   public readonly abstract perms: ReadonlyArray<PermissionFlags | PermissionString>;
+   public readonly perms: ReadonlyArray<PermissionFlags | PermissionString> = [];
 
-   /** allow this command to be run in a guild (server) */
-   public readonly abstract allowguild: boolean;
    /** allow this command to be run in DMs */
-   public readonly abstract allowdm: boolean;
+   public readonly allowdm: boolean = false;
+   /** allow this command to be run in a guild (server) */
+   public readonly allowguild: boolean = false;
 
-   /** whether or not to show this command and information in the help embed */
-   public readonly abstract showinhelp: boolean;
-   /** category of this command (yes i overcomplicated this category thing lol) */
+   /** category of this command (yes i maybe overcomplicated this category thing lol) */
    public readonly abstract category: CategoryAndDataStuff<CategoryNames>;
    /** description of this command */
    public readonly abstract description: string | undefined;
+   /** whether or not to show this command and information in the help embed */
+   public readonly showinhelp: boolean = false;
 }
 
 // what

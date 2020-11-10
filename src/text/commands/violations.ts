@@ -1,5 +1,5 @@
-import { Message, PermissionFlags, PermissionString, User } from "discord.js";
-import { categories, CategoryAndDataStuff, Command } from "./command";
+import { Message, User } from "discord.js";
+import { categories, Command } from "./command";
 
 /** maximum mentions per message */
 export const maxboopspermessage: number = 3;
@@ -53,8 +53,6 @@ export class Violation extends Command {
       for (const user of mentionedusers) msg.channel.send(`${this.opts.pluralaction} <@${user.id}>`).catch(e => this.logger.warn(e));
    }
 
-   public readonly perms = [];
-   public readonly allowdm = false;
    public readonly allowguild = true;
    public readonly category = categories.fun;
    public readonly description;

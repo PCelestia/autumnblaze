@@ -29,10 +29,8 @@ export class LeaveCommand extends Command {
       } else msg.channel.send("i'm not in a voice channel, silly!").catch(e => this.logger.warn(e));
    }
 
-   public readonly allowdm = false;
    public readonly allowguild;
    public readonly category = categories.voice;
    public readonly description = "tell me to leave after you're done";
-   public readonly perms = [];
    public readonly showinhelp = true;
 }
