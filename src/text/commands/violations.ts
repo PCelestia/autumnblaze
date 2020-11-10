@@ -50,7 +50,7 @@ export class Violation extends Command {
       const mentionedusers: Array<User> = msg.mentions.users.array();
       if (mentionedusers.length === 0) return void msg.channel.send(`_${this.opts.pluralaction}_ <@${msg.author.id}>`).catch(e => this.logger.warn(e));
       if (mentionedusers.length >= this.opts.maxmentions) return void msg.channel.send(`I can't ${this.opts.name} that many people!`).catch(e => this.logger.warn(e));
-      for (const user of mentionedusers) msg.channel.send(`${this.opts.pluralaction} <@${user.id}>`).catch(e => this.logger.warn(e));
+      for (const user of mentionedusers) msg.channel.send(`_${this.opts.pluralaction}_ <@${user.id}>`).catch(e => this.logger.warn(e));
    }
 
    public readonly allowguild = true;
