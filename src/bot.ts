@@ -1,4 +1,4 @@
-import { Client, ClientOptions, Collection } from "discord.js";
+import { Client, ClientOptions, Collection, Message } from "discord.js";
 import { Logger } from "winston";
 import { Mango } from "./mango";
 import { GuildConfig } from "./mango/struct";
@@ -59,6 +59,11 @@ export class AutumnBlaze {
    public readonly mango: Mango;
    /** options for the bot */
    public readonly botoptions: AutumnBlazeOptions;
+   /**
+    * generator functions for reply thread type things (where someone has a "conversation"
+    * with the bot)
+    */
+   private readonly repliers: Collection<string, Generator<void, void, Message>>;
 
    /**
     * create! lol
@@ -78,6 +83,7 @@ export class AutumnBlaze {
       });
 
       this.logger = getlogger("_mainbot");
+      this.repliers = new Collection<string, Generator<void, void, Message>>();
       this.commands = new Collection<string, Command>();
 
       this.bot.on("ready", () => {
@@ -152,6 +158,14 @@ export class AutumnBlaze {
    private registermessagelistener(): void {
       this.bot.on("message", async msg => {
          if (msg.author === this.bot.user) return;
+
+         const replier = this.repliers.get(msg.channel.id);
+         if (replier) {
+            const res = replier.next(msg);
+            if (res.done) this.repliers.delete(msg.channel.id);
+            return;
+         }
+
          // the second conditional is not needed but satisfy tsc yk?
          if (msg.guild && msg.channel.type === "text") {
             const guildconfig: GuildConfig = await this.mango.getservconfig(msg.guild);
@@ -191,8 +205,16 @@ export class AutumnBlaze {
       return this.commands.clone();
    }
 
+   public registerreplier(channelid: string, generatorfn: () => Generator<void, void, Message>): void {
+      const instance = generatorfn();
+      instance.next(); // just to set it off once, it doesnt do anything here yet
+      this.repliers.set(channelid, instance);
+   }
+
    /** (eventually) register voicestate listener (for things like auto disconnect and stuff) */
    private registervoicestatelistener(): void {
+      this.logger.info("registervoicestatelistener was called probably expecting it to do something lol");
+      this.logger.info("it doesnt");
       // h
       // this.bot.on("voiceStateUpdate", (_oldstate, newstate) => {
       //

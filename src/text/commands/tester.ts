@@ -14,12 +14,7 @@ export class Testester extends Command {
 
    public async exec(msg: Message): Promise<void> {
       // h
-      await msg.channel.send("h");
-      if (!msg.guild) {
-         this.logger.error("hmmmmmmmmm no guild on guild only command");
-         return void msg.channel.send("no guild h");
-      }
-      await msg.channel.send((await this.autumnblaze.mango.getservconfig(msg.guild)).tojson());
+      this.autumnblaze.registerreplier(msg.channel.id, her);
    }
 
    public readonly perms = [];
@@ -28,4 +23,13 @@ export class Testester extends Command {
    public readonly category = categories.test;
    public readonly description = "test command lol";
    public readonly showinhelp = false;
+}
+
+function* her(): Generator<void, void, Message> {
+   let msg = yield;
+   while (msg.content === "h") {
+      void msg.channel.send("h");
+      msg = yield;
+   }
+   return;
 }
