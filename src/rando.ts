@@ -126,7 +126,7 @@ export type ProcessEvents = "SIGABRT"
 
 /** chops prefix off the front of a command string */
 export function chopprefix(prefix: string, messagecontent: string): string | false {
-   if (messagecontent.startsWith(prefix)) return messagecontent.substring(prefix.length);
+   if (messagecontent.toLowerCase().startsWith(prefix.toLowerCase())) return messagecontent.substring(prefix.length);
    return false;
 }
 
