@@ -146,7 +146,8 @@ export class Mango {
 
    public async putpony(pony: SmolPone): Promise<void> {
       return new Promise((resolve, reject) => {
-         this.ponyclient?.db(this.opts.ponydbname ?? "pones").collection(pony.id.toString().substring(0, 1)).insertOne(this.jsonconverter.serializeObject(pony), (err, res) => {
+         const ponyid = pony.id.toString();
+         this.ponyclient?.db(this.opts.ponydbname ?? "pones").collection(ponyid.substring(ponyid.length - 1)).insertOne(this.jsonconverter.serializeObject(pony), (err, res) => {
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (err) reject(err);
             if (res.result.ok !== 1) return reject(new Error("no error but res.result.ok isnt 1 which means something went wrong, somehow"));
