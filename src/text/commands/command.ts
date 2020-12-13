@@ -29,7 +29,7 @@ export abstract class Command {
     * @param msg message to act on
     * @param args the "args" of this command
     */
-   public async abstract exec(msg: Message, args: string, config?: GuildConfig): Promise<void>;
+   public abstract exec(msg: Message, args: string, config?: GuildConfig): Promise<void>;
    /** permissions required to run this command, empty array if anyone can run it */
    public readonly perms: ReadonlyArray<PermissionFlags | PermissionString> = [];
 
