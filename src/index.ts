@@ -13,14 +13,8 @@ import { LeaveCommand } from "./text/commands/voice/leavecommand";
 import { NOWPlayInglol } from "./text/commands/voice/nowplaying";
 import { PonyCmd } from "./text/commands/pony/pony";
 import { getviolations } from "./text/commands/violations";
+// import { Stabby } from "./text/commands/stab";
 
-const logger = getlogger("_main_");
-process.on("unhandledRejection",  (reason, promise) => {
-   logger.emerg("UNCAUGHT PROMISE REJECTION");
-   logger.emerg(`REASON: ${reason}`);
-   logger.emerg("PROMISE: WELL FUF I CANT STRINGIFY THIS");
-
-});
 void (async function(): Promise<void> {
    if (envisdev()) (require("dotenv") as any).config();
    if (process.env.TOKEN === undefined) {
@@ -56,5 +50,14 @@ void (async function(): Promise<void> {
    autumnblazebotthing.registercommand(new LeaveCommand(autumnblazebotthing));
    autumnblazebotthing.registercommand(new NOWPlayInglol(autumnblazebotthing));
 
-   void autumnblazebotthing.start();
+   // autumnblazebotthing.registercommand(new Stabby());
+
+   await autumnblazebotthing.start();
+
+   const logger = getlogger("_main_");
+   process.on("unhandledRejection", (reason) => {
+      logger.emerg("UNCAUGHT PROMISE REJECTION");
+      logger.emerg(`REASON: ${reason}`);
+      logger.emerg("PROMISE: WELL FUF I CANT STRINGIFY THIS");
+   });
 })();
