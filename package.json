@@ -5,10 +5,11 @@
    "main": "build/bot.js",
    "private": true,
    "scripts": {
+      "clean": "rimraf build",
       "buildandrun": "npm run build && npm run start",
       "build:ncc": "ncc build src/index.ts -o build -m",
       "build:dev:ncc": "ncc build src/index.ts -o build -m -s",
-      "build": "tsc",
+      "build": "npm run clean && tsc",
       "build:dev": "tsc --project tsconfig.dev.json",
       "lint": "eslint --ext .ts src/",
       "test": "echo im lazy lol",
@@ -73,6 +74,7 @@
       "cross-env": "^7.0.2",
       "dotenv": "^8.2.0",
       "eslint": "^7.11.0",
+      "rimraf": "^3.0.2",
       "ts-prune": "^0.8.4",
       "typedoc": "^0.19.2",
       "typescript": "^4.0.3"
