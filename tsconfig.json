@@ -6,6 +6,7 @@
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
+      "importHelpers": true,
       "module": "commonjs",
       "moduleResolution": "node",
       "noEmitOnError": true,
@@ -17,7 +18,8 @@
       "strictFunctionTypes": true,
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
-      "target": "ES2020"
+      "target": "ES2020",
+      "sourceMap": true
    },
    "include": ["src/**/*"],
    "typeAcquisition": {
