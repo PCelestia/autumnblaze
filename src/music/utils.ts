@@ -9,9 +9,9 @@ import { JsonConvert, JsonObject, JsonProperty } from "json2typescript";
 import { unescape } from "html-escaper";
 import { Collection, VoiceBroadcast } from "discord.js";
 import { AutumnBlaze } from "../bot";
-import { Logger } from "winston";
-import { getlogger } from "../rando";
-const logger: Logger = getlogger("_voiceutil");
+// import { Logger } from "winston";
+// import { getlogger } from "../rando";
+// const logger: Logger = getlogger("_voiceutil");
 
 // for autojoin, for later when a db is connected
 // export class VoiceThing {
@@ -202,7 +202,7 @@ const albumobjects: Collection<string, Album> = new Collection();
 
 /** makes a new queue. if there is an existing one, it is overwritten */
 export function getnewqueue(): Array<string> {
-   logger.debug("made new queue");
+   // logger.debug("made new queue");
    const newqueue: Array<string> = [];
    for (let albumnum: number = 0; albumnum < albums.length; albumnum++) for (let songnum: number = 0; songnum < albums[albumnum].numberofsongs; songnum++) {
       newqueue.push(`${albumnum} ${songnum}`);
@@ -231,7 +231,7 @@ interface NextSongLink {
 export async function getnextsonglink(): Promise<NextSongLink> {
    // gotta satisfy typescript ultra strict typing yk?
 
-   logger.debug("getting next song link from queue");
+   // logger.debug("getting next song link from queue");
 
    // try to get a song from the queue, make new if its empty or doesnt exist
    if (!queue || queue.length === 0) queue = getnewqueue();
@@ -261,8 +261,8 @@ export async function getnextsonglink(): Promise<NextSongLink> {
 
    const playableurl: string | false = await getplayableurl(albumsongurls[songnum]);
    if (playableurl) {
-      logger.debug(`bandcamp link: ${albumsongurls[songnum]}`);
-      logger.debug(`playable link: ${playableurl}`);
+      // logger.debug(`bandcamp link: ${albumsongurls[songnum]}`);
+      // logger.debug(`playable link: ${playableurl}`);
       return {
          url: albumsongurls[songnum],
          playable: playableurl,
@@ -308,8 +308,8 @@ export class BroadcastManager {
    private broadcast?: VoiceBroadcast;
    /** the {@link AutumnBlaze} that instantiated this */
    private readonly autumnblaze: AutumnBlaze;
-   /** logger for logging things */
-   private readonly logger: Logger;
+   // /** logger for logging things */
+   // private readonly logger: Logger;
    /** now playing song data */
    private nowplayingsonglol: NextSongLink = nosong;
    /** getter, parses {@link this.nowplayingsonglol} and returns a {@link Track} object */
@@ -328,8 +328,8 @@ export class BroadcastManager {
     */
    public constructor(autumnblaze: AutumnBlaze) {
       this.autumnblaze = autumnblaze;
-      this.logger = getlogger("_voice");
-      this.logger.debug("created le BroadcastManager thing");
+      // this.logger = getlogger("_voice");
+      // this.logger.debug("created le BroadcastManager thing");
    }
 
    /**
@@ -340,7 +340,7 @@ export class BroadcastManager {
       if (!this.broadcast) {
          this.broadcast = this.autumnblaze.bot.voice?.createBroadcast();
          if (!this.broadcast) throw new Error("there doesn't seem to be a voice manager available");
-         this.logger.debug("created a new voice broadcast!");
+         // this.logger.debug("created a new voice broadcast!");
 
          const timeoutnext = (): void => {
             void this.playnextsong().then(time => {
@@ -358,7 +358,7 @@ export class BroadcastManager {
     * @returns length of this song in milliseconds
     */
    private async playnextsong(): Promise<number> {
-      this.logger.debug("playing next song!");
+      // this.logger.debug("playing next song!");
       const links: NextSongLink = await getnextsonglink();
       this.nowplayingsonglol = links;
       this.broadcast?.play(links.playable, {
@@ -376,7 +376,7 @@ export class BroadcastManager {
     */
    public closebroadcast(): void {
       if (this.broadcast?.subscribers.length !== 0) return;
-      this.logger.debug("closed broadcast because (apparently?) noone is listening");
+      // this.logger.debug("closed broadcast because (apparently?) noone is listening");
       this.broadcast.end();
       this.nowplayingsonglol = nosong;
       delete this.broadcast;

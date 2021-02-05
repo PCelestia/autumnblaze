@@ -32,9 +32,9 @@ export class HelpCommandthing extends Command {
          return;
       }
       // if theres already one, send it, if not, create one and save it
-      if (this.helpembed !== undefined) return void msg.channel.send(this.helpembed).catch(e => this.logger.warn(e));
+      if (this.helpembed !== undefined) return void msg.channel.send(this.helpembed)//.catch(e => this.logger.warn(e));
       this.helpembed = this.makeembed(config.prefix !== "" ? config.prefix : this.autumnblaze.botoptions.prefix);
-      msg.channel.send(this.helpembed).catch(e => this.logger.warn(e));
+      msg.channel.send(this.helpembed)//.catch(e => this.logger.warn(e));
    }
 
    private getcategories(): Collection<CategoryNames, Array<Command>> {
@@ -42,14 +42,14 @@ export class HelpCommandthing extends Command {
 
       // sorteth through everything and yea
       this.autumnblaze.getcommands().forEach(cmd => {
-         this.logger.debug(cmd.name);
+         // this.logger.debug(cmd.name);
 
          let thearr: Array<Command> | undefined = commandcollection.get(cmd.category.name);
          if (thearr === undefined) {
             commandcollection.set(cmd.category.name, []);
             thearr = commandcollection.get(cmd.category.name);
          }
-         if (thearr === undefined) return this.logger.emerg("something went wrong in getting categories");
+         if (thearr === undefined) return //this.logger.emerg("something went wrong in getting categories");
 
          thearr.push(cmd);
       });
@@ -78,7 +78,7 @@ export class HelpCommandthing extends Command {
          return -1;
       }).forEach(arr => {
          arr.forEach(cmdinarr => {
-            this.logger.debug(`${cmdinarr.name}: in category ${cmdinarr.category.name}`);
+            // this.logger.debug(`${cmdinarr.name}: in category ${cmdinarr.category.name}`);
          });
       });
 

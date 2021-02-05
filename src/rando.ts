@@ -4,10 +4,10 @@
 
 import { MessageEmbed } from "discord.js";
 import { JsonConvert, JsonObject, JsonProperty } from "json2typescript";
-import { transports } from "winston";
-import { Logger } from "winston";
-import { format } from "winston";
-import { createLogger } from "winston";
+// import { transports } from "winston";
+// import { Logger } from "winston";
+// import { format } from "winston";
+// import { createLogger } from "winston";
 import { devloglevel, prodloglevel, labelshift, levelshift, colours } from "./consts";
 
 /**
@@ -39,35 +39,35 @@ export function envisdev(): boolean {
    return !envisprod();
 }
 
-/**
- * gets a configured winston.Logger
- *
- * @param label label to use in logger
- * @returns the logger
- */
-export function getlogger(label: string): Logger {
-   return createLogger({
-      level: envisprod() ? prodloglevel : devloglevel,
-      transports: [new transports.Console],
-      format: format.combine(
-         format.timestamp(),
-         format.label({ label: `[${label}]`, message: false }),
-         format.printf(info => {
-            return `${info.timestamp} ${normalise(info.label, labelshift)} ${normalise(`[${info.level}]`, levelshift)} ${info.message}`;
-         })
-      ),
-      levels: {
-         emerg: 0,
-         alert: 1,
-         crit: 2,
-         error: 3,
-         warning: 4,
-         notice: 5,
-         info: 6,
-         debug: 7
-      }
-   });
-}
+// /**
+//  * gets a configured winston.Logger
+//  *
+//  * @param label label to use in logger
+//  * @returns the logger
+//  */
+// export function getlogger(label: string): Logger {
+//    return createLogger({
+//       level: envisprod() ? prodloglevel : devloglevel,
+//       transports: [new transports.Console],
+//       format: format.combine(
+//          format.timestamp(),
+//          format.label({ label: `[${label}]`, message: false }),
+//          format.printf(info => {
+//             return `${info.timestamp} ${normalise(info.label, labelshift)} ${normalise(`[${info.level}]`, levelshift)} ${info.message}`;
+//          })
+//       ),
+//       levels: {
+//          emerg: 0,
+//          alert: 1,
+//          crit: 2,
+//          error: 3,
+//          warning: 4,
+//          notice: 5,
+//          info: 6,
+//          debug: 7
+//       }
+//    });
+// }
 
 // const logger: Logger = getlogger("_rando");
 

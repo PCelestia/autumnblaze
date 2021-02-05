@@ -96,8 +96,8 @@ export class PonyCmd extends Command {
    public async exec(msg: Message): Promise<void> {
       const result = await get("https://theponyapi.com/api/v1/pony/random");
       const pony: Pony = this.jsonconvert.deserializeObject(JSON.parse(result.text), RandomPonyResult).pony;
-      this.logger.debug(pony.representations.full);
-      this.logger.debug(pony.derpiid);
+      // this.logger.debug(pony.representations.full);
+      // this.logger.debug(pony.derpiid);
 
       const embed: MessageEmbed = getembed();
       embed.setTitle("Random Pony Image");

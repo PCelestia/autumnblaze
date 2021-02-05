@@ -1,9 +1,9 @@
 import { Client, ClientOptions, Collection, Message } from "discord.js";
-import { Logger } from "winston";
+// import { Logger } from "winston";
 import { Mango } from "./mango";
 import { GuildConfig } from "./mango/struct";
 import { BroadcastManager } from "./music/utils";
-import { chopprefix, getlogger, getnextarg, ProcessEvents } from "./rando";
+import { chopprefix, /*getlogger,*/ getnextarg, ProcessEvents } from "./rando";
 import { Command } from "./text/commands/command";
 
 /** options for {@link AutumnBlaze} */
@@ -50,8 +50,8 @@ export class AutumnBlaze {
    /** whether or not this instance has stopped (after starting it). After it has stopped, it cannot be restarted */
    private stopped: boolean = false;
    /** logger for this main bot */
-   private readonly logger: Logger;
-   /** commands collection to store all the commands in */
+   // private readonly logger: Logger;
+   // /** commands collection to store all the commands in */
    private readonly commands: Collection<string, Command>;
    /** manager for voice if enabled */
    public readonly voicebroadcastmanager?: BroadcastManager;
@@ -82,7 +82,7 @@ export class AutumnBlaze {
          usecache: botoptions.usemangocache
       });
 
-      this.logger = getlogger("_mainbot");
+      // this.logger = getlogger("_mainbot");
       this.repliers = new Collection<string, Generator<void, void, Message>>();
       this.commands = new Collection<string, Command>();
 
@@ -93,13 +93,13 @@ export class AutumnBlaze {
             activity: {
                name: "PING ME LOL"
             }
-         }).catch(e => this.logger.warn(e));
+         })//.catch(e => this.logger.warn(e));
       });
       this.registermessagelistener();
       this.registervoicestatelistener();
-      if (botoptions.enablevoice === false) this.logger.debug("voice not enabled");
+      // if (botoptions.enablevoice === false) this.logger.debug("voice not enabled");
       this.voicebroadcastmanager = new BroadcastManager(this);
-      this.logger.debug("okie constructed main bot");
+      // this.logger.debug("okie constructed main bot");
    }
 
    /**
@@ -116,9 +116,9 @@ export class AutumnBlaze {
 
       await this.mango.start();
       await this.bot.login(this.token);
-      this.logger.info("connected to discord!!");
-      this.bot.on("warn", warn => this.logger.warn(warn));
-      this.bot.on("error", error => this.logger.error(error));
+      // this.logger.info("connected to discord!!");
+      // this.bot.on("warn", warn => this.logger.warn(warn));
+      // this.bot.on("error", error => this.logger.error(error));
 
       this.started = true;
    }
@@ -129,7 +129,7 @@ export class AutumnBlaze {
 
       this.bot.destroy();
       this.mango.stop();
-      this.logger.info("disconnected");
+      // this.logger.info("disconnected");
       this.stopped = true;
    }
 
@@ -151,7 +151,7 @@ export class AutumnBlaze {
    public registercommand(cmd: Command): void {
       if (this.commands.get(cmd.name)) throw new Error(`duplicate command "${cmd.name}"!`);
       this.commands.set(cmd.name, cmd);
-      this.logger.debug(`added command ${cmd.name}`);
+      // this.logger.debug(`added command ${cmd.name}`);
    }
 
    /** register the message listener to discord.js bot (only called once) */
@@ -214,8 +214,8 @@ export class AutumnBlaze {
 
    /** (eventually) register voicestate listener (for things like auto disconnect and stuff) */
    private registervoicestatelistener(): void {
-      this.logger.info("registervoicestatelistener was called probably expecting it to do something lol");
-      this.logger.info("it doesnt");
+      // this.logger.info("registervoicestatelistener was called probably expecting it to do something lol");
+      // this.logger.info("it doesnt");
       // h
       // this.bot.on("voiceStateUpdate", (_oldstate, newstate) => {
       //

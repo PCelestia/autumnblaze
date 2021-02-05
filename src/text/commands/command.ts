@@ -1,7 +1,7 @@
 import { Message, PermissionFlags, PermissionString } from "discord.js";
-import { Logger } from "winston";
+// import { Logger } from "winston";
 import { GuildConfig } from "../../mango/struct";
-import { getlogger } from "../../rando";
+// import { getlogger } from "../../rando";
 
 /**
  * abstract interface providing things common across all commands.
@@ -10,8 +10,8 @@ import { getlogger } from "../../rando";
 export abstract class Command {
    /** name of the command, also what is used to invoke this command */
    public readonly name: string;
-   /** logger of the command (subclasses inherit and can use this) */
-   protected readonly logger: Logger;
+   // /** logger of the command (subclasses inherit and can use this) */
+   // protected readonly logger: Logger;
 
    /** constructor, subclasses should declare a different
     * (noarg or maybe one that takes an {@link AutumnBlaze})
@@ -19,9 +19,9 @@ export abstract class Command {
     */
    public constructor(name: string) {
       this.name = name;
-      this.logger = getlogger(this.name);
+      // this.logger = getlogger(this.name);
 
-      this.logger.debug(`${this.name} constructed!`);
+      // this.logger.debug(`${this.name} constructed!`);
    }
 
    /**

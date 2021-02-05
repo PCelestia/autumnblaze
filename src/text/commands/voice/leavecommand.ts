@@ -21,12 +21,12 @@ export class LeaveCommand extends Command {
 
    public async exec(msg: Message): Promise<void> {
       if (!this.autumnblaze.voicebroadcastmanager) return void msg.channel.send("voice is not enabled!");
-      if (!msg.guild) return void this.logger.emerg("Holy HECK this leave command message doesn't have a guild! but it supposedly can only run in a guild! INITIATE PANIC MODE!!!!!");
+      if (!msg.guild) return //void this.logger.emerg("Holy HECK this leave command message doesn't have a guild! but it supposedly can only run in a guild! INITIATE PANIC MODE!!!!!");
       if (this.autumnblaze.bot.voice?.connections.has(msg.guild.id)) {
          this.autumnblaze.bot.voice.connections.get(msg.guild.id)?.disconnect();
          this.autumnblaze.voicebroadcastmanager.closebroadcast();
-         msg.channel.send("disconnected!").catch(e => this.logger.warn(e));
-      } else msg.channel.send("i'm not in a voice channel, silly!").catch(e => this.logger.warn(e));
+         msg.channel.send("disconnected!")//.catch(e => this.logger.warn(e));
+      } else msg.channel.send("i'm not in a voice channel, silly!")//.catch(e => this.logger.warn(e));
    }
 
    public readonly allowguild;

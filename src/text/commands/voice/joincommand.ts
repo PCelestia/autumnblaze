@@ -21,26 +21,26 @@ export class JoinCommand extends Command {
       if (!this.autumnblaze.voicebroadcastmanager) return void msg.channel.send("voice is not enabled!");
       if (msg.member?.voice.channel) msg.member.voice.channel.join().then(con => {
          if (!this.autumnblaze.voicebroadcastmanager) {
-            // why did i do this, idk
-            this.logger.emerg("hmmmmmmm this.autumnblaze.voicebroadcastmanager is undefined");
-            this.logger.emerg("but it passed the first check, wasnt modified then failed the same check hmmmmmmmmmmmmm");
-            this.logger.emerg("big h");
-            this.logger.emerg("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-            this.logger.emerg("h");
-            this.logger.emerg("this went horribly wrong if this happened so");
-            this.logger.emerg("yah");
-            this.logger.emerg("spam errors in the logz");
-            this.logger.emerg("this should never happen btw");
-            this.logger.emerg("never ever ever ever ever ever ever ever ever ever ever");
-            this.logger.emerg(new Error());
+            // // why did i do this, idk
+            // this.logger.emerg("hmmmmmmm this.autumnblaze.voicebroadcastmanager is undefined");
+            // this.logger.emerg("but it passed the first check, wasnt modified then failed the same check hmmmmmmmmmmmmm");
+            // this.logger.emerg("big h");
+            // this.logger.emerg("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+            // this.logger.emerg("h");
+            // this.logger.emerg("this went horribly wrong if this happened so");
+            // this.logger.emerg("yah");
+            // this.logger.emerg("spam errors in the logz");
+            // this.logger.emerg("this should never happen btw");
+            // this.logger.emerg("never ever ever ever ever ever ever ever ever ever ever");
+            // this.logger.emerg(new Error());
             return void msg.channel.send("voice is not enabled!");
          }
          con.play(this.autumnblaze.voicebroadcastmanager.getbroadcast());
       }).catch(err => {
          void msg.channel.send("I couldn't join this voice channel, sorry!");
          yeet(err);
-      }).catch(e => this.logger.warn(e));
-      else msg.channel.send("you need to join a voice channel first!").catch(e => this.logger.warn(e));
+      })//.catch(e => this.logger.warn(e));
+      else msg.channel.send("you need to join a voice channel first!")//.catch(e => this.logger.warn(e));
    }
 
    public readonly allowguild;

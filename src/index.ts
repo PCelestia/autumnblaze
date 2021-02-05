@@ -6,7 +6,7 @@
 // ok eslint now SHUSH
 
 import { AutumnBlaze } from "./bot";
-import { envisdev, getlogger } from "./rando";
+import { envisdev, /*getlogger*/ } from "./rando";
 import { HelpCommandthing } from "./text/commands/help";
 import { JoinCommand } from "./text/commands/voice/joincommand";
 import { LeaveCommand } from "./text/commands/voice/leavecommand";
@@ -54,10 +54,12 @@ void (async function(): Promise<void> {
 
    await autumnblazebotthing.start();
 
-   const logger = getlogger("_main_");
+   // const logger = getlogger("_main_");
    process.on("unhandledRejection", (reason) => {
-      logger.emerg("UNCAUGHT PROMISE REJECTION");
-      logger.emerg(`REASON: ${reason}`);
-      logger.emerg("PROMISE: WELL FUF I CANT STRINGIFY THIS");
+      // logger.emerg("UNCAUGHT PROMISE REJECTION");
+      // logger.emerg(`REASON: ${reason}`);
+      // logger.emerg("PROMISE: WELL FUF I CANT STRINGIFY THIS");
+      console.log("bruh");
+      console.log(reason);
    });
 })();

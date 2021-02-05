@@ -1,8 +1,8 @@
 import { Collection } from "discord.js";
 import { JsonConvert } from "json2typescript";
 import { MongoClient, MongoClientOptions } from "mongodb";
-import { Logger } from "winston";
-import { getlogger } from "../rando";
+// import { Logger } from "winston";
+// import { getlogger } from "../rando";
 import { SmolPone } from "../text/commands/pony/pony";
 import { GuildConfig, GuildLike } from "./struct";
 
@@ -47,7 +47,7 @@ export class Mango {
     */
    private ponyclient: MongoClient | undefined;
    /** [winston](https://www.npmjs.com/package/winston) logger to use */
-   private readonly logger: Logger;
+   // private readonly logger: Logger;
    /** cache for items gotten from the database */
    private readonly cache?: Collection<string, GuildConfig>;
    /** options to pass to the [MongoClient](https://mongodb.github.io/node-mongodb-native/3.1/api/MongoClient.html)
@@ -64,7 +64,7 @@ export class Mango {
    public constructor(opts: MangoOpts) {
       this.opts = opts;
       this.jsonconverter = new JsonConvert();
-      this.logger = getlogger("_mango");
+      // this.logger = getlogger("_mango");
       if (opts.usecache) this.cache = new Collection<string, GuildConfig>();
    }
 
@@ -77,10 +77,10 @@ export class Mango {
       const connectp1: Promise<MongoClient> = MongoClient.connect(this.opts.mainlink, Mango.mongoopts);
       if (!this.opts.ponylink) {
          this.mongoclient = await connectp1;
-         this.logger.info("connected to the db!!");
+         // this.logger.info("connected to the db!!");
       } else {
          [this.mongoclient, this.ponyclient] = await Promise.all([connectp1, MongoClient.connect(this.opts.ponylink, Mango.mongoopts)]);
-         this.logger.info("connected to main db and pony db!!");
+         // this.logger.info("connected to main db and pony db!!");
       }
       this.started = true;
    }
@@ -88,8 +88,8 @@ export class Mango {
    /** disconnect from the database servers and performs other necessary cleanup */
    public stop(): void {
       if (this.stopped) return;
-      void this.mongoclient?.close().then(() => this.logger.info("disconnected main db"));
-      void this.ponyclient?.close().then(() => this.logger.info("disconnected pony db"));
+      void this.mongoclient?.close()//.then(() => this.logger.info("disconnected main db"));
+      void this.ponyclient?.close()//.then(() => this.logger.info("disconnected pony db"));
       this.stopped = false;
    }
 
@@ -103,7 +103,7 @@ export class Mango {
       return new Promise((resolve, reject) => {
          if (!this.mongoclient) return reject("connect first!");
 
-         this.logger.debug("about to add a new config! createservconfig()");
+         // this.logger.debug("about to add a new config! createservconfig()");
          this.mongoclient.db(this.opts.maindbname).collection(guild.id).insertOne({ name: "guildsettings" }, (err, res) => {
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (err) return reject(err);
@@ -129,7 +129,7 @@ export class Mango {
          const config: GuildConfig | undefined = this.cache?.get(guild.id);
          if (config) return resolve(config);
 
-         this.logger.debug("about to query main db in getservconfig()");
+         // this.logger.debug("about to query main db in getservconfig()");
          this.mongoclient.db(this.opts.maindbname).collection(guild.id).findOne({ name: "guildsettings" }, (err, res) => {
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (err) return reject(err);
@@ -138,7 +138,7 @@ export class Mango {
                if (this.cache) this.cache.set(guild.id, gottenconfig);
                return resolve(gottenconfig);
             }
-            this.logger.debug("create new configg!");
+            // this.logger.debug("create new configg!");
             this.createservconfig(guild).then(resolve).catch(reject);
          });
       });
