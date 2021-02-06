@@ -2,8 +2,7 @@ node_modules
 build
 docs
 .env
-notz
-testfolderlol
-.vscode
+*.env
 
-GIT-PLEASE-IGNORE-ME-*
+GITIGNORE
+GITIGNORE-*

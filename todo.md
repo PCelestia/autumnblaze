@@ -1,4 +1,5 @@
 # FIND (IMPLEMENT) A USE FOR ALL THESE PERMS OR REMOVE THEM
+
 - [ ] manage server
 - [ ] manage roles
 - [ ] manage channels
@@ -26,6 +27,7 @@
 - [ ] priority speaker
 
 ## things to implement
+
 - [ ] lvls, xp, message count tracking
 - [ ] auto actions
 - [ ] automod (bad-words)
@@ -33,6 +35,7 @@
 - [ ] radio, specify radio link
 
 ## commands to implement
+
 - [ ] echo
 - [ ] config
 - [ ] derpi
