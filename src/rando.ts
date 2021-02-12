@@ -45,3 +45,19 @@ export function envisdev(): boolean {
 // export function envisprod(): boolean {
 //    return !envisdev();
 // }
+
+export function chopprefix(prefix: string, messagecontent: string): string | false {
+   return messagecontent.toLowerCase().startsWith(prefix.toLowerCase())
+      ? messagecontent.substring(prefix.length)
+      : false;
+}
+
+export function getnextarg(messagecontent: string): [string, string] {
+   const space = messagecontent.indexOf(" ");
+   return space === -1 ? [messagecontent, ""] : [
+      messagecontent.substring(0, space).trim(),
+      messagecontent.substring(space + 1).trim()
+   ];
+}
+
+export const wait = (ms: number) => new Promise<void>(res => setTimeout(res, ms));

@@ -1,4 +1,6 @@
 import { createautumn } from "./bot";
+import { testcmd } from "./command/test";
+import { testcommandish } from "./commandish/test";
 import { envisdev } from "./rando";
 
 void (async function() {
@@ -9,6 +11,9 @@ void (async function() {
       token: process.env.TOKEN,
       stdout: console.log,
       stderr: console.error,
-      events: ["exit", "SIGINT", "SIGTERM"]
+      events: ["exit", "SIGINT", "SIGTERM"],
+      commandish: [testcommandish],
+      command: [testcmd],
+      defaultprefix: "autumn "
    });
 })().catch(console.error);

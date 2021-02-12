@@ -33,6 +33,7 @@ module.exports = {
       "@typescript-eslint/no-unsafe-member-access": "off",
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-unsafe-return": "off",
+      "@typescript-eslint/no-use-before-define": "off",
       "@typescript-eslint/promise-function-async": "off",
       "@typescript-eslint/require-array-sort-compare": "off",
       "@typescript-eslint/restrict-plus-operands": "off",
